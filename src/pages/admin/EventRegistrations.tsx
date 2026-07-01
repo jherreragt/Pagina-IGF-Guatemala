@@ -1,21 +1,27 @@
 import { useEffect, useState } from 'react';
-import { Search, Download, Trash2, ClipboardList } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Search, Download, Trash2, ClipboardList, Layers } from 'lucide-react';
 import { supabase, EventRegistration } from '../../lib/supabase';
+import { useActiveEdition } from '../../hooks/useActiveEdition';
 
 export default function EventRegistrations() {
+  const { edition, loading: editionLoading } = useActiveEdition();
   const [registrations, setRegistrations] = useState<EventRegistration[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [filter, setFilter] = useState<'all' | 'presencial' | 'virtual'>('all');
 
   async function load() {
+    if (editionLoading) return;
     setLoading(true);
-    const { data } = await supabase.from('event_registrations').select('*').order('created_at', { ascending: false });
+    let q = supabase.from('event_registrations').select('*').order('created_at', { ascending: false });
+    if (edition) q = q.eq('edition_id', edition.id);
+    const { data } = await q;
     setRegistrations((data as EventRegistration[]) ?? []);
     setLoading(false);
   }
 
-  useEffect(() => { load(); }, []);
+  useEffect(() => { load(); }, [edition?.id, editionLoading]);
 
   async function deleteReg(id: string) {
     if (!confirm('¿Eliminar este registro?')) return;
@@ -49,6 +55,15 @@ export default function EventRegistrations() {
 
   return (
     <div className="space-y-6 max-w-5xl">
+      {edition && (
+        <div className="flex items-center gap-2 px-4 py-2.5 bg-sky-500/5 border border-sky-500/20 rounded-xl text-xs text-slate-400">
+          <span className="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse flex-shrink-0" />
+          Viendo registros de: <span className="text-sky-300 font-semibold">{edition.title}</span>
+          <Link to="/admin/event/editions" className="ml-auto flex items-center gap-1 text-slate-500 hover:text-sky-400 transition-colors">
+            <Layers className="w-3 h-3" /> Cambiar
+          </Link>
+        </div>
+      )}
       <div className="flex items-start justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold text-white">Registros de participantes</h1>

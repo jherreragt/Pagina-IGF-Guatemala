@@ -1,34 +1,40 @@
 import { useEffect, useState } from 'react';
-import { Plus, Trash2, Edit2, X, Save, CheckCircle2, AlertCircle, Users } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Plus, Trash2, Edit2, X, Save, CheckCircle2, AlertCircle, Users, Layers } from 'lucide-react';
 import { supabase, EventSpeaker } from '../../lib/supabase';
+import { useActiveEdition } from '../../hooks/useActiveEdition';
 
 const CATEGORIES = ['Ponente', 'Moderador', 'Relator', 'Panelista', 'Invitado especial'];
 const SECTORS = ['Gobierno', 'Sociedad Civil', 'Sector Privado', 'Comunidad Técnica', 'Academia', 'Juventudes', 'Organismos Internacionales', 'Medios'];
 
-const EMPTY: Omit<EventSpeaker, 'id' | 'created_at'> = {
+const EMPTY: Omit<EventSpeaker, 'id' | 'created_at' | 'edition_id'> = {
   name: '', role: '', organization: '', sector: 'Academia', category: 'Ponente',
   bio: '', photo_url: '', session_title: '', sort_order: 0, published: true,
 };
 
 export default function EventSpeakers() {
+  const { edition, loading: editionLoading } = useActiveEdition();
   const [speakers, setSpeakers] = useState<EventSpeaker[]>([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState('Todos');
   const [editing, setEditing] = useState<EventSpeaker | null>(null);
   const [isNew, setIsNew] = useState(false);
-  const [form, setForm] = useState<Omit<EventSpeaker, 'id' | 'created_at'>>(EMPTY);
+  const [form, setForm] = useState<Omit<EventSpeaker, 'id' | 'created_at' | 'edition_id'>>(EMPTY);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState('');
 
   async function load() {
+    if (editionLoading) return;
     setLoading(true);
-    const { data } = await supabase.from('event_speakers').select('*').order('sort_order').order('name');
+    let q = supabase.from('event_speakers').select('*').order('sort_order').order('name');
+    if (edition) q = q.eq('edition_id', edition.id);
+    const { data } = await q;
     setSpeakers((data as EventSpeaker[]) ?? []);
     setLoading(false);
   }
 
-  useEffect(() => { load(); }, []);
+  useEffect(() => { load(); }, [edition?.id, editionLoading]);
 
   function openNew() {
     setIsNew(true); setEditing(null); setForm({ ...EMPTY, sort_order: speakers.length }); setError('');
@@ -47,11 +53,12 @@ export default function EventSpeakers() {
   async function handleSave() {
     if (!form.name.trim()) { setError('El nombre es requerido.'); return; }
     setSaving(true); setError(''); setSaved(false);
+    const payload = { ...form, edition_id: edition?.id ?? null };
     let result;
     if (isNew) {
-      result = await supabase.from('event_speakers').insert(form).select().single();
+      result = await supabase.from('event_speakers').insert(payload).select().single();
     } else {
-      result = await supabase.from('event_speakers').update(form).eq('id', editing!.id).select().single();
+      result = await supabase.from('event_speakers').update(payload).eq('id', editing!.id).select().single();
     }
     setSaving(false);
     if (result.error) { setError(result.error.message); return; }
@@ -75,6 +82,15 @@ export default function EventSpeakers() {
   return (
     <div className="flex gap-6 max-w-7xl">
       <div className={`${panelOpen ? 'hidden xl:block xl:w-1/2' : 'w-full'} space-y-5`}>
+        {edition && (
+          <div className="flex items-center gap-2 px-4 py-2.5 bg-sky-500/5 border border-sky-500/20 rounded-xl text-xs text-slate-400">
+            <span className="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse flex-shrink-0" />
+            Editando contenido para: <span className="text-sky-300 font-semibold">{edition.title}</span>
+            <Link to="/admin/event/editions" className="ml-auto flex items-center gap-1 text-slate-500 hover:text-sky-400 transition-colors">
+              <Layers className="w-3 h-3" /> Cambiar
+            </Link>
+          </div>
+        )}
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-bold text-white">Ponentes y moderadores</h1>

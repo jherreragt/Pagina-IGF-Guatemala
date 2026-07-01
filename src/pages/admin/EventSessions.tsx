@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import {
-  Plus, Trash2, Edit2, GripVertical, ChevronUp, ChevronDown, X, Save, CheckCircle2, AlertCircle
+  Plus, Trash2, Edit2, GripVertical, ChevronUp, ChevronDown, X, Save, CheckCircle2, AlertCircle, Layers
 } from 'lucide-react';
 import { supabase, EventSession } from '../../lib/supabase';
+import { useActiveEdition } from '../../hooks/useActiveEdition';
 
 const SESSION_TYPES = ['Panel', 'Taller', 'Conversatorio', 'Mesa multiactor', 'Plenaria', 'Lightning talk', 'Sesión juvenil', 'Demostración', 'Logística', 'Descanso'];
 const AXES = [
@@ -15,29 +17,33 @@ const AXES = [
   'Economía digital, innovación y desarrollo sostenible',
 ];
 
-const EMPTY: Omit<EventSession, 'id' | 'created_at'> = {
+const EMPTY: Omit<EventSession, 'id' | 'created_at' | 'edition_id'> = {
   title: '', description: '', session_type: 'Panel', axis: '', start_time: '',
   end_time: '', event_date: '2026-10-15', room: '', speakers_text: '', sort_order: 0, published: true,
 };
 
 export default function EventSessions() {
+  const { edition, loading: editionLoading } = useActiveEdition();
   const [sessions, setSessions] = useState<EventSession[]>([]);
   const [loading, setLoading] = useState(true);
   const [editing, setEditing] = useState<EventSession | null>(null);
   const [isNew, setIsNew] = useState(false);
-  const [form, setForm] = useState<Omit<EventSession, 'id' | 'created_at'>>(EMPTY);
+  const [form, setForm] = useState<Omit<EventSession, 'id' | 'created_at' | 'edition_id'>>(EMPTY);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState('');
 
   async function load() {
+    if (editionLoading) return;
     setLoading(true);
-    const { data } = await supabase.from('event_sessions').select('*').order('sort_order').order('start_time');
+    let q = supabase.from('event_sessions').select('*').order('sort_order').order('start_time');
+    if (edition) q = q.eq('edition_id', edition.id);
+    const { data } = await q;
     setSessions((data as EventSession[]) ?? []);
     setLoading(false);
   }
 
-  useEffect(() => { load(); }, []);
+  useEffect(() => { load(); }, [edition?.id, editionLoading]);
 
   function openNew() {
     setIsNew(true);
@@ -60,7 +66,7 @@ export default function EventSessions() {
   async function handleSave() {
     if (!form.title.trim()) { setError('El título es requerido.'); return; }
     setSaving(true); setError(''); setSaved(false);
-    const payload = { ...form };
+    const payload = { ...form, edition_id: edition?.id ?? null };
     let result;
     if (isNew) {
       result = await supabase.from('event_sessions').insert(payload).select().single();
@@ -101,6 +107,15 @@ export default function EventSessions() {
     <div className="flex gap-6 max-w-7xl h-full">
       {/* List */}
       <div className={`${panelOpen ? 'hidden xl:block xl:w-1/2' : 'w-full'} space-y-5`}>
+        {edition && (
+          <div className="flex items-center gap-2 px-4 py-2.5 bg-sky-500/5 border border-sky-500/20 rounded-xl text-xs text-slate-400">
+            <span className="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse flex-shrink-0" />
+            Editando contenido para: <span className="text-sky-300 font-semibold">{edition.title}</span>
+            <Link to="/admin/event/editions" className="ml-auto flex items-center gap-1 text-slate-500 hover:text-sky-400 transition-colors">
+              <Layers className="w-3 h-3" /> Cambiar
+            </Link>
+          </div>
+        )}
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-bold text-white">Agenda del evento</h1>

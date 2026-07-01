@@ -31,8 +31,24 @@ export type BlogPost = {
   updated_at: string;
 };
 
+export type EventEdition = {
+  id: string;
+  year: string;
+  title: string;
+  lema: string | null;
+  event_date: string | null;
+  event_location: string;
+  event_modality: string;
+  datetime_iso: string | null;
+  registration_open: boolean;
+  sessions_open: boolean;
+  is_active: boolean;
+  created_at: string;
+};
+
 export type EventSession = {
   id: string;
+  edition_id: string | null;
   title: string;
   description: string | null;
   session_type: string;
@@ -49,6 +65,7 @@ export type EventSession = {
 
 export type EventSpeaker = {
   id: string;
+  edition_id: string | null;
   name: string;
   role: string | null;
   organization: string | null;
@@ -64,6 +81,7 @@ export type EventSpeaker = {
 
 export type EventAlly = {
   id: string;
+  edition_id: string | null;
   name: string;
   ally_type: string;
   logo_url: string | null;
@@ -75,6 +93,7 @@ export type EventAlly = {
 
 export type EventResource = {
   id: string;
+  edition_id: string | null;
   title: string;
   description: string | null;
   file_url: string | null;
@@ -86,6 +105,7 @@ export type EventResource = {
 
 export type EventRegistration = {
   id: string;
+  edition_id: string | null;
   name: string;
   organization: string | null;
   role: string | null;

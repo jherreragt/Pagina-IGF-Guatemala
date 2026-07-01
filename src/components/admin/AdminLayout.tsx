@@ -9,6 +9,7 @@ import { useAuth } from '../../contexts/AuthContext';
 
 const eventSubItems = [
   { label: 'Resumen', href: '/admin/event' },
+  { label: 'Ediciones', href: '/admin/event/editions' },
   { label: 'Agenda', href: '/admin/event/sessions' },
   { label: 'Ponentes', href: '/admin/event/speakers' },
   { label: 'Aliados', href: '/admin/event/allies' },

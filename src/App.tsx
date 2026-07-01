@@ -31,6 +31,7 @@ import EventSpeakers from './pages/admin/EventSpeakers';
 import EventAllies from './pages/admin/EventAllies';
 import EventResources from './pages/admin/EventResources';
 import EventRegistrations from './pages/admin/EventRegistrations';
+import EventEditions from './pages/admin/EventEditions';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -102,6 +103,7 @@ export default function App() {
           <Route path="/admin/event/allies" element={<ProtectedRoute><AdminLayout><EventAllies /></AdminLayout></ProtectedRoute>} />
           <Route path="/admin/event/resources" element={<ProtectedRoute><AdminLayout><EventResources /></AdminLayout></ProtectedRoute>} />
           <Route path="/admin/event/registrations" element={<ProtectedRoute><AdminLayout><EventRegistrations /></AdminLayout></ProtectedRoute>} />
+          <Route path="/admin/event/editions" element={<ProtectedRoute><AdminLayout><EventEditions /></AdminLayout></ProtectedRoute>} />
 
           {/* Public routes */}
           <Route path="/" element={<PublicLayout><Home /></PublicLayout>} />

@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 import Countdown from '../components/Countdown';
 import { useSiteSettings } from '../hooks/useSiteSettings';
+import { useActiveEdition } from '../hooks/useActiveEdition';
 import { supabase, EventSession, EventSpeaker, EventAlly, EventResource, BlogPost } from '../lib/supabase';
 
 const themes = [
@@ -61,7 +62,19 @@ const registrationFields = [
 
 export default function Event() {
   const { settings } = useSiteSettings();
-  const eventDate = new Date(settings.event_datetime_iso || '2026-10-15T09:00:00');
+  const { edition, loading: editionLoading } = useActiveEdition();
+
+  // Prefer active edition values over site_settings fallbacks
+  const eventYear      = edition?.year          ?? settings.event_year;
+  const eventDate      = edition?.event_date    ?? settings.event_date;
+  const eventLocation  = edition?.event_location ?? settings.event_location;
+  const eventModality  = edition?.event_modality ?? settings.event_modality;
+  const eventLema      = edition?.lema           ?? settings.event_lema;
+  const eventDatetimeIso = edition?.datetime_iso ?? settings.event_datetime_iso ?? '2026-10-15T09:00:00';
+  const registrationOpen = edition ? edition.registration_open : settings.event_registration_open === 'true';
+  const sessionsOpen     = edition ? edition.sessions_open     : settings.event_sessions_open === 'true';
+
+  const countdownDate = new Date(eventDatetimeIso);
 
   const [sessions, setSessions] = useState<EventSession[]>([]);
   const [speakers, setSpeakers] = useState<EventSpeaker[]>([]);
@@ -79,12 +92,14 @@ export default function Event() {
   const [acceptedData, setAcceptedData] = useState(false);
 
   useEffect(() => {
+    if (editionLoading) return;
     async function loadAll() {
+      const addFilter = (q: any) => edition ? q.eq('edition_id', edition.id) : q;
       const [sessRes, spkRes, allRes, reRes, newsRes] = await Promise.all([
-        supabase.from('event_sessions').select('*').eq('published', true).order('sort_order').order('start_time'),
-        supabase.from('event_speakers').select('*').eq('published', true).order('sort_order').order('name'),
-        supabase.from('event_allies').select('*').eq('published', true).order('sort_order').order('name'),
-        supabase.from('event_resources').select('*').eq('published', true).order('sort_order').order('created_at'),
+        addFilter(supabase.from('event_sessions').select('*').eq('published', true)).order('sort_order').order('start_time'),
+        addFilter(supabase.from('event_speakers').select('*').eq('published', true)).order('sort_order').order('name'),
+        addFilter(supabase.from('event_allies').select('*').eq('published', true)).order('sort_order').order('name'),
+        addFilter(supabase.from('event_resources').select('*').eq('published', true)).order('sort_order').order('created_at'),
         supabase.from('blog_posts').select('id,title,slug,excerpt,cover_url,category,author,published_at,created_at,tags,content,updated_at,published')
           .eq('published', true).eq('category', 'Evento Anual').order('published_at', { ascending: false }).limit(3),
       ]);
@@ -96,7 +111,7 @@ export default function Event() {
       setLoadingContent(false);
     }
     loadAll();
-  }, []);
+  }, [edition?.id, editionLoading]);
 
   const filteredSessions = activeFilter === 'Todos'
     ? sessions
@@ -123,6 +138,7 @@ export default function Event() {
       modality: formData.modality ?? '',
       accepted_conduct: acceptedConduct,
       accepted_data: acceptedData,
+      edition_id: edition?.id ?? null,
     });
     setSubmitting(false);
     setFormSubmitted(true);
@@ -145,22 +161,22 @@ export default function Event() {
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-sky-500/10 border border-sky-400/20 mb-10">
             <span className="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse" />
             <Calendar className="w-3 h-3 text-sky-400" />
-            <span className="text-sky-300 text-xs font-semibold tracking-widest uppercase">Evento Anual · {settings.event_date}</span>
+            <span className="text-sky-300 text-xs font-semibold tracking-widest uppercase">Evento Anual · {eventDate}</span>
           </div>
 
           <h1 className="font-display font-bold text-white leading-tight mb-5">
             <span className="block text-4xl sm:text-5xl lg:text-6xl text-slate-300 font-light mb-1">IGF Guatemala</span>
-            <span className="block text-6xl sm:text-7xl lg:text-8xl gradient-text">{settings.event_year}</span>
+            <span className="block text-6xl sm:text-7xl lg:text-8xl gradient-text">{eventYear}</span>
           </h1>
 
           <p className="text-lg sm:text-xl text-slate-400 font-light italic mb-6 max-w-2xl mx-auto leading-relaxed">
-            "{settings.event_lema}"
+            "{eventLema}"
           </p>
 
           <div className="flex flex-wrap justify-center gap-6 mb-12 text-slate-400 text-sm">
-            <span className="flex items-center gap-2"><Calendar className="w-4 h-4 text-sky-400" />{settings.event_date}</span>
-            <span className="flex items-center gap-2"><MapPin className="w-4 h-4 text-sky-400" />{settings.event_location}</span>
-            <span className="flex items-center gap-2"><Monitor className="w-4 h-4 text-sky-400" />{settings.event_modality}</span>
+            <span className="flex items-center gap-2"><Calendar className="w-4 h-4 text-sky-400" />{eventDate}</span>
+            <span className="flex items-center gap-2"><MapPin className="w-4 h-4 text-sky-400" />{eventLocation}</span>
+            <span className="flex items-center gap-2"><Monitor className="w-4 h-4 text-sky-400" />{eventModality}</span>
           </div>
 
           <div className="flex flex-col sm:flex-row gap-3 justify-center mb-16">
@@ -175,7 +191,7 @@ export default function Event() {
 
           <div className="border-t border-white/[0.08] pt-12">
             <p className="text-slate-500 text-xs font-semibold mb-6 uppercase tracking-widest">El evento comienza en</p>
-            <Countdown targetDate={eventDate} />
+            <Countdown targetDate={countdownDate} />
           </div>
         </div>
       </section>
@@ -237,7 +253,7 @@ export default function Event() {
             <div className="inline-flex items-center gap-2 text-sky-600 font-semibold text-sm uppercase tracking-wider mb-4">
               <span className="w-8 h-0.5 bg-sky-500" />Agenda temática<span className="w-8 h-0.5 bg-sky-500" />
             </div>
-            <h2 className="text-4xl font-bold text-blue-950 mb-4">Ejes Temáticos {settings.event_year}</h2>
+            <h2 className="text-4xl font-bold text-blue-950 mb-4">Ejes Temáticos {eventYear}</h2>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {themes.map(({ icon: Icon, title }, i) => (
@@ -275,7 +291,7 @@ export default function Event() {
                   { label: 'Apertura de convocatoria', date: '1 de julio 2026' },
                   { label: 'Cierre de convocatoria', date: '31 de agosto 2026' },
                   { label: 'Notificación de resultados', date: '15 de septiembre 2026' },
-                  { label: 'Evento', date: settings.event_date || '15 de octubre 2026' },
+                  { label: 'Evento', date: eventDate || '15 de octubre 2026' },
                 ].map(({ label, date }) => (
                   <li key={label} className="flex justify-between gap-4">
                     <span className="text-blue-200 text-sm">{label}</span>
@@ -321,7 +337,7 @@ export default function Event() {
               <span className="w-8 h-0.5 bg-sky-500" />Programa<span className="w-8 h-0.5 bg-sky-500" />
             </div>
             <h2 className="text-4xl font-bold text-blue-950 mb-4">Agenda del Evento</h2>
-            <p className="text-slate-500">{settings.event_date} · {settings.event_location}</p>
+            <p className="text-slate-500">{eventDate} · {eventLocation}</p>
           </div>
 
           {sessions.length > 0 && (
@@ -629,7 +645,7 @@ export default function Event() {
                   <input type="checkbox" checked={acceptedConduct} onChange={(e) => setAcceptedConduct(e.target.checked)}
                     className="mt-0.5 w-4 h-4 rounded border-slate-300 text-sky-600 focus:ring-sky-500" />
                   <span className="text-slate-600 text-sm">
-                    Acepto el <a href="#conducta" className="text-sky-600 font-medium hover:underline">Código de Conducta</a> del IGF Guatemala {settings.event_year}. <span className="text-red-500">*</span>
+                    Acepto el <a href="#conducta" className="text-sky-600 font-medium hover:underline">Código de Conducta</a> del IGF Guatemala {eventYear}. <span className="text-red-500">*</span>
                   </span>
                 </label>
                 <label className="flex items-start gap-3 cursor-pointer">
@@ -685,9 +701,9 @@ export default function Event() {
           <div className="grid lg:grid-cols-2 gap-10">
             <div className="space-y-5">
               {[
-                { icon: MapPin, title: 'Lugar', info: settings.event_location || 'Centro de Convenciones, Ciudad de Guatemala' },
-                { icon: Calendar, title: 'Fecha y horario', info: `${settings.event_date || '15 de octubre de 2026'} · 8:00 AM – 6:00 PM` },
-                { icon: Monitor, title: 'Modalidad', info: settings.event_modality || 'Presencial con transmisión en vivo' },
+                { icon: MapPin, title: 'Lugar', info: eventLocation || 'Centro de Convenciones, Ciudad de Guatemala' },
+                { icon: Calendar, title: 'Fecha y horario', info: `${eventDate || '15 de octubre de 2026'} · 8:00 AM – 6:00 PM` },
+                { icon: Monitor, title: 'Modalidad', info: eventModality || 'Presencial con transmisión en vivo' },
                 { icon: Users, title: 'Accesibilidad', info: 'El recinto es accesible para personas con movilidad reducida. Servicios de interpretación disponibles.' },
               ].map(({ icon: Icon, title, info }) => (
                 <div key={title} className="flex items-start gap-4 p-5 bg-white rounded-xl border border-slate-100">
@@ -705,7 +721,7 @@ export default function Event() {
               <div className="text-center">
                 <MapPin className="w-10 h-10 text-sky-400 mx-auto mb-3" />
                 <p className="text-slate-500 text-sm">Mapa de ubicación</p>
-                <p className="text-slate-400 text-xs mt-1">{settings.event_location || 'Ciudad de Guatemala'}</p>
+                <p className="text-slate-400 text-xs mt-1">{eventLocation || 'Ciudad de Guatemala'}</p>
               </div>
             </div>
           </div>
