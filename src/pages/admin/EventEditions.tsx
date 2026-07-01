@@ -126,7 +126,7 @@ export default function EventEditions() {
           </div>
           <button
             onClick={openNew}
-            className="flex items-center gap-2 px-4 py-2.5 bg-sky-600 hover:bg-sky-500 text-white font-semibold text-sm rounded-xl transition-colors"
+            className="flex items-center gap-2 px-4 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-sm rounded-xl transition-colors"
           >
             <Plus className="w-4 h-4" /> Nueva edición
           </button>
@@ -140,7 +140,7 @@ export default function EventEditions() {
             <p className="text-slate-400 text-sm mb-4">No hay ediciones registradas.</p>
             <button
               onClick={openNew}
-              className="inline-flex items-center gap-2 px-4 py-2 bg-sky-600 text-white text-sm font-semibold rounded-lg hover:bg-sky-500 transition-colors"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-600 text-white text-sm font-semibold rounded-lg hover:bg-emerald-500 transition-colors"
             >
               <Plus className="w-4 h-4" /> Nueva edición
             </button>
@@ -152,7 +152,7 @@ export default function EventEditions() {
                 key={ed.id}
                 className={`bg-slate-800/50 border rounded-2xl p-5 transition-all ${
                   ed.is_active
-                    ? 'border-sky-500/50 bg-sky-500/5'
+                    ? 'border-emerald-500/50 bg-emerald-500/5'
                     : 'border-white/10 hover:border-white/20'
                 }`}
               >
@@ -161,8 +161,8 @@ export default function EventEditions() {
                     <div className="flex items-center gap-2 mb-1">
                       <span className="font-display font-black text-2xl text-white">{ed.year}</span>
                       {ed.is_active && (
-                        <span className="flex items-center gap-1 px-2 py-0.5 bg-sky-500/20 border border-sky-500/30 rounded-full text-sky-300 text-xs font-semibold">
-                          <span className="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse" />
+                        <span className="flex items-center gap-1 px-2 py-0.5 bg-emerald-500/20 border border-emerald-500/30 rounded-full text-emerald-300 text-xs font-semibold">
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
                           Activa
                         </span>
                       )}
@@ -194,7 +194,7 @@ export default function EventEditions() {
                         onClick={() => activateEdition(ed.id)}
                         disabled={activating === ed.id}
                         title="Activar esta edición en el sitio público"
-                        className="flex items-center gap-1.5 px-3 py-1.5 bg-sky-600/20 hover:bg-sky-600 border border-sky-500/30 hover:border-transparent text-sky-300 hover:text-white text-xs font-semibold rounded-lg transition-all disabled:opacity-50"
+                        className="flex items-center gap-1.5 px-3 py-1.5 bg-emerald-600/20 hover:bg-emerald-600 border border-emerald-500/30 hover:border-transparent text-emerald-300 hover:text-white text-xs font-semibold rounded-lg transition-all disabled:opacity-50"
                       >
                         {activating === ed.id
                           ? <div className="w-3 h-3 border border-current border-t-transparent rounded-full animate-spin" />
@@ -247,7 +247,7 @@ export default function EventEditions() {
                     value={form.year}
                     onChange={(e) => handleYearChange(e.target.value)}
                     placeholder="2027"
-                    className="w-full px-3 py-2.5 bg-slate-900 border border-white/10 rounded-xl text-white text-sm focus:outline-none focus:border-sky-500 transition-colors"
+                    className="w-full px-3 py-2.5 bg-slate-900 border border-white/10 rounded-xl text-white text-sm focus:outline-none focus:border-emerald-500 transition-colors"
                   />
                 </div>
                 <div>
@@ -256,7 +256,7 @@ export default function EventEditions() {
                     value={form.title}
                     onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))}
                     placeholder="IGF Guatemala 2027"
-                    className="w-full px-3 py-2.5 bg-slate-900 border border-white/10 rounded-xl text-white text-sm focus:outline-none focus:border-sky-500 transition-colors"
+                    className="w-full px-3 py-2.5 bg-slate-900 border border-white/10 rounded-xl text-white text-sm focus:outline-none focus:border-emerald-500 transition-colors"
                   />
                 </div>
               </div>
@@ -268,7 +268,7 @@ export default function EventEditions() {
                   onChange={(e) => setForm((f) => ({ ...f, lema: e.target.value }))}
                   rows={2}
                   placeholder="Lema o tema central del evento"
-                  className="w-full px-3 py-2.5 bg-slate-900 border border-white/10 rounded-xl text-white text-sm focus:outline-none focus:border-sky-500 transition-colors resize-none"
+                  className="w-full px-3 py-2.5 bg-slate-900 border border-white/10 rounded-xl text-white text-sm focus:outline-none focus:border-emerald-500 transition-colors resize-none"
                 />
               </div>
 
@@ -278,7 +278,7 @@ export default function EventEditions() {
                   value={form.event_date ?? ''}
                   onChange={(e) => setForm((f) => ({ ...f, event_date: e.target.value }))}
                   placeholder="15 de octubre de 2027"
-                  className="w-full px-3 py-2.5 bg-slate-900 border border-white/10 rounded-xl text-white text-sm focus:outline-none focus:border-sky-500 transition-colors"
+                  className="w-full px-3 py-2.5 bg-slate-900 border border-white/10 rounded-xl text-white text-sm focus:outline-none focus:border-emerald-500 transition-colors"
                 />
               </div>
 
@@ -288,7 +288,7 @@ export default function EventEditions() {
                   value={form.datetime_iso ?? ''}
                   onChange={(e) => setForm((f) => ({ ...f, datetime_iso: e.target.value }))}
                   placeholder="2027-10-15T09:00:00"
-                  className="w-full px-3 py-2.5 bg-slate-900 border border-white/10 rounded-xl text-white text-sm focus:outline-none focus:border-sky-500 transition-colors font-mono"
+                  className="w-full px-3 py-2.5 bg-slate-900 border border-white/10 rounded-xl text-white text-sm focus:outline-none focus:border-emerald-500 transition-colors font-mono"
                 />
               </div>
 
@@ -297,7 +297,7 @@ export default function EventEditions() {
                 <input
                   value={form.event_location}
                   onChange={(e) => setForm((f) => ({ ...f, event_location: e.target.value }))}
-                  className="w-full px-3 py-2.5 bg-slate-900 border border-white/10 rounded-xl text-white text-sm focus:outline-none focus:border-sky-500 transition-colors"
+                  className="w-full px-3 py-2.5 bg-slate-900 border border-white/10 rounded-xl text-white text-sm focus:outline-none focus:border-emerald-500 transition-colors"
                 />
               </div>
 
@@ -306,7 +306,7 @@ export default function EventEditions() {
                 <input
                   value={form.event_modality}
                   onChange={(e) => setForm((f) => ({ ...f, event_modality: e.target.value }))}
-                  className="w-full px-3 py-2.5 bg-slate-900 border border-white/10 rounded-xl text-white text-sm focus:outline-none focus:border-sky-500 transition-colors"
+                  className="w-full px-3 py-2.5 bg-slate-900 border border-white/10 rounded-xl text-white text-sm focus:outline-none focus:border-emerald-500 transition-colors"
                 />
               </div>
 
@@ -319,7 +319,7 @@ export default function EventEditions() {
                     <span className="text-slate-300 text-sm">{label}</span>
                     <div
                       onClick={() => setForm((f) => ({ ...f, [key]: !f[key] }))}
-                      className={`relative w-11 h-6 rounded-full transition-colors cursor-pointer ${form[key] ? 'bg-sky-600' : 'bg-slate-700'}`}
+                      className={`relative w-11 h-6 rounded-full transition-colors cursor-pointer ${form[key] ? 'bg-emerald-600' : 'bg-slate-700'}`}
                     >
                       <div className={`absolute top-0.5 w-5 h-5 rounded-full bg-white shadow transition-transform ${form[key] ? 'translate-x-5' : 'translate-x-0.5'}`} />
                     </div>
@@ -340,7 +340,7 @@ export default function EventEditions() {
               <button
                 onClick={handleSave}
                 disabled={saving}
-                className="flex items-center gap-2 px-5 py-2.5 bg-sky-600 hover:bg-sky-500 disabled:opacity-50 text-white font-semibold text-sm rounded-xl transition-colors"
+                className="flex items-center gap-2 px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 disabled:opacity-50 text-white font-semibold text-sm rounded-xl transition-colors"
               >
                 {saving ? <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : <Save className="w-4 h-4" />}
                 {saving ? 'Guardando...' : 'Guardar'}

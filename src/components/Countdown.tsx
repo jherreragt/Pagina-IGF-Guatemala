@@ -49,7 +49,7 @@ export default function Countdown({ targetDate }: CountdownProps) {
                 {String(value).padStart(2, '0')}
               </span>
             </div>
-            <div className="text-sky-200 text-xs mt-2 font-medium uppercase tracking-wider">{label}</div>
+            <div className="text-emerald-200 text-xs mt-2 font-medium uppercase tracking-wider">{label}</div>
           </div>
           {i < 3 && (
             <div className="text-white/40 text-2xl font-bold pb-4">:</div>

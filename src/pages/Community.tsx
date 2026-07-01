@@ -5,7 +5,7 @@ const sectors = [
   {
     icon: Building2,
     title: 'Gobierno',
-    gradient: 'from-blue-500 to-blue-700',
+    gradient: 'from-green-500 to-green-700',
     desc: 'Ministerios, entes reguladores, secretarías, municipalidades y otras instituciones del Estado participan para compartir políticas públicas y contribuir a propuestas de gobernanza digital incluyente.',
     examples: ['Ministerios con competencias digitales', 'Entes reguladores de telecomunicaciones', 'Superintendencia de Telecomunicaciones (SIT)', 'Oficinas de gobierno digital'],
   },
@@ -26,7 +26,7 @@ const sectors = [
   {
     icon: Laptop,
     title: 'Comunidad Técnica',
-    gradient: 'from-cyan-500 to-sky-600',
+    gradient: 'from-teal-500 to-emerald-600',
     desc: 'Expertos en infraestructura de Internet, ingenieros de redes y miembros de organizaciones técnicas internacionales aportan conocimiento especializado.',
     examples: ['Ingenieros de redes y protocolos', 'Administradores de sistemas', 'Comunidad LACNIC', 'Operadores de IXP'],
   },
@@ -47,7 +47,7 @@ const sectors = [
   {
     icon: Globe,
     title: 'Organismos Internacionales',
-    gradient: 'from-sky-500 to-blue-600',
+    gradient: 'from-emerald-500 to-green-600',
     desc: 'Agencias de Naciones Unidas, organismos de cooperación internacional y redes regionales comparten experiencias globales y apoyan la gobernanza digital.',
     examples: ['PNUD', 'UNESCO', 'CEPAL', 'UIT', 'Organismos de cooperación bilateral'],
   },
@@ -75,13 +75,13 @@ export default function Community() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {sectors.map(({ icon: Icon, title, gradient, desc, examples }) => (
-              <div key={title} className="group rounded-2xl border border-slate-100 hover:border-sky-200 hover:shadow-card-hover transition-all duration-200 overflow-hidden">
+              <div key={title} className="group rounded-2xl border border-slate-100 hover:border-emerald-200 hover:shadow-card-hover transition-all duration-200 overflow-hidden">
                 <div className={`h-1 bg-gradient-to-r ${gradient}`} />
                 <div className="p-7">
                   <div className={`inline-flex w-12 h-12 rounded-2xl bg-gradient-to-br ${gradient} items-center justify-center mb-5 shadow-md`}>
                     <Icon className="w-6 h-6 text-white" />
                   </div>
-                  <h3 className="font-display font-bold text-blue-950 text-xl mb-3">{title}</h3>
+                  <h3 className="font-display font-bold text-green-950 text-xl mb-3">{title}</h3>
                   <p className="text-slate-500 text-[15px] leading-relaxed mb-5">{desc}</p>
                   <div>
                     <p className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-3">Participantes</p>

@@ -46,7 +46,7 @@ const selectionCriteria = [
 ];
 
 const typeColors: Record<string, string> = {
-  Panel: 'bg-slate-100 text-slate-700', Plenaria: 'bg-blue-50 text-blue-800 font-medium',
+  Panel: 'bg-slate-100 text-slate-700', Plenaria: 'bg-green-50 text-green-800 font-medium',
   'Mesa multiactor': 'bg-green-100 text-green-700', Conversatorio: 'bg-amber-100 text-amber-700',
   'Sesión juvenil': 'bg-purple-100 text-purple-700', Logística: 'bg-slate-50 text-slate-500',
   Descanso: 'bg-slate-50 text-slate-400',
@@ -149,19 +149,19 @@ export default function Event() {
       {/* Hero */}
       <section
         className="relative min-h-screen flex items-center justify-center overflow-hidden"
-        style={{ background: 'linear-gradient(135deg, #1a3a6e 0%, #1565c0 50%, #0288d1 100%)' }}
+        style={{ background: 'linear-gradient(135deg, #14532d 0%, #166534 50%, #15803d 100%)' }}
       >
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute -top-20 left-1/4 w-[500px] h-[500px] rounded-full bg-sky-600/10 blur-[120px]" />
-          <div className="absolute bottom-0 right-0 w-[400px] h-[400px] rounded-full bg-blue-500/8 blur-[100px]" />
+          <div className="absolute -top-20 left-1/4 w-[500px] h-[500px] rounded-full bg-emerald-600/10 blur-[120px]" />
+          <div className="absolute bottom-0 right-0 w-[400px] h-[400px] rounded-full bg-green-500/8 blur-[100px]" />
           <div className="absolute inset-0 bg-grid" />
         </div>
 
         <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-32">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-sky-500/10 border border-sky-400/20 mb-10">
-            <span className="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse" />
-            <Calendar className="w-3 h-3 text-sky-400" />
-            <span className="text-sky-300 text-xs font-semibold tracking-widest uppercase">Evento Anual · {eventDate}</span>
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-400/20 mb-10">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+            <Calendar className="w-3 h-3 text-emerald-400" />
+            <span className="text-emerald-300 text-xs font-semibold tracking-widest uppercase">Evento Anual · {eventDate}</span>
           </div>
 
           <h1 className="font-display font-bold text-white leading-tight mb-5">
@@ -174,9 +174,9 @@ export default function Event() {
           </p>
 
           <div className="flex flex-wrap justify-center gap-6 mb-12 text-slate-400 text-sm">
-            <span className="flex items-center gap-2"><Calendar className="w-4 h-4 text-sky-400" />{eventDate}</span>
-            <span className="flex items-center gap-2"><MapPin className="w-4 h-4 text-sky-400" />{eventLocation}</span>
-            <span className="flex items-center gap-2"><Monitor className="w-4 h-4 text-sky-400" />{eventModality}</span>
+            <span className="flex items-center gap-2"><Calendar className="w-4 h-4 text-emerald-400" />{eventDate}</span>
+            <span className="flex items-center gap-2"><MapPin className="w-4 h-4 text-emerald-400" />{eventLocation}</span>
+            <span className="flex items-center gap-2"><Monitor className="w-4 h-4 text-emerald-400" />{eventModality}</span>
           </div>
 
           <div className="flex flex-col sm:flex-row gap-3 justify-center mb-16">
@@ -201,7 +201,7 @@ export default function Event() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div>
-              <p className="section-label"><span className="w-5 h-px bg-sky-500" />Acerca del evento</p>
+              <p className="section-label"><span className="w-5 h-px bg-emerald-500" />Acerca del evento</p>
               <h2 className="section-title text-4xl mb-6">El encuentro nacional de gobernanza de Internet</h2>
               <p className="text-slate-500 leading-relaxed mb-5 text-[15px]">
                 El Evento Anual del IGF Guatemala es el principal espacio nacional de diálogo multiactor sobre gobernanza de Internet. Reúne a representantes del gobierno, sociedad civil, sector privado, comunidad técnica, academia, juventudes y organismos internacionales.
@@ -212,7 +212,7 @@ export default function Event() {
               <div className="grid grid-cols-3 gap-4">
                 {[{ num: '1 día', label: 'de evento' }, { num: '8+', label: 'sesiones paralelas' }, { num: '500+', label: 'participantes esperados' }].map((stat) => (
                   <div key={stat.label} className="text-center p-4 bg-slate-50 rounded-xl">
-                    <div className="text-2xl font-black text-sky-600">{stat.num}</div>
+                    <div className="text-2xl font-black text-emerald-600">{stat.num}</div>
                     <div className="text-slate-500 text-xs mt-1">{stat.label}</div>
                   </div>
                 ))}
@@ -230,16 +230,16 @@ export default function Event() {
       <section className="py-20 bg-slate-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-blue-950 mb-3">¿Quiénes participan?</h2>
+            <h2 className="text-3xl font-bold text-green-950 mb-3">¿Quiénes participan?</h2>
             <p className="text-slate-500 max-w-xl mx-auto">Un espacio multiactor donde todos los sectores tienen voz en igualdad de condiciones.</p>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             {stakeholders.map(({ icon: Icon, label }) => (
-              <div key={label} className="flex flex-col items-center gap-3 p-5 bg-white rounded-2xl border border-slate-100 hover:border-sky-200 hover:shadow-md transition-all">
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-sky-50 to-blue-100 flex items-center justify-center">
-                  <Icon className="w-6 h-6 text-sky-600" />
+              <div key={label} className="flex flex-col items-center gap-3 p-5 bg-white rounded-2xl border border-slate-100 hover:border-emerald-200 hover:shadow-md transition-all">
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-50 to-green-100 flex items-center justify-center">
+                  <Icon className="w-6 h-6 text-emerald-600" />
                 </div>
-                <span className="font-semibold text-blue-950 text-sm">{label}</span>
+                <span className="font-semibold text-green-950 text-sm">{label}</span>
               </div>
             ))}
           </div>
@@ -250,19 +250,19 @@ export default function Event() {
       <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
-            <div className="inline-flex items-center gap-2 text-sky-600 font-semibold text-sm uppercase tracking-wider mb-4">
-              <span className="w-8 h-0.5 bg-sky-500" />Agenda temática<span className="w-8 h-0.5 bg-sky-500" />
+            <div className="inline-flex items-center gap-2 text-emerald-600 font-semibold text-sm uppercase tracking-wider mb-4">
+              <span className="w-8 h-0.5 bg-emerald-500" />Agenda temática<span className="w-8 h-0.5 bg-emerald-500" />
             </div>
-            <h2 className="text-4xl font-bold text-blue-950 mb-4">Ejes Temáticos {eventYear}</h2>
+            <h2 className="text-4xl font-bold text-green-950 mb-4">Ejes Temáticos {eventYear}</h2>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {themes.map(({ icon: Icon, title }, i) => (
-              <div key={title} className="group flex items-start gap-4 p-6 bg-slate-50 hover:bg-sky-50 rounded-2xl border border-slate-100 hover:border-sky-200 transition-all hover:shadow-md">
-                <div className="w-10 h-10 rounded-xl bg-sky-100 group-hover:bg-sky-200 flex items-center justify-center flex-shrink-0 transition-colors">
-                  <Icon className="w-5 h-5 text-sky-600" />
+              <div key={title} className="group flex items-start gap-4 p-6 bg-slate-50 hover:bg-emerald-50 rounded-2xl border border-slate-100 hover:border-emerald-200 transition-all hover:shadow-md">
+                <div className="w-10 h-10 rounded-xl bg-emerald-100 group-hover:bg-emerald-200 flex items-center justify-center flex-shrink-0 transition-colors">
+                  <Icon className="w-5 h-5 text-emerald-600" />
                 </div>
                 <div>
-                  <div className="text-xs font-bold text-sky-400/70 mb-1 font-mono">{String(i + 1).padStart(2, '0')}</div>
+                  <div className="text-xs font-bold text-emerald-400/70 mb-1 font-mono">{String(i + 1).padStart(2, '0')}</div>
                   <p className="text-slate-700 font-medium text-sm leading-relaxed">{title}</p>
                 </div>
               </div>
@@ -272,19 +272,19 @@ export default function Event() {
       </section>
 
       {/* Convocatoria de sesiones */}
-      <section id="sesiones" className="py-24 bg-gradient-to-br from-blue-700 to-sky-600">
+      <section id="sesiones" className="py-24 bg-gradient-to-br from-green-700 to-emerald-600">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-sky-400/15 border border-sky-400/25 mb-6">
-              <FileText className="w-3.5 h-3.5 text-sky-300" />
-              <span className="text-sky-200 text-xs font-medium tracking-wider uppercase">Convocatoria abierta</span>
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-400/15 border border-emerald-400/25 mb-6">
+              <FileText className="w-3.5 h-3.5 text-emerald-300" />
+              <span className="text-emerald-200 text-xs font-medium tracking-wider uppercase">Convocatoria abierta</span>
             </div>
             <h2 className="text-4xl font-bold text-white mb-4">Propón tu Sesión</h2>
-            <p className="text-blue-200 max-w-xl mx-auto">¿Tienes un tema relevante para la gobernanza de Internet en Guatemala? Presentá tu propuesta de sesión.</p>
+            <p className="text-green-200 max-w-xl mx-auto">¿Tienes un tema relevante para la gobernanza de Internet en Guatemala? Presentá tu propuesta de sesión.</p>
           </div>
           <div className="grid lg:grid-cols-3 gap-8">
             <div className="bg-white/5 border border-white/10 rounded-2xl p-7">
-              <Clock className="w-7 h-7 text-sky-400 mb-4" />
+              <Clock className="w-7 h-7 text-emerald-400 mb-4" />
               <h3 className="font-bold text-white text-lg mb-4">Fechas clave</h3>
               <ul className="space-y-3">
                 {[
@@ -294,35 +294,35 @@ export default function Event() {
                   { label: 'Evento', date: eventDate || '15 de octubre 2026' },
                 ].map(({ label, date }) => (
                   <li key={label} className="flex justify-between gap-4">
-                    <span className="text-blue-200 text-sm">{label}</span>
-                    <span className="text-sky-300 text-sm font-medium whitespace-nowrap">{date}</span>
+                    <span className="text-green-200 text-sm">{label}</span>
+                    <span className="text-emerald-300 text-sm font-medium whitespace-nowrap">{date}</span>
                   </li>
                 ))}
               </ul>
             </div>
             <div className="bg-white/5 border border-white/10 rounded-2xl p-7">
-              <Send className="w-7 h-7 text-sky-400 mb-4" />
+              <Send className="w-7 h-7 text-emerald-400 mb-4" />
               <h3 className="font-bold text-white text-lg mb-4">Tipos de sesión</h3>
               <div className="flex flex-wrap gap-2">
                 {sessionTypes.map((type) => (
-                  <span key={type} className="px-3 py-1 bg-white/10 rounded-full text-sky-200 text-xs font-medium">{type}</span>
+                  <span key={type} className="px-3 py-1 bg-white/10 rounded-full text-emerald-200 text-xs font-medium">{type}</span>
                 ))}
               </div>
             </div>
             <div className="bg-white/5 border border-white/10 rounded-2xl p-7">
-              <Check className="w-7 h-7 text-sky-400 mb-4" />
+              <Check className="w-7 h-7 text-emerald-400 mb-4" />
               <h3 className="font-bold text-white text-lg mb-4">Criterios de selección</h3>
               <ul className="space-y-2">
                 {selectionCriteria.map((c) => (
-                  <li key={c} className="flex items-start gap-2 text-blue-200 text-xs">
-                    <div className="w-1 h-1 rounded-full bg-sky-400 mt-1.5 flex-shrink-0" />{c}
+                  <li key={c} className="flex items-start gap-2 text-green-200 text-xs">
+                    <div className="w-1 h-1 rounded-full bg-emerald-400 mt-1.5 flex-shrink-0" />{c}
                   </li>
                 ))}
               </ul>
             </div>
           </div>
           <div className="text-center mt-10">
-            <a href="#registro" className="inline-flex items-center gap-2 px-8 py-4 bg-sky-500 hover:bg-sky-400 text-white font-bold rounded-xl transition-all hover:scale-105 shadow-lg">
+            <a href="#registro" className="inline-flex items-center gap-2 px-8 py-4 bg-emerald-500 hover:bg-emerald-400 text-white font-bold rounded-xl transition-all hover:scale-105 shadow-lg">
               Enviar propuesta de sesión <ArrowRight className="w-4 h-4" />
             </a>
           </div>
@@ -333,10 +333,10 @@ export default function Event() {
       <section id="agenda" className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
-            <div className="inline-flex items-center gap-2 text-sky-600 font-semibold text-sm uppercase tracking-wider mb-4">
-              <span className="w-8 h-0.5 bg-sky-500" />Programa<span className="w-8 h-0.5 bg-sky-500" />
+            <div className="inline-flex items-center gap-2 text-emerald-600 font-semibold text-sm uppercase tracking-wider mb-4">
+              <span className="w-8 h-0.5 bg-emerald-500" />Programa<span className="w-8 h-0.5 bg-emerald-500" />
             </div>
-            <h2 className="text-4xl font-bold text-blue-950 mb-4">Agenda del Evento</h2>
+            <h2 className="text-4xl font-bold text-green-950 mb-4">Agenda del Evento</h2>
             <p className="text-slate-500">{eventDate} · {eventLocation}</p>
           </div>
 
@@ -345,7 +345,7 @@ export default function Event() {
               <Filter className="w-4 h-4 text-slate-400" />
               {axisFilters.map((f) => (
                 <button key={f} onClick={() => setActiveFilter(f)}
-                  className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors ${activeFilter === f ? 'bg-sky-600 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}>
+                  className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors ${activeFilter === f ? 'bg-emerald-600 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}>
                   {f === 'Todos' ? 'Todos' : f.split(' ').slice(0, 4).join(' ') + (f.split(' ').length > 4 ? '…' : '')}
                 </button>
               ))}
@@ -353,7 +353,7 @@ export default function Event() {
           )}
 
           {loadingContent ? (
-            <div className="py-16 text-center"><div className="w-8 h-8 border-2 border-sky-400 border-t-transparent rounded-full animate-spin mx-auto" /></div>
+            <div className="py-16 text-center"><div className="w-8 h-8 border-2 border-emerald-400 border-t-transparent rounded-full animate-spin mx-auto" /></div>
           ) : filteredSessions.length === 0 ? (
             <div className="py-16 text-center bg-slate-50 rounded-2xl border border-slate-100">
               <Calendar className="w-10 h-10 text-slate-300 mx-auto mb-3" />
@@ -366,21 +366,21 @@ export default function Event() {
                   className={`group flex gap-4 p-5 rounded-xl border transition-all hover:shadow-md ${
                     session.session_type === 'Descanso' || session.session_type === 'Logística'
                       ? 'bg-slate-50/60 border-slate-100 opacity-70'
-                      : 'bg-white border-slate-100 hover:border-sky-200'
+                      : 'bg-white border-slate-100 hover:border-emerald-200'
                   }`}>
-                  <div className="flex-shrink-0 w-24 text-sky-600 font-mono text-xs font-semibold pt-0.5">
+                  <div className="flex-shrink-0 w-24 text-emerald-600 font-mono text-xs font-semibold pt-0.5">
                     {session.start_time}{session.end_time ? `–${session.end_time}` : ''}
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex flex-wrap items-start gap-2 mb-2">
-                      <h3 className="font-semibold text-blue-950 text-sm">{session.title}</h3>
+                      <h3 className="font-semibold text-green-950 text-sm">{session.title}</h3>
                     </div>
                     <div className="flex flex-wrap gap-2">
                       <span className={`px-2 py-0.5 rounded-full text-xs ${typeColors[session.session_type] || 'bg-slate-100 text-slate-600'}`}>
                         {session.session_type}
                       </span>
                       {session.axis && (
-                        <span className="px-2 py-0.5 rounded-full text-xs bg-sky-100 text-sky-700">
+                        <span className="px-2 py-0.5 rounded-full text-xs bg-emerald-100 text-emerald-700">
                           {session.axis.split(',')[0].split(' ').slice(0, 5).join(' ')}
                         </span>
                       )}
@@ -408,17 +408,17 @@ export default function Event() {
       <section id="ponentes" className="py-24 bg-slate-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
-            <div className="inline-flex items-center gap-2 text-sky-600 font-semibold text-sm uppercase tracking-wider mb-4">
-              <span className="w-8 h-0.5 bg-sky-500" />Voces del evento<span className="w-8 h-0.5 bg-sky-500" />
+            <div className="inline-flex items-center gap-2 text-emerald-600 font-semibold text-sm uppercase tracking-wider mb-4">
+              <span className="w-8 h-0.5 bg-emerald-500" />Voces del evento<span className="w-8 h-0.5 bg-emerald-500" />
             </div>
-            <h2 className="text-4xl font-bold text-blue-950 mb-4">Ponentes y Moderadores</h2>
+            <h2 className="text-4xl font-bold text-green-950 mb-4">Ponentes y Moderadores</h2>
           </div>
 
           {speakerCategories.length > 1 && (
             <div className="flex gap-3 justify-center mb-10">
               {speakerCategories.map((cat) => (
                 <button key={cat} onClick={() => setSpeakerCategory(cat)}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${speakerCategory === cat ? 'bg-sky-600 text-white' : 'bg-white text-slate-600 border border-slate-200 hover:border-sky-300'}`}>
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${speakerCategory === cat ? 'bg-emerald-600 text-white' : 'bg-white text-slate-600 border border-slate-200 hover:border-emerald-300'}`}>
                   {cat}
                 </button>
               ))}
@@ -426,7 +426,7 @@ export default function Event() {
           )}
 
           {loadingContent ? (
-            <div className="py-16 text-center"><div className="w-8 h-8 border-2 border-sky-400 border-t-transparent rounded-full animate-spin mx-auto" /></div>
+            <div className="py-16 text-center"><div className="w-8 h-8 border-2 border-emerald-400 border-t-transparent rounded-full animate-spin mx-auto" /></div>
           ) : filteredSpeakers.length === 0 ? (
             <div className="py-16 text-center bg-white rounded-2xl border border-slate-100">
               <Users className="w-10 h-10 text-slate-300 mx-auto mb-3" />
@@ -441,16 +441,16 @@ export default function Event() {
                       <img src={speaker.photo_url} alt={speaker.name}
                         className="w-24 h-24 rounded-2xl object-cover shadow-md group-hover:shadow-lg transition-shadow" />
                     ) : (
-                      <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-sky-100 to-blue-200 flex items-center justify-center shadow-md">
-                        <span className="text-2xl font-bold text-sky-600">
+                      <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-emerald-100 to-green-200 flex items-center justify-center shadow-md">
+                        <span className="text-2xl font-bold text-emerald-600">
                           {speaker.name.split(' ').map((n) => n[0]).slice(0, 2).join('')}
                         </span>
                       </div>
                     )}
-                    <div className="absolute inset-0 rounded-2xl ring-0 group-hover:ring-2 ring-sky-400 transition-all" />
+                    <div className="absolute inset-0 rounded-2xl ring-0 group-hover:ring-2 ring-emerald-400 transition-all" />
                   </div>
-                  <h3 className="font-bold text-blue-950 text-sm">{speaker.name}</h3>
-                  <p className="text-sky-600 text-xs font-medium mt-0.5">{speaker.role}</p>
+                  <h3 className="font-bold text-green-950 text-sm">{speaker.name}</h3>
+                  <p className="text-emerald-600 text-xs font-medium mt-0.5">{speaker.role}</p>
                   <p className="text-slate-500 text-xs">{speaker.organization}</p>
                   <span className="inline-block mt-2 px-2 py-0.5 bg-slate-100 rounded-full text-slate-500 text-xs">{speaker.sector}</span>
                 </div>
@@ -465,28 +465,28 @@ export default function Event() {
         <section className="py-20 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
-              <div className="inline-flex items-center gap-2 text-sky-600 font-semibold text-sm uppercase tracking-wider mb-4">
-                <span className="w-8 h-0.5 bg-sky-500" />Respaldo<span className="w-8 h-0.5 bg-sky-500" />
+              <div className="inline-flex items-center gap-2 text-emerald-600 font-semibold text-sm uppercase tracking-wider mb-4">
+                <span className="w-8 h-0.5 bg-emerald-500" />Respaldo<span className="w-8 h-0.5 bg-emerald-500" />
               </div>
-              <h2 className="text-3xl font-bold text-blue-950 mb-3">Aliados y Apoyos</h2>
+              <h2 className="text-3xl font-bold text-green-950 mb-3">Aliados y Apoyos</h2>
             </div>
             {loadingContent ? (
-              <div className="py-10 text-center"><div className="w-6 h-6 border-2 border-sky-400 border-t-transparent rounded-full animate-spin mx-auto" /></div>
+              <div className="py-10 text-center"><div className="w-6 h-6 border-2 border-emerald-400 border-t-transparent rounded-full animate-spin mx-auto" /></div>
             ) : (
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-5">
                 {allies.map((ally) => (
                   <a key={ally.id} href={ally.website_url || '#'} target={ally.website_url ? '_blank' : '_self'} rel="noopener noreferrer"
-                    className="flex flex-col items-center gap-3 p-5 border border-slate-100 rounded-xl hover:border-sky-200 hover:shadow-md transition-all group">
+                    className="flex flex-col items-center gap-3 p-5 border border-slate-100 rounded-xl hover:border-emerald-200 hover:shadow-md transition-all group">
                     <div className="w-12 h-12 rounded-lg bg-slate-50 flex items-center justify-center overflow-hidden">
                       {ally.logo_url ? (
                         <img src={ally.logo_url} alt={ally.name} className="w-full h-full object-contain p-1"
                           onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />
                       ) : (
-                        <Globe className="w-6 h-6 text-sky-400" />
+                        <Globe className="w-6 h-6 text-emerald-400" />
                       )}
                     </div>
                     <div className="text-center">
-                      <p className="font-semibold text-blue-950 text-sm group-hover:text-sky-700 transition-colors">{ally.name}</p>
+                      <p className="font-semibold text-green-950 text-sm group-hover:text-emerald-700 transition-colors">{ally.name}</p>
                       <p className="text-slate-400 text-xs mt-0.5">{ally.ally_type}</p>
                     </div>
                   </a>
@@ -503,17 +503,17 @@ export default function Event() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-end justify-between mb-12">
               <div>
-                <div className="inline-flex items-center gap-2 text-sky-600 font-semibold text-sm uppercase tracking-wider mb-4">
-                  <span className="w-8 h-0.5 bg-sky-500" />Noticias
+                <div className="inline-flex items-center gap-2 text-emerald-600 font-semibold text-sm uppercase tracking-wider mb-4">
+                  <span className="w-8 h-0.5 bg-emerald-500" />Noticias
                 </div>
-                <h2 className="text-3xl font-bold text-blue-950">Noticias del evento</h2>
+                <h2 className="text-3xl font-bold text-green-950">Noticias del evento</h2>
               </div>
-              <Link to="/blog" className="flex items-center gap-1 text-sky-600 text-sm font-medium hover:text-blue-700 transition-colors">
+              <Link to="/blog" className="flex items-center gap-1 text-emerald-600 text-sm font-medium hover:text-green-700 transition-colors">
                 Ver todo <ChevronRight className="w-3.5 h-3.5" />
               </Link>
             </div>
             {loadingContent ? (
-              <div className="py-10 text-center"><div className="w-6 h-6 border-2 border-sky-400 border-t-transparent rounded-full animate-spin mx-auto" /></div>
+              <div className="py-10 text-center"><div className="w-6 h-6 border-2 border-emerald-400 border-t-transparent rounded-full animate-spin mx-auto" /></div>
             ) : news.length === 0 ? null : (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {news.map((post) => (
@@ -523,13 +523,13 @@ export default function Event() {
                       {post.cover_url ? (
                         <img src={post.cover_url} alt={post.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                       ) : (
-                        <div className="w-full h-full bg-gradient-to-br from-sky-50 to-blue-100 flex items-center justify-center">
-                          <BookOpen className="w-10 h-10 text-sky-200" />
+                        <div className="w-full h-full bg-gradient-to-br from-emerald-50 to-green-100 flex items-center justify-center">
+                          <BookOpen className="w-10 h-10 text-emerald-200" />
                         </div>
                       )}
                     </div>
                     <div className="flex flex-col flex-1 p-5">
-                      <h3 className="font-bold text-blue-950 group-hover:text-sky-700 transition-colors leading-snug mb-2 line-clamp-2 text-[15px]">{post.title}</h3>
+                      <h3 className="font-bold text-green-950 group-hover:text-emerald-700 transition-colors leading-snug mb-2 line-clamp-2 text-[15px]">{post.title}</h3>
                       {post.excerpt && <p className="text-slate-500 text-sm leading-relaxed line-clamp-2 flex-1">{post.excerpt}</p>}
                       <div className="flex items-center gap-3 mt-4 pt-4 border-t border-slate-100 text-slate-400 text-xs">
                         <span className="flex items-center gap-1"><User className="w-3 h-3" />{post.author}</span>
@@ -552,13 +552,13 @@ export default function Event() {
         <section className="py-20 bg-white">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
-              <div className="inline-flex items-center gap-2 text-sky-600 font-semibold text-sm uppercase tracking-wider mb-4">
-                <span className="w-8 h-0.5 bg-sky-500" />Documentación
+              <div className="inline-flex items-center gap-2 text-emerald-600 font-semibold text-sm uppercase tracking-wider mb-4">
+                <span className="w-8 h-0.5 bg-emerald-500" />Documentación
               </div>
-              <h2 className="text-3xl font-bold text-blue-950 mb-3">Recursos del Evento</h2>
+              <h2 className="text-3xl font-bold text-green-950 mb-3">Recursos del Evento</h2>
             </div>
             {loadingContent ? (
-              <div className="py-10 text-center"><div className="w-6 h-6 border-2 border-sky-400 border-t-transparent rounded-full animate-spin mx-auto" /></div>
+              <div className="py-10 text-center"><div className="w-6 h-6 border-2 border-emerald-400 border-t-transparent rounded-full animate-spin mx-auto" /></div>
             ) : (
               <div className="bg-white border border-slate-100 rounded-2xl overflow-hidden shadow-sm">
                 <div className="divide-y divide-slate-50">
@@ -571,8 +571,8 @@ export default function Event() {
                       <div className="flex items-center gap-3 ml-4">
                         <span className="text-xs text-slate-400 font-mono">{r.resource_type}</span>
                         <a href={r.file_url || '#'} target="_blank" rel="noopener noreferrer"
-                          className="w-8 h-8 rounded-lg bg-slate-100 group-hover:bg-sky-100 flex items-center justify-center transition-colors">
-                          <Download className="w-3.5 h-3.5 text-slate-500 group-hover:text-sky-600" />
+                          className="w-8 h-8 rounded-lg bg-slate-100 group-hover:bg-emerald-100 flex items-center justify-center transition-colors">
+                          <Download className="w-3.5 h-3.5 text-slate-500 group-hover:text-emerald-600" />
                         </a>
                       </div>
                     </div>
@@ -588,19 +588,19 @@ export default function Event() {
       <section id="registro" className="py-24 bg-slate-50">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <div className="inline-flex items-center gap-2 text-sky-600 font-semibold text-sm uppercase tracking-wider mb-4">
-              <span className="w-8 h-0.5 bg-sky-500" />Participación
+            <div className="inline-flex items-center gap-2 text-emerald-600 font-semibold text-sm uppercase tracking-wider mb-4">
+              <span className="w-8 h-0.5 bg-emerald-500" />Participación
             </div>
-            <h2 className="text-4xl font-bold text-blue-950 mb-4">Registro al Evento</h2>
+            <h2 className="text-4xl font-bold text-green-950 mb-4">Registro al Evento</h2>
             <p className="text-slate-500">Completa el formulario para reservar tu participación.</p>
           </div>
 
           {formSubmitted ? (
-            <div className="text-center py-16 bg-sky-50 rounded-2xl border border-sky-200">
-              <div className="w-16 h-16 bg-sky-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Check className="w-8 h-8 text-sky-600" />
+            <div className="text-center py-16 bg-emerald-50 rounded-2xl border border-emerald-200">
+              <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Check className="w-8 h-8 text-emerald-600" />
               </div>
-              <h3 className="text-2xl font-bold text-blue-950 mb-2">¡Registro exitoso!</h3>
+              <h3 className="text-2xl font-bold text-green-950 mb-2">¡Registro exitoso!</h3>
               <p className="text-slate-600 max-w-sm mx-auto">Hemos recibido tu registro. Recibirás una confirmación en tu correo con los detalles del evento.</p>
             </div>
           ) : (
@@ -614,14 +614,14 @@ export default function Event() {
                     <input id={id} type={type} placeholder={placeholder} required
                       value={formData[id] || ''}
                       onChange={(e) => setFormData({ ...formData, [id]: e.target.value })}
-                      className="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:border-sky-400 focus:ring-2 focus:ring-sky-100 outline-none text-slate-800 text-sm transition-colors" />
+                      className="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100 outline-none text-slate-800 text-sm transition-colors" />
                   </div>
                 ))}
                 <div>
                   <label htmlFor="sector" className="block text-sm font-semibold text-slate-700 mb-1.5">Sector <span className="text-red-500">*</span></label>
                   <select id="sector" required value={formData.sector || ''}
                     onChange={(e) => setFormData({ ...formData, sector: e.target.value })}
-                    className="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:border-sky-400 focus:ring-2 focus:ring-sky-100 outline-none text-slate-800 text-sm transition-colors bg-white">
+                    className="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100 outline-none text-slate-800 text-sm transition-colors bg-white">
                     <option value="">Selecciona tu sector</option>
                     {['Gobierno', 'Sociedad Civil', 'Sector Privado', 'Comunidad Técnica', 'Academia', 'Juventudes', 'Organismos Internacionales', 'Medios de Comunicación', 'Otro'].map((s) => (
                       <option key={s} value={s}>{s}</option>
@@ -632,7 +632,7 @@ export default function Event() {
                   <label htmlFor="modality" className="block text-sm font-semibold text-slate-700 mb-1.5">Modalidad <span className="text-red-500">*</span></label>
                   <select id="modality" required value={formData.modality || ''}
                     onChange={(e) => setFormData({ ...formData, modality: e.target.value })}
-                    className="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:border-sky-400 focus:ring-2 focus:ring-sky-100 outline-none text-slate-800 text-sm transition-colors bg-white">
+                    className="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100 outline-none text-slate-800 text-sm transition-colors bg-white">
                     <option value="">Selecciona modalidad</option>
                     <option value="presencial">Presencial</option>
                     <option value="virtual">Virtual/En línea</option>
@@ -643,14 +643,14 @@ export default function Event() {
               <div className="space-y-3 mb-6">
                 <label className="flex items-start gap-3 cursor-pointer">
                   <input type="checkbox" checked={acceptedConduct} onChange={(e) => setAcceptedConduct(e.target.checked)}
-                    className="mt-0.5 w-4 h-4 rounded border-slate-300 text-sky-600 focus:ring-sky-500" />
+                    className="mt-0.5 w-4 h-4 rounded border-slate-300 text-emerald-600 focus:ring-emerald-500" />
                   <span className="text-slate-600 text-sm">
-                    Acepto el <a href="#conducta" className="text-sky-600 font-medium hover:underline">Código de Conducta</a> del IGF Guatemala {eventYear}. <span className="text-red-500">*</span>
+                    Acepto el <a href="#conducta" className="text-emerald-600 font-medium hover:underline">Código de Conducta</a> del IGF Guatemala {eventYear}. <span className="text-red-500">*</span>
                   </span>
                 </label>
                 <label className="flex items-start gap-3 cursor-pointer">
                   <input type="checkbox" checked={acceptedData} onChange={(e) => setAcceptedData(e.target.checked)}
-                    className="mt-0.5 w-4 h-4 rounded border-slate-300 text-sky-600 focus:ring-sky-500" />
+                    className="mt-0.5 w-4 h-4 rounded border-slate-300 text-emerald-600 focus:ring-emerald-500" />
                   <span className="text-slate-600 text-sm">
                     Consiento el uso de mis datos personales para la gestión de mi participación. <span className="text-red-500">*</span>
                   </span>
@@ -658,7 +658,7 @@ export default function Event() {
               </div>
 
               <button type="submit" disabled={!acceptedConduct || !acceptedData || submitting}
-                className="w-full py-3.5 bg-sky-600 hover:bg-sky-500 disabled:bg-slate-300 disabled:cursor-not-allowed text-white font-bold rounded-xl transition-colors flex items-center justify-center gap-2">
+                className="w-full py-3.5 bg-emerald-600 hover:bg-emerald-500 disabled:bg-slate-300 disabled:cursor-not-allowed text-white font-bold rounded-xl transition-colors flex items-center justify-center gap-2">
                 {submitting ? <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : <>Confirmar registro <ArrowRight className="w-4 h-4" /></>}
               </button>
             </form>
@@ -670,7 +670,7 @@ export default function Event() {
       <section id="conducta" className="py-24 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-blue-950 mb-3">Código de Conducta</h2>
+            <h2 className="text-3xl font-bold text-green-950 mb-3">Código de Conducta</h2>
             <p className="text-slate-500">El IGF Guatemala es un espacio seguro, inclusivo y respetuoso para todas las personas.</p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
@@ -683,7 +683,7 @@ export default function Event() {
               { title: 'Mecanismo de reporte', desc: 'Cualquier persona puede reportar incidentes de forma confidencial al comité organizador.' },
             ].map(({ title, desc }) => (
               <div key={title} className="bg-white rounded-xl border border-slate-100 p-6">
-                <h3 className="font-bold text-blue-950 text-sm mb-2">{title}</h3>
+                <h3 className="font-bold text-green-950 text-sm mb-2">{title}</h3>
                 <p className="text-slate-600 text-sm leading-relaxed">{desc}</p>
               </div>
             ))}
@@ -695,7 +695,7 @@ export default function Event() {
       <section className="py-24 bg-slate-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-blue-950 mb-3">Sede y Logística</h2>
+            <h2 className="text-3xl font-bold text-green-950 mb-3">Sede y Logística</h2>
             <p className="text-slate-500">Todo lo que necesitas saber para participar.</p>
           </div>
           <div className="grid lg:grid-cols-2 gap-10">
@@ -707,11 +707,11 @@ export default function Event() {
                 { icon: Users, title: 'Accesibilidad', info: 'El recinto es accesible para personas con movilidad reducida. Servicios de interpretación disponibles.' },
               ].map(({ icon: Icon, title, info }) => (
                 <div key={title} className="flex items-start gap-4 p-5 bg-white rounded-xl border border-slate-100">
-                  <div className="w-10 h-10 rounded-lg bg-sky-100 flex items-center justify-center flex-shrink-0">
-                    <Icon className="w-5 h-5 text-sky-600" />
+                  <div className="w-10 h-10 rounded-lg bg-emerald-100 flex items-center justify-center flex-shrink-0">
+                    <Icon className="w-5 h-5 text-emerald-600" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-blue-950 text-sm mb-1">{title}</h3>
+                    <h3 className="font-semibold text-green-950 text-sm mb-1">{title}</h3>
                     <p className="text-slate-600 text-sm">{info}</p>
                   </div>
                 </div>
@@ -719,7 +719,7 @@ export default function Event() {
             </div>
             <div className="bg-slate-100 rounded-2xl h-72 flex items-center justify-center">
               <div className="text-center">
-                <MapPin className="w-10 h-10 text-sky-400 mx-auto mb-3" />
+                <MapPin className="w-10 h-10 text-emerald-400 mx-auto mb-3" />
                 <p className="text-slate-500 text-sm">Mapa de ubicación</p>
                 <p className="text-slate-400 text-xs mt-1">{eventLocation || 'Ciudad de Guatemala'}</p>
               </div>
@@ -729,9 +729,9 @@ export default function Event() {
       </section>
 
       {/* Volver al sitio */}
-      <section className="py-12 bg-blue-700 text-center">
-        <p className="text-blue-300 text-sm mb-3">¿Buscas más información sobre el IGF Guatemala?</p>
-        <Link to="/" className="inline-flex items-center gap-2 text-sky-300 font-semibold hover:text-white transition-colors">
+      <section className="py-12 bg-green-700 text-center">
+        <p className="text-green-300 text-sm mb-3">¿Buscas más información sobre el IGF Guatemala?</p>
+        <Link to="/" className="inline-flex items-center gap-2 text-emerald-300 font-semibold hover:text-white transition-colors">
           Visita el sitio institucional <ChevronRight className="w-4 h-4" />
         </Link>
       </section>

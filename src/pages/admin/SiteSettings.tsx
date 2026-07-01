@@ -81,7 +81,7 @@ export default function SiteSettings() {
           </div>
           <div
             onClick={() => setValues((v) => ({ ...v, [setting.key]: val === 'true' ? 'false' : 'true' }))}
-            className={`relative w-11 h-6 rounded-full transition-colors cursor-pointer ${val === 'true' ? 'bg-sky-600' : 'bg-slate-700'}`}
+            className={`relative w-11 h-6 rounded-full transition-colors cursor-pointer ${val === 'true' ? 'bg-emerald-600' : 'bg-slate-700'}`}
           >
             <div className={`absolute top-0.5 w-5 h-5 rounded-full bg-white shadow transition-transform ${val === 'true' ? 'translate-x-5' : 'translate-x-0.5'}`} />
           </div>
@@ -98,7 +98,7 @@ export default function SiteSettings() {
             value={val}
             onChange={(e) => setValues((v) => ({ ...v, [setting.key]: e.target.value }))}
             rows={4}
-            className="w-full px-3 py-2.5 bg-slate-800 border border-white/10 rounded-lg text-white text-sm focus:outline-none focus:border-sky-500 transition-colors resize-y"
+            className="w-full px-3 py-2.5 bg-slate-800 border border-white/10 rounded-lg text-white text-sm focus:outline-none focus:border-emerald-500 transition-colors resize-y"
           />
         </div>
       );
@@ -112,7 +112,7 @@ export default function SiteSettings() {
           type="text"
           value={val}
           onChange={(e) => setValues((v) => ({ ...v, [setting.key]: e.target.value }))}
-          className="w-full px-3 py-2.5 bg-slate-800 border border-white/10 rounded-lg text-white text-sm focus:outline-none focus:border-sky-500 transition-colors"
+          className="w-full px-3 py-2.5 bg-slate-800 border border-white/10 rounded-lg text-white text-sm focus:outline-none focus:border-emerald-500 transition-colors"
         />
       </div>
     );
@@ -121,7 +121,7 @@ export default function SiteSettings() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="w-8 h-8 border-2 border-sky-400 border-t-transparent rounded-full animate-spin" />
+        <div className="w-8 h-8 border-2 border-emerald-400 border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -142,7 +142,7 @@ export default function SiteSettings() {
           <button
             onClick={handleSave}
             disabled={saving}
-            className="flex items-center gap-2 px-5 py-2.5 bg-sky-600 hover:bg-sky-500 disabled:opacity-50 text-white font-semibold text-sm rounded-xl transition-colors"
+            className="flex items-center gap-2 px-5 py-2.5 bg-emerald-600 hover:bg-sky-500 disabled:opacity-50 text-white font-semibold text-sm rounded-xl transition-colors"
           >
             {saving ? <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : <Save className="w-4 h-4" />}
             {saving ? 'Guardando...' : 'Guardar cambios'}
@@ -185,7 +185,7 @@ export default function SiteSettings() {
         <button
           onClick={handleSave}
           disabled={saving}
-          className="w-full flex items-center justify-center gap-2 py-3.5 bg-sky-600 hover:bg-sky-500 disabled:opacity-50 text-white font-bold rounded-xl transition-colors"
+          className="w-full flex items-center justify-center gap-2 py-3.5 bg-emerald-600 hover:bg-sky-500 disabled:opacity-50 text-white font-bold rounded-xl transition-colors"
         >
           {saving ? <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : <Save className="w-5 h-5" />}
           {saving ? 'Guardando...' : 'Guardar todos los cambios'}

@@ -61,7 +61,7 @@ export default function BlogList() {
         </div>
         <Link
           to="/admin/blog/new"
-          className="flex items-center gap-2 px-4 py-2.5 bg-sky-600 hover:bg-sky-500 text-white font-semibold text-sm rounded-xl transition-colors flex-shrink-0"
+          className="flex items-center gap-2 px-4 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-sm rounded-xl transition-colors flex-shrink-0"
         >
           <Plus className="w-4 h-4" />
           Nuevo artículo
@@ -77,7 +77,7 @@ export default function BlogList() {
             placeholder="Buscar artículos..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-10 pr-4 py-2.5 bg-slate-800 border border-white/10 rounded-xl text-white placeholder-slate-500 text-sm focus:outline-none focus:border-sky-500 transition-colors"
+            className="w-full pl-10 pr-4 py-2.5 bg-slate-800 border border-white/10 rounded-xl text-white placeholder-slate-500 text-sm focus:outline-none focus:border-emerald-500 transition-colors"
           />
         </div>
         <div className="flex rounded-xl border border-white/10 overflow-hidden">
@@ -85,7 +85,7 @@ export default function BlogList() {
             <button
               key={f}
               onClick={() => setFilter(f)}
-              className={`px-4 py-2.5 text-xs font-medium transition-colors ${filter === f ? 'bg-sky-600 text-white' : 'bg-slate-800 text-slate-400 hover:text-white'}`}
+              className={`px-4 py-2.5 text-xs font-medium transition-colors ${filter === f ? 'bg-emerald-600 text-white' : 'bg-slate-800 text-slate-400 hover:text-white'}`}
             >
               {f === 'all' ? 'Todos' : f === 'published' ? 'Publicados' : 'Borradores'}
             </button>
@@ -104,7 +104,7 @@ export default function BlogList() {
               {search || filter !== 'all' ? 'No se encontraron artículos con los filtros seleccionados.' : 'Aún no hay artículos. ¡Crea el primero!'}
             </p>
             {!search && filter === 'all' && (
-              <Link to="/admin/blog/new" className="inline-flex items-center gap-2 mt-4 px-4 py-2 bg-sky-600 text-white text-sm font-semibold rounded-lg hover:bg-sky-500 transition-colors">
+              <Link to="/admin/blog/new" className="inline-flex items-center gap-2 mt-4 px-4 py-2 bg-emerald-600 text-white text-sm font-semibold rounded-lg hover:bg-emerald-500 transition-colors">
                 <Plus className="w-4 h-4" /> Crear artículo
               </Link>
             )}
@@ -136,7 +136,7 @@ export default function BlogList() {
                   <button
                     onClick={() => togglePublish(post)}
                     title={post.published ? 'Despublicar' : 'Publicar'}
-                    className="p-2 text-slate-400 hover:text-sky-400 hover:bg-sky-500/10 rounded-lg transition-colors"
+                    className="p-2 text-slate-400 hover:text-emerald-400 hover:bg-emerald-500/10 rounded-lg transition-colors"
                   >
                     {post.published ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                   </button>

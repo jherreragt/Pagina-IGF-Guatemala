@@ -46,7 +46,7 @@ export default function AdminDashboard() {
   }, []);
 
   const cards = [
-    { label: 'Total de artículos', value: stats.total, icon: FileText, color: 'sky' },
+    { label: 'Total de artículos', value: stats.total, icon: FileText, color: 'emerald' },
     { label: 'Publicados', value: stats.published, icon: Globe, color: 'green' },
     { label: 'Borradores', value: stats.drafts, icon: PenLine, color: 'amber' },
   ];
@@ -90,10 +90,10 @@ export default function AdminDashboard() {
                 href={href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-start gap-4 p-5 bg-slate-800/50 border border-white/10 rounded-xl hover:border-sky-500/40 hover:bg-slate-800 transition-all group"
+                className="flex items-start gap-4 p-5 bg-slate-800/50 border border-white/10 rounded-xl hover:border-emerald-500/40 hover:bg-slate-800 transition-all group"
               >
-                <div className="w-9 h-9 rounded-lg bg-sky-500/10 flex items-center justify-center flex-shrink-0">
-                  <Icon className="w-4 h-4 text-sky-400" />
+                <div className="w-9 h-9 rounded-lg bg-emerald-500/10 flex items-center justify-center flex-shrink-0">
+                  <Icon className="w-4 h-4 text-emerald-400" />
                 </div>
                 <div>
                   <p className="text-white font-medium text-sm">{label}</p>
@@ -104,10 +104,10 @@ export default function AdminDashboard() {
               <Link
                 key={label}
                 to={href}
-                className="flex items-start gap-4 p-5 bg-slate-800/50 border border-white/10 rounded-xl hover:border-sky-500/40 hover:bg-slate-800 transition-all group"
+                className="flex items-start gap-4 p-5 bg-slate-800/50 border border-white/10 rounded-xl hover:border-emerald-500/40 hover:bg-slate-800 transition-all group"
               >
-                <div className="w-9 h-9 rounded-lg bg-sky-500/10 flex items-center justify-center flex-shrink-0">
-                  <Icon className="w-4 h-4 text-sky-400" />
+                <div className="w-9 h-9 rounded-lg bg-emerald-500/10 flex items-center justify-center flex-shrink-0">
+                  <Icon className="w-4 h-4 text-emerald-400" />
                 </div>
                 <div>
                   <p className="text-white font-medium text-sm">{label}</p>
@@ -123,7 +123,7 @@ export default function AdminDashboard() {
       <div>
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg font-semibold text-white">Artículos recientes</h2>
-          <Link to="/admin/blog" className="text-sky-400 text-sm hover:text-sky-300 transition-colors flex items-center gap-1">
+          <Link to="/admin/blog" className="text-emerald-400 text-sm hover:text-emerald-300 transition-colors flex items-center gap-1">
             Ver todos <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </div>
@@ -134,7 +134,7 @@ export default function AdminDashboard() {
             <div className="p-10 text-center">
               <FileText className="w-8 h-8 text-slate-600 mx-auto mb-3" />
               <p className="text-slate-400 text-sm">Aún no hay artículos. ¡Crea el primero!</p>
-              <Link to="/admin/blog/new" className="inline-flex items-center gap-2 mt-4 px-4 py-2 bg-sky-600 text-white text-sm font-semibold rounded-lg hover:bg-sky-500 transition-colors">
+              <Link to="/admin/blog/new" className="inline-flex items-center gap-2 mt-4 px-4 py-2 bg-emerald-600 text-white text-sm font-semibold rounded-lg hover:bg-emerald-500 transition-colors">
                 Crear artículo
               </Link>
             </div>
@@ -156,7 +156,7 @@ export default function AdminDashboard() {
                     <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${post.published ? 'bg-green-500/10 text-green-400' : 'bg-amber-500/10 text-amber-400'}`}>
                       {post.published ? 'Publicado' : 'Borrador'}
                     </span>
-                    <Link to={`/admin/blog/edit/${post.id}`} className="text-slate-400 hover:text-sky-400 transition-colors">
+                    <Link to={`/admin/blog/edit/${post.id}`} className="text-slate-400 hover:text-emerald-400 transition-colors">
                       <Edit2 className="w-4 h-4" />
                     </Link>
                   </div>

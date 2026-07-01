@@ -10,12 +10,12 @@ export default function Footer() {
           {/* Brand */}
           <div className="lg:col-span-2">
             <div className="flex items-center gap-2.5 mb-5">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-sky-400 to-blue-600 flex items-center justify-center shadow-md">
+              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-emerald-400 to-green-600 flex items-center justify-center shadow-md">
                 <Globe className="w-5 h-5 text-white" strokeWidth={1.8} />
               </div>
               <div>
                 <div className="font-display font-bold text-white text-sm tracking-tight">IGF Guatemala</div>
-                <div className="text-sky-500 text-xs font-medium">Internet Governance Forum</div>
+                <div className="text-emerald-500 text-xs font-medium">Internet Governance Forum</div>
               </div>
             </div>
             <p className="text-slate-500 text-sm leading-relaxed mb-6 max-w-xs">
@@ -23,7 +23,7 @@ export default function Footer() {
             </p>
             <Link
               to="/contacto"
-              className="inline-flex items-center gap-2 text-sky-400 hover:text-sky-300 text-sm font-semibold transition-colors group"
+              className="inline-flex items-center gap-2 text-emerald-400 hover:text-emerald-300 text-sm font-semibold transition-colors group"
             >
               Súmate a la comunidad
               <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
@@ -39,7 +39,7 @@ export default function Footer() {
                   key={label}
                   href={href ?? '#'}
                   aria-label={label}
-                  className="w-9 h-9 rounded-xl bg-white/5 hover:bg-sky-500 border border-white/8 hover:border-transparent flex items-center justify-center transition-all duration-150 hover:scale-105"
+                  className="w-9 h-9 rounded-xl bg-white/5 hover:bg-emerald-500 border border-white/8 hover:border-transparent flex items-center justify-center transition-all duration-150 hover:scale-105"
                 >
                   <Icon className="w-4 h-4 text-slate-400 hover:text-white" />
                 </a>

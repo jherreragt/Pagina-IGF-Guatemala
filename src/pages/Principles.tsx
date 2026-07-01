@@ -69,10 +69,10 @@ export default function Principles() {
             {principles.map(({ num, title, desc }) => (
               <div
                 key={num}
-                className="group p-7 rounded-2xl border border-slate-100 hover:border-sky-200 hover:shadow-card-hover transition-all duration-200"
+                className="group p-7 rounded-2xl border border-slate-100 hover:border-emerald-200 hover:shadow-card-hover transition-all duration-200"
               >
-                <div className="font-mono font-black text-3xl text-sky-500/20 mb-3 group-hover:text-sky-500/30 transition-colors">{num}</div>
-                <h3 className="font-display font-bold text-blue-950 text-lg mb-3">{title}</h3>
+                <div className="font-mono font-black text-3xl text-emerald-500/20 mb-3 group-hover:text-emerald-500/30 transition-colors">{num}</div>
+                <h3 className="font-display font-bold text-green-950 text-lg mb-3">{title}</h3>
                 <p className="text-slate-500 text-[15px] leading-relaxed">{desc}</p>
               </div>
             ))}

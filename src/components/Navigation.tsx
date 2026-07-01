@@ -51,9 +51,9 @@ export default function Navigation() {
   return (
     <>
       {/* Top bar */}
-      <div className="fixed top-0 left-0 right-0 z-50 h-8 bg-blue-700 border-b border-white/[0.12] hidden sm:flex">
+      <div className="fixed top-0 left-0 right-0 z-50 h-8 bg-green-700 border-b border-white/[0.12] hidden sm:flex">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex items-center justify-between">
-          <p className="text-blue-300/70 text-[11px] font-medium tracking-wide">
+          <p className="text-green-300/70 text-[11px] font-medium tracking-wide">
             Foro Nacional de Gobernanza de Internet · Guatemala
           </p>
           <div className="flex items-center gap-0.5">
@@ -64,7 +64,7 @@ export default function Navigation() {
                 aria-label={label}
                 target={href.startsWith('http') ? '_blank' : undefined}
                 rel="noopener noreferrer"
-                className="w-7 h-7 flex items-center justify-center text-blue-300/50 hover:text-sky-300 transition-colors rounded"
+                className="w-7 h-7 flex items-center justify-center text-green-300/50 hover:text-emerald-300 transition-colors rounded"
               >
                 <Icon className="w-3.5 h-3.5" />
               </a>
@@ -77,7 +77,7 @@ export default function Navigation() {
       <header
         className={`fixed top-0 sm:top-8 left-0 right-0 z-50 transition-all duration-300 ${
           solid
-            ? 'bg-blue-800/95 backdrop-blur-xl shadow-lg shadow-black/20 border-b border-white/[0.08]'
+            ? 'bg-green-800/95 backdrop-blur-xl shadow-lg shadow-black/20 border-b border-white/[0.08]'
             : 'bg-transparent'
         }`}
       >
@@ -86,7 +86,7 @@ export default function Navigation() {
 
             {/* Brand */}
             <Link to="/" className="flex items-center gap-2.5 group flex-shrink-0">
-              <div className="relative w-8 h-8 rounded-lg bg-gradient-to-br from-sky-400 to-blue-600 flex items-center justify-center shadow-md group-hover:shadow-glow-sky transition-all duration-200 group-hover:scale-105">
+              <div className="relative w-8 h-8 rounded-lg bg-gradient-to-br from-emerald-400 to-green-600 flex items-center justify-center shadow-md group-hover:shadow-glow-sky transition-all duration-200 group-hover:scale-105">
                 <Globe className="w-4 h-4 text-white" strokeWidth={2} />
               </div>
             </Link>
@@ -102,11 +102,11 @@ export default function Navigation() {
                     className={`relative px-3.5 py-2 rounded-lg text-sm font-medium transition-all duration-150 ${
                       active
                         ? 'text-white'
-                        : 'text-blue-100/80 hover:text-white hover:bg-white/[0.07]'
+                        : 'text-green-100/80 hover:text-white hover:bg-white/[0.07]'
                     }`}
                   >
                     {active && (
-                      <span className="absolute inset-x-2 -bottom-px h-0.5 rounded-full bg-sky-400" />
+                      <span className="absolute inset-x-2 -bottom-px h-0.5 rounded-full bg-emerald-400" />
                     )}
                     {link.label}
                   </Link>
@@ -121,7 +121,7 @@ export default function Navigation() {
                   className={`flex items-center gap-1 px-3.5 py-2 rounded-lg text-sm font-medium transition-all duration-150 ${
                     isMoreActive
                       ? 'text-white bg-white/10'
-                      : 'text-blue-100/80 hover:text-white hover:bg-white/[0.07]'
+                      : 'text-green-100/80 hover:text-white hover:bg-white/[0.07]'
                   }`}
                 >
                   Más
@@ -137,7 +137,7 @@ export default function Navigation() {
                           key={link.href}
                           to={link.href}
                           className={`flex items-center px-4 py-2.5 text-sm transition-colors duration-100 ${
-                            active ? 'text-sky-300 bg-white/5' : 'text-blue-100/80 hover:text-white hover:bg-white/5'
+                            active ? 'text-emerald-300 bg-white/5' : 'text-green-100/80 hover:text-white hover:bg-white/5'
                           }`}
                         >
                           {link.label}
@@ -153,7 +153,7 @@ export default function Navigation() {
             <div className="flex items-center gap-3">
               <Link
                 to="/evento"
-                className="hidden sm:inline-flex items-center gap-1.5 px-4 py-2 bg-sky-500 hover:bg-sky-400 text-white text-sm font-semibold rounded-lg transition-all duration-150 hover:scale-[1.02] shadow-md shadow-sky-500/20"
+                className="hidden sm:inline-flex items-center gap-1.5 px-4 py-2 bg-emerald-500 hover:bg-emerald-400 text-white text-sm font-semibold rounded-lg transition-all duration-150 hover:scale-[1.02] shadow-md shadow-sky-500/20"
               >
                 Registro al evento
               </Link>
@@ -188,7 +188,7 @@ export default function Navigation() {
                   key={link.href}
                   to={link.href}
                   className={`px-4 py-2.5 rounded-lg text-sm font-medium transition-colors ${
-                    active ? 'text-sky-300 bg-white/10' : 'text-blue-100 hover:text-white hover:bg-white/5'
+                    active ? 'text-emerald-300 bg-white/10' : 'text-blue-100 hover:text-white hover:bg-white/5'
                   }`}
                 >
                   {link.label}
@@ -199,7 +199,7 @@ export default function Navigation() {
           <div className="px-4 pb-4 space-y-3">
             <Link
               to="/evento"
-              className="w-full flex items-center justify-center py-3 bg-sky-500 hover:bg-sky-400 text-white font-semibold rounded-xl transition-colors"
+              className="w-full flex items-center justify-center py-3 bg-emerald-500 hover:bg-emerald-400 text-white font-semibold rounded-xl transition-colors"
             >
               Registro al evento
             </Link>
@@ -208,7 +208,7 @@ export default function Navigation() {
               {socialLinks.map(({ icon: Icon, href, label }) => (
                 <a key={label} href={href} aria-label={label}
                   target={href.startsWith('http') ? '_blank' : undefined} rel="noopener noreferrer"
-                  className="text-blue-300/60 hover:text-sky-300 transition-colors">
+                  className="text-blue-300/60 hover:text-emerald-300 transition-colors">
                   <Icon className="w-4 h-4" />
                 </a>
               ))}
