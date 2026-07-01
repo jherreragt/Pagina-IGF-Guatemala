@@ -36,13 +36,13 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     return (
       <div className={`flex flex-col h-full bg-slate-950 ${mobile ? 'w-64' : sidebarOpen ? 'w-64' : 'w-16'} transition-all duration-200`}>
         <div className="flex items-center gap-3 px-4 py-5 border-b border-white/10">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-emerald-400 to-green-600 flex items-center justify-center flex-shrink-0">
+          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-sky-400 to-blue-600 flex items-center justify-center flex-shrink-0">
             <Globe className="w-4 h-4 text-white" strokeWidth={1.8} />
           </div>
           {expanded && (
             <div className="leading-tight overflow-hidden">
               <div className="font-bold text-white text-xs truncate">IGF Guatemala</div>
-              <div className="text-emerald-400 text-xs truncate">Panel de Administración</div>
+              <div className="text-sky-400 text-xs truncate">Panel de Administración</div>
             </div>
           )}
         </div>
@@ -56,7 +56,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             const active = location.pathname === href || (href !== '/admin' && location.pathname.startsWith(href) && !location.pathname.startsWith('/admin/event'));
             return (
               <Link key={href} to={href}
-                className={`flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors ${active ? 'bg-emerald-600 text-white' : 'text-slate-400 hover:text-white hover:bg-white/5'}`}>
+                className={`flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors ${active ? 'bg-sky-600 text-white' : 'text-slate-400 hover:text-white hover:bg-white/5'}`}>
                 <Icon className="w-5 h-5 flex-shrink-0" />
                 {expanded && <span className="text-sm font-medium">{label}</span>}
               </Link>
@@ -66,7 +66,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           {/* Evento section */}
           <div>
             <Link to="/admin/event"
-              className={`flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors ${eventActive ? 'bg-emerald-600/20 text-emerald-300' : 'text-slate-400 hover:text-white hover:bg-white/5'}`}>
+              className={`flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors ${eventActive ? 'bg-sky-600/20 text-sky-300' : 'text-slate-400 hover:text-white hover:bg-white/5'}`}>
               <Calendar className="w-5 h-5 flex-shrink-0" />
               {expanded && (
                 <>
@@ -82,7 +82,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                   const active = location.pathname === href;
                   return (
                     <Link key={href} to={href}
-                      className={`flex items-center px-3 py-2 rounded-lg text-xs transition-colors ${active ? 'text-white bg-emerald-600/20 font-semibold' : 'text-slate-500 hover:text-slate-200 hover:bg-white/5'}`}>
+                      className={`flex items-center px-3 py-2 rounded-lg text-xs transition-colors ${active ? 'text-white bg-sky-600/20 font-semibold' : 'text-slate-500 hover:text-slate-200 hover:bg-white/5'}`}>
                       {label}
                     </Link>
                   );
@@ -96,7 +96,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             const active = location.pathname === '/admin/settings';
             return (
               <Link to="/admin/settings"
-                className={`flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors ${active ? 'bg-emerald-600 text-white' : 'text-slate-400 hover:text-white hover:bg-white/5'}`}>
+                className={`flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors ${active ? 'bg-sky-600 text-white' : 'text-slate-400 hover:text-white hover:bg-white/5'}`}>
                 <Settings className="w-5 h-5 flex-shrink-0" />
                 {expanded && <span className="text-sm font-medium">Configuración</span>}
               </Link>
@@ -158,7 +158,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             <span className="text-white font-semibold text-sm hidden sm:block">{currentLabel}</span>
           </div>
           <div className="flex items-center gap-3">
-            <div className="w-7 h-7 rounded-full bg-emerald-600 flex items-center justify-center text-white text-xs font-bold">
+            <div className="w-7 h-7 rounded-full bg-sky-600 flex items-center justify-center text-white text-xs font-bold">
               {user?.email?.[0]?.toUpperCase() ?? 'A'}
             </div>
             <span className="text-slate-300 text-xs hidden sm:block truncate max-w-[180px]">{user?.email}</span>

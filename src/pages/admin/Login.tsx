@@ -15,7 +15,7 @@ export default function AdminLogin() {
   if (loading) {
     return (
       <div className="min-h-screen bg-slate-950 flex items-center justify-center">
-        <div className="w-8 h-8 border-2 border-emerald-400 border-t-transparent rounded-full animate-spin" />
+        <div className="w-8 h-8 border-2 border-sky-400 border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -39,7 +39,7 @@ export default function AdminLogin() {
     <div className="min-h-screen bg-slate-950 flex items-center justify-center p-4">
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
-          <div className="inline-flex w-14 h-14 rounded-2xl bg-gradient-to-br from-sky-400 to-green-600 items-center justify-center mb-4 shadow-lg shadow-green-500/25">
+          <div className="inline-flex w-14 h-14 rounded-2xl bg-gradient-to-br from-sky-400 to-blue-600 items-center justify-center mb-4 shadow-lg shadow-blue-500/25">
             <Globe className="w-7 h-7 text-white" strokeWidth={1.8} />
           </div>
           <h1 className="text-2xl font-bold text-white">IGF Guatemala</h1>
@@ -69,7 +69,7 @@ export default function AdminLogin() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="correo@ejemplo.com"
-                className="w-full px-4 py-2.5 bg-slate-800 border border-white/10 rounded-xl text-white placeholder-slate-500 text-sm focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/40 transition-colors"
+                className="w-full px-4 py-2.5 bg-slate-800 border border-white/10 rounded-xl text-white placeholder-slate-500 text-sm focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500/40 transition-colors"
               />
             </div>
 
@@ -86,7 +86,7 @@ export default function AdminLogin() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="w-full px-4 py-2.5 pr-11 bg-slate-800 border border-white/10 rounded-xl text-white placeholder-slate-500 text-sm focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/40 transition-colors"
+                  className="w-full px-4 py-2.5 pr-11 bg-slate-800 border border-white/10 rounded-xl text-white placeholder-slate-500 text-sm focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500/40 transition-colors"
                 />
                 <button
                   type="button"
@@ -101,7 +101,7 @@ export default function AdminLogin() {
             <button
               type="submit"
               disabled={submitting}
-              className="w-full py-3 bg-emerald-600 hover:bg-emerald-500 disabled:bg-slate-700 disabled:cursor-not-allowed text-white font-semibold rounded-xl transition-colors flex items-center justify-center gap-2 mt-2"
+              className="w-full py-3 bg-sky-600 hover:bg-sky-500 disabled:bg-slate-700 disabled:cursor-not-allowed text-white font-semibold rounded-xl transition-colors flex items-center justify-center gap-2 mt-2"
             >
               {submitting ? (
                 <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />

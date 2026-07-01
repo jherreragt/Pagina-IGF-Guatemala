@@ -57,7 +57,7 @@ export default function Blog() {
                 placeholder="Buscar artículos..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="w-full pl-10 pr-4 py-2.5 border border-slate-200 rounded-xl text-slate-800 text-sm focus:outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100 transition-all"
+                className="w-full pl-10 pr-4 py-2.5 border border-slate-200 rounded-xl text-slate-800 text-sm focus:outline-none focus:border-sky-400 focus:ring-2 focus:ring-sky-100 transition-all"
               />
             </div>
             <div className="flex flex-wrap gap-2">
@@ -65,7 +65,7 @@ export default function Blog() {
                 <button
                   key={cat}
                   onClick={() => setCategory(cat)}
-                  className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all ${category === cat ? 'bg-emerald-600 text-white shadow-md' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}
+                  className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all ${category === cat ? 'bg-sky-600 text-white shadow-md' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}
                 >
                   {cat}
                 </button>
@@ -75,7 +75,7 @@ export default function Blog() {
 
           {loading ? (
             <div className="py-24 text-center text-slate-400">
-              <div className="w-8 h-8 border-2 border-emerald-400 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+              <div className="w-8 h-8 border-2 border-sky-400 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
               Cargando artículos...
             </div>
           ) : filtered.length === 0 ? (
@@ -90,7 +90,7 @@ export default function Blog() {
               {featured && !search && category === 'Todos' && (
                 <Link
                   to={`/blog/${featured.slug}`}
-                  className="group block mb-10 rounded-2xl overflow-hidden border border-slate-100 hover:border-emerald-200 hover:shadow-card-hover transition-all duration-200"
+                  className="group block mb-10 rounded-2xl overflow-hidden border border-slate-100 hover:border-sky-200 hover:shadow-card-hover transition-all duration-200"
                 >
                   <div className="grid lg:grid-cols-5">
                     <div className="lg:col-span-2 relative h-56 lg:h-auto overflow-hidden">
@@ -101,19 +101,19 @@ export default function Blog() {
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                         />
                       ) : (
-                        <div className="w-full h-full bg-gradient-to-br from-emerald-100 to-green-200 flex items-center justify-center">
-                          <BookOpen className="w-16 h-16 text-emerald-200" />
+                        <div className="w-full h-full bg-gradient-to-br from-sky-100 to-blue-200 flex items-center justify-center">
+                          <BookOpen className="w-16 h-16 text-sky-200" />
                         </div>
                       )}
                     </div>
                     <div className="lg:col-span-3 p-8 lg:p-10 flex flex-col justify-center">
                       <div className="flex items-center gap-3 mb-5">
-                        <span className="px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-xs font-bold">
+                        <span className="px-3 py-1 bg-sky-100 text-sky-700 rounded-full text-xs font-bold">
                           {featured.category}
                         </span>
                         <span className="text-xs text-slate-400 font-semibold uppercase tracking-wider">Destacado</span>
                       </div>
-                      <h2 className="font-display font-bold text-green-950 text-2xl lg:text-3xl mb-4 group-hover:text-emerald-700 transition-colors leading-tight">
+                      <h2 className="font-display font-bold text-blue-950 text-2xl lg:text-3xl mb-4 group-hover:text-sky-700 transition-colors leading-tight">
                         {featured.title}
                       </h2>
                       {featured.excerpt && (
@@ -126,7 +126,7 @@ export default function Blog() {
                           {new Date(featured.published_at ?? featured.created_at).toLocaleDateString('es-GT', { year: 'numeric', month: 'long', day: 'numeric' })}
                         </span>
                       </div>
-                      <span className="inline-flex items-center gap-2 text-emerald-600 font-bold text-sm group-hover:text-green-700 transition-colors">
+                      <span className="inline-flex items-center gap-2 text-sky-600 font-bold text-sm group-hover:text-blue-700 transition-colors">
                         Leer artículo <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                       </span>
                     </div>
@@ -150,14 +150,14 @@ export default function Blog() {
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                         />
                       ) : (
-                        <div className="w-full h-full bg-gradient-to-br from-emerald-50 to-green-100 flex items-center justify-center">
-                          <BookOpen className="w-10 h-10 text-emerald-200" />
+                        <div className="w-full h-full bg-gradient-to-br from-sky-50 to-blue-100 flex items-center justify-center">
+                          <BookOpen className="w-10 h-10 text-sky-200" />
                         </div>
                       )}
                     </div>
                     <div className="flex flex-col flex-1 p-5">
-                      <span className="text-xs font-bold text-emerald-600 mb-2">{post.category}</span>
-                      <h3 className="font-bold text-green-950 group-hover:text-emerald-700 transition-colors leading-snug mb-2 line-clamp-2 text-[15px]">
+                      <span className="text-xs font-bold text-sky-600 mb-2">{post.category}</span>
+                      <h3 className="font-bold text-blue-950 group-hover:text-sky-700 transition-colors leading-snug mb-2 line-clamp-2 text-[15px]">
                         {post.title}
                       </h3>
                       {post.excerpt && (

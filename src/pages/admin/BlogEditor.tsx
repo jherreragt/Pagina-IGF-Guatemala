@@ -123,7 +123,7 @@ export default function BlogEditor() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="w-8 h-8 border-2 border-emerald-400 border-t-transparent rounded-full animate-spin" />
+        <div className="w-8 h-8 border-2 border-sky-400 border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -168,7 +168,7 @@ export default function BlogEditor() {
             className={`flex items-center gap-2 px-4 py-2.5 font-medium text-sm rounded-xl transition-colors disabled:opacity-50 ${
               form.published
                 ? 'bg-amber-600 hover:bg-amber-500 text-white'
-                : 'bg-emerald-600 hover:bg-emerald-500 text-white'
+                : 'bg-sky-600 hover:bg-sky-500 text-white'
             }`}
           >
             {form.published ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
@@ -197,7 +197,7 @@ export default function BlogEditor() {
                 value={form.title}
                 onChange={(e) => handleTitleChange(e.target.value)}
                 placeholder="Título del artículo"
-                className="w-full px-4 py-3 bg-slate-900 border border-white/10 rounded-xl text-white placeholder-slate-500 text-lg font-medium focus:outline-none focus:border-emerald-500 transition-colors"
+                className="w-full px-4 py-3 bg-slate-900 border border-white/10 rounded-xl text-white placeholder-slate-500 text-lg font-medium focus:outline-none focus:border-sky-500 transition-colors"
               />
             </div>
 
@@ -211,7 +211,7 @@ export default function BlogEditor() {
                   value={form.slug}
                   onChange={(e) => { setSlugManual(true); setForm((f) => ({ ...f, slug: e.target.value })); }}
                   placeholder="slug-del-articulo"
-                  className="flex-1 px-4 py-2.5 bg-slate-900 border border-white/10 rounded-xl text-slate-300 placeholder-slate-600 text-sm font-mono focus:outline-none focus:border-emerald-500 transition-colors"
+                  className="flex-1 px-4 py-2.5 bg-slate-900 border border-white/10 rounded-xl text-slate-300 placeholder-slate-600 text-sm font-mono focus:outline-none focus:border-sky-500 transition-colors"
                 />
               </div>
               <p className="text-slate-600 text-xs mt-1">/blog/{form.slug || 'slug-del-articulo'}</p>
@@ -226,7 +226,7 @@ export default function BlogEditor() {
                 onChange={(e) => setForm((f) => ({ ...f, excerpt: e.target.value }))}
                 placeholder="Breve descripción del artículo para listados y SEO..."
                 rows={3}
-                className="w-full px-4 py-2.5 bg-slate-900 border border-white/10 rounded-xl text-white placeholder-slate-500 text-sm focus:outline-none focus:border-emerald-500 transition-colors resize-none"
+                className="w-full px-4 py-2.5 bg-slate-900 border border-white/10 rounded-xl text-white placeholder-slate-500 text-sm focus:outline-none focus:border-sky-500 transition-colors resize-none"
               />
             </div>
           </div>
@@ -240,7 +240,7 @@ export default function BlogEditor() {
               onChange={(e) => setForm((f) => ({ ...f, content: e.target.value }))}
               placeholder="Escribe el contenido del artículo aquí. Puedes usar saltos de línea para separar párrafos."
               rows={20}
-              className="w-full px-4 py-3 bg-slate-900 border border-white/10 rounded-xl text-white placeholder-slate-500 text-sm focus:outline-none focus:border-emerald-500 transition-colors resize-y font-mono leading-relaxed"
+              className="w-full px-4 py-3 bg-slate-900 border border-white/10 rounded-xl text-white placeholder-slate-500 text-sm focus:outline-none focus:border-sky-500 transition-colors resize-y font-mono leading-relaxed"
             />
             <p className="text-slate-600 text-xs mt-2">Los párrafos separados por líneas en blanco se mostrarán correctamente en el sitio.</p>
           </div>
@@ -256,7 +256,7 @@ export default function BlogEditor() {
               <select
                 value={form.category}
                 onChange={(e) => setForm((f) => ({ ...f, category: e.target.value }))}
-                className="w-full px-3 py-2.5 bg-slate-900 border border-white/10 rounded-xl text-white text-sm focus:outline-none focus:border-emerald-500 transition-colors"
+                className="w-full px-3 py-2.5 bg-slate-900 border border-white/10 rounded-xl text-white text-sm focus:outline-none focus:border-sky-500 transition-colors"
               >
                 {CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
               </select>
@@ -268,7 +268,7 @@ export default function BlogEditor() {
                 type="text"
                 value={form.author}
                 onChange={(e) => setForm((f) => ({ ...f, author: e.target.value }))}
-                className="w-full px-3 py-2.5 bg-slate-900 border border-white/10 rounded-xl text-white text-sm focus:outline-none focus:border-emerald-500 transition-colors"
+                className="w-full px-3 py-2.5 bg-slate-900 border border-white/10 rounded-xl text-white text-sm focus:outline-none focus:border-sky-500 transition-colors"
               />
             </div>
 
@@ -279,7 +279,7 @@ export default function BlogEditor() {
                 value={form.cover_url}
                 onChange={(e) => setForm((f) => ({ ...f, cover_url: e.target.value }))}
                 placeholder="https://..."
-                className="w-full px-3 py-2.5 bg-slate-900 border border-white/10 rounded-xl text-white placeholder-slate-600 text-sm focus:outline-none focus:border-emerald-500 transition-colors"
+                className="w-full px-3 py-2.5 bg-slate-900 border border-white/10 rounded-xl text-white placeholder-slate-600 text-sm focus:outline-none focus:border-sky-500 transition-colors"
               />
               {form.cover_url && (
                 <img src={form.cover_url} alt="Preview" className="mt-2 w-full h-28 object-cover rounded-lg" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />
@@ -295,12 +295,12 @@ export default function BlogEditor() {
                   onChange={(e) => setTagInput(e.target.value)}
                   onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); addTag(); } }}
                   placeholder="Agregar etiqueta"
-                  className="flex-1 px-3 py-2 bg-slate-900 border border-white/10 rounded-lg text-white placeholder-slate-600 text-xs focus:outline-none focus:border-emerald-500 transition-colors"
+                  className="flex-1 px-3 py-2 bg-slate-900 border border-white/10 rounded-lg text-white placeholder-slate-600 text-xs focus:outline-none focus:border-sky-500 transition-colors"
                 />
                 <button
                   type="button"
                   onClick={addTag}
-                  className="p-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg transition-colors"
+                  className="p-2 bg-sky-600 hover:bg-sky-500 text-white rounded-lg transition-colors"
                 >
                   <Plus className="w-3.5 h-3.5" />
                 </button>
@@ -308,7 +308,7 @@ export default function BlogEditor() {
               {form.tags.length > 0 && (
                 <div className="flex flex-wrap gap-1.5">
                   {form.tags.map((tag) => (
-                    <span key={tag} className="inline-flex items-center gap-1 px-2.5 py-1 bg-emerald-500/10 border border-emerald-500/20 rounded-full text-sky-300 text-xs">
+                    <span key={tag} className="inline-flex items-center gap-1 px-2.5 py-1 bg-sky-500/10 border border-sky-500/20 rounded-full text-sky-300 text-xs">
                       {tag}
                       <button onClick={() => removeTag(tag)} className="hover:text-red-400 transition-colors">
                         <X className="w-2.5 h-2.5" />

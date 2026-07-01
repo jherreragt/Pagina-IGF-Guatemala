@@ -71,10 +71,10 @@ export default function EventResources() {
     <div className="flex gap-6 max-w-7xl">
       <div className={`${panelOpen ? 'hidden xl:block xl:w-1/2' : 'w-full'} space-y-5`}>
         {edition && (
-          <div className="flex items-center gap-2 px-4 py-2.5 bg-emerald-500/5 border border-emerald-500/20 rounded-xl text-xs text-slate-400">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse flex-shrink-0" />
-            Editando contenido para: <span className="text-emerald-300 font-semibold">{edition.title}</span>
-            <Link to="/admin/event/editions" className="ml-auto flex items-center gap-1 text-slate-500 hover:text-emerald-400 transition-colors">
+          <div className="flex items-center gap-2 px-4 py-2.5 bg-sky-500/5 border border-sky-500/20 rounded-xl text-xs text-slate-400">
+            <span className="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse flex-shrink-0" />
+            Editando contenido para: <span className="text-sky-300 font-semibold">{edition.title}</span>
+            <Link to="/admin/event/editions" className="ml-auto flex items-center gap-1 text-slate-500 hover:text-sky-400 transition-colors">
               <Layers className="w-3 h-3" /> Cambiar
             </Link>
           </div>
@@ -84,7 +84,7 @@ export default function EventResources() {
             <h1 className="text-2xl font-bold text-white">Recursos del evento</h1>
             <p className="text-slate-400 text-sm mt-1">{resources.length} recursos</p>
           </div>
-          <button onClick={openNew} className="flex items-center gap-2 px-4 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-sm rounded-xl transition-colors">
+          <button onClick={openNew} className="flex items-center gap-2 px-4 py-2.5 bg-sky-600 hover:bg-sky-500 text-white font-semibold text-sm rounded-xl transition-colors">
             <Plus className="w-4 h-4" /> Agregar recurso
           </button>
         </div>
@@ -96,7 +96,7 @@ export default function EventResources() {
             <div className="p-12 text-center">
               <Download className="w-10 h-10 text-slate-600 mx-auto mb-3" />
               <p className="text-slate-400 text-sm mb-4">No hay recursos. ¡Agrega el primero!</p>
-              <button onClick={openNew} className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-600 text-white text-sm font-semibold rounded-lg hover:bg-emerald-500 transition-colors">
+              <button onClick={openNew} className="inline-flex items-center gap-2 px-4 py-2 bg-sky-600 text-white text-sm font-semibold rounded-lg hover:bg-sky-500 transition-colors">
                 <Plus className="w-4 h-4" /> Agregar recurso
               </button>
             </div>
@@ -134,22 +134,22 @@ export default function EventResources() {
               <div>
                 <label className="block text-xs font-medium text-slate-400 mb-1">Título *</label>
                 <input value={form.title} onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))}
-                  className="w-full px-3 py-2.5 bg-slate-900 border border-white/10 rounded-xl text-white text-sm focus:outline-none focus:border-emerald-500 transition-colors" />
+                  className="w-full px-3 py-2.5 bg-slate-900 border border-white/10 rounded-xl text-white text-sm focus:outline-none focus:border-sky-500 transition-colors" />
               </div>
               <div>
                 <label className="block text-xs font-medium text-slate-400 mb-1">Descripción</label>
                 <textarea value={form.description ?? ''} onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))} rows={2}
-                  className="w-full px-3 py-2.5 bg-slate-900 border border-white/10 rounded-xl text-white text-sm focus:outline-none focus:border-emerald-500 transition-colors resize-none" />
+                  className="w-full px-3 py-2.5 bg-slate-900 border border-white/10 rounded-xl text-white text-sm focus:outline-none focus:border-sky-500 transition-colors resize-none" />
               </div>
               <div>
                 <label className="block text-xs font-medium text-slate-400 mb-1">URL del archivo / enlace</label>
                 <input value={form.file_url ?? ''} onChange={(e) => setForm((f) => ({ ...f, file_url: e.target.value }))} placeholder="https://..."
-                  className="w-full px-3 py-2.5 bg-slate-900 border border-white/10 rounded-xl text-white text-sm focus:outline-none focus:border-emerald-500 transition-colors" />
+                  className="w-full px-3 py-2.5 bg-slate-900 border border-white/10 rounded-xl text-white text-sm focus:outline-none focus:border-sky-500 transition-colors" />
               </div>
               <div>
                 <label className="block text-xs font-medium text-slate-400 mb-1">Tipo de archivo</label>
                 <select value={form.resource_type} onChange={(e) => setForm((f) => ({ ...f, resource_type: e.target.value }))}
-                  className="w-full px-3 py-2.5 bg-slate-900 border border-white/10 rounded-xl text-white text-sm focus:outline-none focus:border-emerald-500 transition-colors">
+                  className="w-full px-3 py-2.5 bg-slate-900 border border-white/10 rounded-xl text-white text-sm focus:outline-none focus:border-sky-500 transition-colors">
                   {RESOURCE_TYPES.map((t) => <option key={t} value={t}>{t}</option>)}
                 </select>
               </div>
@@ -157,11 +157,11 @@ export default function EventResources() {
                 <div>
                   <label className="block text-xs font-medium text-slate-400 mb-1">Orden</label>
                   <input type="number" value={form.sort_order} onChange={(e) => setForm((f) => ({ ...f, sort_order: parseInt(e.target.value) || 0 }))}
-                    className="w-20 px-3 py-2.5 bg-slate-900 border border-white/10 rounded-xl text-white text-sm focus:outline-none focus:border-emerald-500 transition-colors" />
+                    className="w-20 px-3 py-2.5 bg-slate-900 border border-white/10 rounded-xl text-white text-sm focus:outline-none focus:border-sky-500 transition-colors" />
                 </div>
                 <label className="flex items-center gap-3 cursor-pointer">
                   <div onClick={() => setForm((f) => ({ ...f, published: !f.published }))}
-                    className={`relative w-11 h-6 rounded-full transition-colors cursor-pointer ${form.published ? 'bg-emerald-600' : 'bg-slate-700'}`}>
+                    className={`relative w-11 h-6 rounded-full transition-colors cursor-pointer ${form.published ? 'bg-sky-600' : 'bg-slate-700'}`}>
                     <div className={`absolute top-0.5 w-5 h-5 rounded-full bg-white shadow transition-transform ${form.published ? 'translate-x-5' : 'translate-x-0.5'}`} />
                   </div>
                   <span className="text-slate-300 text-sm">Publicar</span>
@@ -173,7 +173,7 @@ export default function EventResources() {
               {saved && <span className="flex items-center gap-1.5 text-green-400 text-sm"><CheckCircle2 className="w-4 h-4" />Guardado</span>}
               <button onClick={closePanel} className="ml-auto px-4 py-2.5 bg-slate-700 hover:bg-slate-600 text-white text-sm font-medium rounded-xl transition-colors">Cancelar</button>
               <button onClick={handleSave} disabled={saving}
-                className="flex items-center gap-2 px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 disabled:opacity-50 text-white font-semibold text-sm rounded-xl transition-colors">
+                className="flex items-center gap-2 px-5 py-2.5 bg-sky-600 hover:bg-sky-500 disabled:opacity-50 text-white font-semibold text-sm rounded-xl transition-colors">
                 {saving ? <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : <Save className="w-4 h-4" />}
                 {saving ? 'Guardando...' : 'Guardar'}
               </button>

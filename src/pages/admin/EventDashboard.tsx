@@ -34,8 +34,8 @@ export default function EventDashboard() {
 
   const cards = [
     { label: 'Sesiones de agenda', value: stats.sessions, icon: Calendar, href: '/admin/event/sessions', color: 'sky' },
-    { label: 'Ponentes y moderadores', value: stats.speakers, icon: Users, href: '/admin/event/speakers', color: 'green' },
-    { label: 'Aliados y apoyos', value: stats.allies, icon: Globe, href: '/admin/event/allies', color: 'teal' },
+    { label: 'Ponentes y moderadores', value: stats.speakers, icon: Users, href: '/admin/event/speakers', color: 'blue' },
+    { label: 'Aliados y apoyos', value: stats.allies, icon: Globe, href: '/admin/event/allies', color: 'cyan' },
     { label: 'Recursos del evento', value: stats.resources, icon: FileText, href: '/admin/event/resources', color: 'sky' },
     { label: 'Registros de participantes', value: stats.registrations, icon: ClipboardList, href: '/admin/event/registrations', color: 'green' },
   ];
@@ -57,13 +57,13 @@ export default function EventDashboard() {
       </div>
 
       {!editionLoading && (
-        <div className={`rounded-2xl p-5 border ${edition ? 'bg-emerald-500/5 border-emerald-500/30' : 'bg-amber-500/5 border-amber-500/30'}`}>
+        <div className={`rounded-2xl p-5 border ${edition ? 'bg-sky-500/5 border-sky-500/30' : 'bg-amber-500/5 border-amber-500/30'}`}>
           {edition ? (
             <div className="flex items-center justify-between gap-4 flex-wrap">
               <div>
                 <div className="flex items-center gap-2 mb-1">
-                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                  <span className="text-emerald-400 text-xs font-semibold uppercase tracking-wider">Edición activa</span>
+                  <span className="w-2 h-2 rounded-full bg-sky-400 animate-pulse" />
+                  <span className="text-sky-400 text-xs font-semibold uppercase tracking-wider">Edición activa</span>
                 </div>
                 <p className="text-white font-bold text-lg">{edition.title}</p>
                 {edition.event_date && (
@@ -75,7 +75,7 @@ export default function EventDashboard() {
               </div>
               <Link
                 to="/admin/event/editions"
-                className="flex items-center gap-1.5 px-4 py-2 bg-emerald-600/20 hover:bg-emerald-600 border border-emerald-500/30 hover:border-transparent text-emerald-300 hover:text-white text-sm font-semibold rounded-xl transition-all flex-shrink-0"
+                className="flex items-center gap-1.5 px-4 py-2 bg-sky-600/20 hover:bg-sky-600 border border-sky-500/30 hover:border-transparent text-sky-300 hover:text-white text-sm font-semibold rounded-xl transition-all flex-shrink-0"
               >
                 <Layers className="w-4 h-4" /> Cambiar edición
               </Link>
@@ -101,7 +101,7 @@ export default function EventDashboard() {
           <Link
             key={label}
             to={href}
-            className="bg-slate-800/50 border border-white/10 rounded-2xl p-5 hover:border-emerald-500/40 hover:bg-slate-800 transition-all"
+            className="bg-slate-800/50 border border-white/10 rounded-2xl p-5 hover:border-sky-500/40 hover:bg-slate-800 transition-all"
           >
             <div className={`w-9 h-9 rounded-xl bg-${color}-500/15 flex items-center justify-center mb-3`}>
               <Icon className={`w-4 h-4 text-${color}-400`} />
@@ -121,10 +121,10 @@ export default function EventDashboard() {
             <Link
               key={label}
               to={href}
-              className="flex items-start gap-4 p-5 bg-slate-800/50 border border-white/10 rounded-xl hover:border-emerald-500/40 hover:bg-slate-800 transition-all"
+              className="flex items-start gap-4 p-5 bg-slate-800/50 border border-white/10 rounded-xl hover:border-sky-500/40 hover:bg-slate-800 transition-all"
             >
-              <div className="w-9 h-9 rounded-lg bg-emerald-500/10 flex items-center justify-center flex-shrink-0">
-                <Icon className="w-4 h-4 text-emerald-400" />
+              <div className="w-9 h-9 rounded-lg bg-sky-500/10 flex items-center justify-center flex-shrink-0">
+                <Icon className="w-4 h-4 text-sky-400" />
               </div>
               <div>
                 <p className="text-white font-medium text-sm">{label}</p>

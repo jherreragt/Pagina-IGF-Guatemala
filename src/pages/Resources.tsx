@@ -49,15 +49,15 @@ const resources = [
 ];
 
 const colorMap: Record<string, string> = {
-  sky: 'bg-emerald-50 border-emerald-100 text-emerald-600',
-  blue: 'bg-green-50 border-green-100 text-green-600',
-  cyan: 'bg-teal-50 border-teal-100 text-teal-700',
+  sky: 'bg-sky-50 border-sky-100 text-sky-600',
+  blue: 'bg-blue-50 border-blue-100 text-blue-600',
+  cyan: 'bg-cyan-50 border-cyan-100 text-cyan-700',
 };
 
 const iconBg: Record<string, string> = {
-  sky: 'bg-emerald-100',
-  blue: 'bg-green-100',
-  cyan: 'bg-teal-100',
+  sky: 'bg-sky-100',
+  blue: 'bg-blue-100',
+  cyan: 'bg-cyan-100',
 };
 
 export default function Resources() {
@@ -81,7 +81,7 @@ export default function Resources() {
                     <div className={`w-9 h-9 rounded-lg ${iconBg[color]} flex items-center justify-center`}>
                       <Icon className="w-5 h-5" />
                     </div>
-                    <h3 className="font-bold text-green-950">{category}</h3>
+                    <h3 className="font-bold text-blue-950">{category}</h3>
                   </div>
                 </div>
                 <div className="divide-y divide-slate-50">
@@ -93,8 +93,8 @@ export default function Resources() {
                       </div>
                       <div className="flex items-center gap-3 ml-4">
                         <span className="text-xs text-slate-400 font-mono">{type}</span>
-                        <button className="w-8 h-8 rounded-lg bg-slate-100 group-hover:bg-emerald-100 flex items-center justify-center transition-colors">
-                          <Download className="w-3.5 h-3.5 text-slate-500 group-hover:text-emerald-600" />
+                        <button className="w-8 h-8 rounded-lg bg-slate-100 group-hover:bg-sky-100 flex items-center justify-center transition-colors">
+                          <Download className="w-3.5 h-3.5 text-slate-500 group-hover:text-sky-600" />
                         </button>
                       </div>
                     </div>
@@ -104,13 +104,13 @@ export default function Resources() {
             ))}
           </div>
 
-          <div className="mt-16 p-8 bg-emerald-50 rounded-2xl border border-emerald-100 text-center">
-            <BookOpen className="w-10 h-10 text-emerald-500 mx-auto mb-4" />
-            <h3 className="text-xl font-bold text-green-950 mb-2">Glosario de Gobernanza de Internet</h3>
+          <div className="mt-16 p-8 bg-sky-50 rounded-2xl border border-sky-100 text-center">
+            <BookOpen className="w-10 h-10 text-sky-500 mx-auto mb-4" />
+            <h3 className="text-xl font-bold text-blue-950 mb-2">Glosario de Gobernanza de Internet</h3>
             <p className="text-slate-600 text-sm mb-5 max-w-md mx-auto">
               Un glosario completo con los términos y conceptos más importantes de la gobernanza de Internet, accesible para personas sin conocimiento técnico previo.
             </p>
-            <a href="#" className="inline-flex items-center gap-2 px-6 py-3 bg-emerald-600 text-white font-semibold rounded-xl hover:bg-emerald-500 transition-colors">
+            <a href="#" className="inline-flex items-center gap-2 px-6 py-3 bg-sky-600 text-white font-semibold rounded-xl hover:bg-sky-500 transition-colors">
               Consultar glosario
             </a>
           </div>
