@@ -85,10 +85,8 @@ export default function Navigation() {
           <div className="flex items-center justify-between h-16">
 
             {/* Brand */}
-            <Link to="/" className="flex items-center gap-2.5 group flex-shrink-0">
-              <div className="relative w-8 h-8 rounded-lg bg-gradient-to-br from-sky-400 to-blue-600 flex items-center justify-center shadow-md group-hover:shadow-glow-sky transition-all duration-200 group-hover:scale-105">
-                <Globe className="w-4 h-4 text-white" strokeWidth={2} />
-              </div>
+            <Link to="/" className="flex items-center flex-shrink-0">
+              <img src="/igflogo2.png" alt="IGF Guatemala" className="h-10 w-auto" />
             </Link>
 
             {/* Desktop nav */}
