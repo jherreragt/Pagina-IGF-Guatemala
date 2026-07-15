@@ -7,7 +7,7 @@ const SECTION_LABELS: Record<string, string> = {
   sobre: 'Sobre IGF Guatemala',
   evento: 'Evento Anual',
   visibilidad: 'Visibilidad de Secciones',
-  contacto: 'Información de Contacto',
+  contacto: 'Información de Contacto y Redes',
 };
 
 const SECTION_ORDER = ['hero', 'evento', 'sobre', 'visibilidad', 'contacto'];

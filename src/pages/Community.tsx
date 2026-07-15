@@ -1,5 +1,8 @@
-import { Users, Building2, GraduationCap, Laptop, Heart, Zap, Globe, Radio, TrendingUp } from 'lucide-react';
+import { Users, Building2, GraduationCap, Laptop, Heart, Zap, Globe, Radio, TrendingUp, Facebook, Video } from 'lucide-react';
 import PageHero from '../components/PageHero';
+import FacebookEmbed from '../components/FacebookEmbed';
+import YouTubeWebinars from '../components/YouTubeWebinars';
+import { useSiteSettings } from '../hooks/useSiteSettings';
 
 const sectors = [
   {
@@ -61,6 +64,9 @@ const sectors = [
 ];
 
 export default function Community() {
+  const { settings } = useSiteSettings();
+  const showEmbeds = settings.show_social_embeds !== 'false';
+
   return (
     <div className="pt-16 sm:pt-24">
       <PageHero
@@ -99,6 +105,62 @@ export default function Community() {
           </div>
         </div>
       </section>
+
+      {showEmbeds && (
+        <section className="py-20 bg-slate-50 bg-grid-light">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-14">
+              <p className="section-label justify-center">
+                <span className="w-5 h-px bg-sky-500" />
+                Vida digital
+                <span className="w-5 h-px bg-sky-500" />
+              </p>
+              <h2 className="section-title text-4xl sm:text-5xl mb-4">Comunidad Digital</h2>
+              <p className="text-slate-500 max-w-2xl mx-auto text-[15px]">
+                Seguimos la conversación más allá del evento. Aquí encontrás nuestras publicaciones recientes en Facebook y las grabaciones de webinars anteriores en YouTube.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+              {/* Facebook */}
+              <div>
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-10 h-10 rounded-xl bg-blue-100 flex items-center justify-center">
+                    <Facebook className="w-5 h-5 text-blue-600" />
+                  </div>
+                  <div>
+                    <h3 className="font-display font-bold text-blue-950 text-lg">Publicaciones de Facebook</h3>
+                    <p className="text-slate-400 text-xs">Lo más reciente de nuestra página</p>
+                  </div>
+                </div>
+                <FacebookEmbed
+                  pageUrl={settings.facebook_page_url}
+                  pageName={settings.facebook_page_name}
+                  height={520}
+                />
+              </div>
+
+              {/* YouTube */}
+              <div>
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-10 h-10 rounded-xl bg-red-100 flex items-center justify-center">
+                    <Video className="w-5 h-5 text-red-600" />
+                  </div>
+                  <div>
+                    <h3 className="font-display font-bold text-blue-950 text-lg">Webinars anteriores</h3>
+                    <p className="text-slate-400 text-xs">Grabaciones de nuestros foros y conversatorios</p>
+                  </div>
+                </div>
+                <YouTubeWebinars
+                  channelId={settings.youtube_channel_id}
+                  playlistId={settings.youtube_playlist_id}
+                  channelName={settings.youtube_channel_name}
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
     </div>
   );
 }

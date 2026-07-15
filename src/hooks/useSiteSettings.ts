@@ -23,10 +23,16 @@ const DEFAULTS: SettingsMap = {
   show_past_editions: 'true',
   show_resources_cta: 'true',
   show_blog: 'true',
+  show_social_embeds: 'true',
   contact_email: 'info@igfguatemala.org',
   contact_address: 'Ciudad de Guatemala, Guatemala',
   contact_twitter: '@IGFGuatemala',
   contact_youtube: 'IGF Guatemala',
+  facebook_page_url: '',
+  facebook_page_name: 'IGF Guatemala',
+  youtube_channel_id: '',
+  youtube_playlist_id: '',
+  youtube_channel_name: 'IGF Guatemala',
 };
 
 export function useSiteSettings() {
