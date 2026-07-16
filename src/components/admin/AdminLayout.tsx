@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import {
   LayoutDashboard, FileText, Settings, LogOut,
   ChevronLeft, Menu, ExternalLink, Calendar,
-  Youtube, Mail, ChevronDown, ChevronRight, MessageSquare
+  Youtube, Mail, ChevronDown, ChevronRight, MessageSquare, Home
 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 
@@ -129,6 +129,18 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             )}
           </div>
 
+          {/* Home Content */}
+          {(() => {
+            const active = location.pathname === '/admin/home';
+            return (
+              <Link to="/admin/home"
+                className={`flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors ${active ? 'bg-sky-600 text-white' : 'text-slate-400 hover:text-white hover:bg-white/5'}`}>
+                <Home className="w-5 h-5 flex-shrink-0" />
+                {expanded && <span className="text-sm font-medium">Contenido del Home</span>}
+              </Link>
+            );
+          })()}
+
           {/* Settings */}
           {(() => {
             const active = location.pathname === '/admin/settings';
@@ -166,6 +178,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     if (location.pathname === '/admin/forum') return 'Foro de Diálogo';
     const fSub = forumSubItems.find((s) => location.pathname === s.href);
     if (fSub) return `Foro — ${fSub.label}`;
+    if (location.pathname === '/admin/home') return 'Contenido del Home';
     if (location.pathname === '/admin/settings') return 'Configuración';
     return 'Dashboard';
   })();

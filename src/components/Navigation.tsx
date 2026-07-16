@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Twitter, Youtube, Facebook, Mail } from 'lucide-react';
+import { useSiteSettings } from '../hooks/useSiteSettings';
 
 const primaryLinks = [
   { label: 'Inicio', href: '/' },
@@ -10,17 +11,18 @@ const primaryLinks = [
   { label: 'Contacto', href: '/contacto' },
 ];
 
-const socialLinks = [
-  { icon: Youtube, href: 'https://www.youtube.com/@IGFGuatemalaISOCGT', label: 'YouTube' },
-  { icon: Facebook, href: 'https://www.facebook.com/share/1FvujVBQMp/', label: 'Facebook' },
-  { icon: Twitter, href: 'https://twitter.com/IGFGuatemala', label: 'Twitter' },
-  { icon: Mail, href: 'mailto:igf.guatemala.isocgt@gmail.com', label: 'Correo' },
-];
-
 export default function Navigation() {
+  const { settings } = useSiteSettings();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
+
+  const socialLinks = [
+    { icon: Youtube, href: settings.youtube_channel_id || 'https://www.youtube.com/@IGFGuatemalaISOCGT', label: 'YouTube' },
+    { icon: Facebook, href: settings.facebook_page_url || '#', label: 'Facebook' },
+    { icon: Twitter, href: `https://twitter.com/${(settings.contact_twitter || 'IGFGuatemala').replace('@', '')}`, label: 'Twitter' },
+    { icon: Mail, href: `mailto:${settings.contact_email || 'igf.guatemala.isocgt@gmail.com'}`, label: 'Correo' },
+  ].filter((l) => l.href && l.href !== '#');
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);

@@ -6,11 +6,13 @@ const SECTION_LABELS: Record<string, string> = {
   hero: 'Sección Hero (Inicio)',
   sobre: 'Sobre IGF Guatemala',
   evento: 'Evento Anual',
+  inicio: 'Textos del Home',
+  footer: 'Footer',
   visibilidad: 'Visibilidad de Secciones',
   contacto: 'Información de Contacto y Redes',
 };
 
-const SECTION_ORDER = ['hero', 'evento', 'sobre', 'visibilidad', 'contacto'];
+const SECTION_ORDER = ['hero', 'evento', 'sobre', 'inicio', 'footer', 'visibilidad', 'contacto'];
 
 export default function SiteSettings() {
   const [settings, setSettings] = useState<SiteSetting[]>([]);
@@ -20,7 +22,7 @@ export default function SiteSettings() {
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState('');
   const [openSections, setOpenSections] = useState<Record<string, boolean>>({
-    hero: true, evento: true, sobre: false, visibilidad: false, contacto: false,
+    hero: true, evento: true, sobre: false, inicio: false, footer: false, visibilidad: false, contacto: false,
   });
 
   useEffect(() => {

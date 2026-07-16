@@ -225,3 +225,40 @@ export type ContactSubmission = {
   status: string;
   created_at: string;
 };
+
+export type HomeStat = {
+  id: string;
+  number: string;
+  label: string;
+  icon_name: string;
+  sort_order: number;
+  published: boolean;
+  created_at: string;
+};
+
+export type HomeWhyMatter = {
+  id: string;
+  label: string;
+  icon_name: string;
+  sort_order: number;
+  published: boolean;
+  created_at: string;
+};
+
+export type HomePrinciple = {
+  id: string;
+  label: string;
+  sort_order: number;
+  published: boolean;
+  created_at: string;
+};
+
+export type HomeStakeholder = {
+  id: string;
+  label: string;
+  description: string;
+  icon_name: string;
+  sort_order: number;
+  published: boolean;
+  created_at: string;
+};

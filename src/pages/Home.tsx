@@ -2,53 +2,64 @@ import { Link } from 'react-router-dom';
 import {
   Globe, Users, ShieldCheck, Wifi, Scale, BookOpen, MessageSquare,
   ArrowRight, ChevronRight, Building2, GraduationCap, Laptop, Heart,
-  Lightbulb, TrendingUp, Lock, Database, Zap, Radio, Calendar, User
+  Lightbulb, TrendingUp, Lock, Database, Zap, Radio, Calendar, User,
+  Award, Network, Server, Cpu, Cloud, FileText, Microscope, Eye,
+  type LucideIcon,
 } from 'lucide-react';
 import { useSiteSettings } from '../hooks/useSiteSettings';
 import { useEffect, useState } from 'react';
-import { supabase, BlogPost } from '../lib/supabase';
+import { supabase, BlogPost, HomeStat, HomeWhyMatter, HomePrinciple, HomeStakeholder } from '../lib/supabase';
 import Countdown from '../components/Countdown';
 import YouTubeWebinars from '../components/YouTubeWebinars';
 
-const whyMatters = [
-  { icon: Wifi, label: 'Brecha digital' },
-  { icon: ShieldCheck, label: 'Derechos digitales' },
-  { icon: Lock, label: 'Protección de datos' },
-  { icon: Lightbulb, label: 'IA responsable' },
-  { icon: Scale, label: 'Ciberseguridad' },
-  { icon: MessageSquare, label: 'Libertad de expresión' },
-  { icon: Radio, label: 'Desinformación' },
-  { icon: Database, label: 'Servicios digitales' },
-  { icon: Heart, label: 'Inclusión digital' },
-];
+const ICON_MAP: Record<string, LucideIcon> = {
+  Globe, Users, ShieldCheck, Wifi, Scale, BookOpen, MessageSquare,
+  ArrowRight, ChevronRight, Building2, GraduationCap, Laptop, Heart,
+  Lightbulb, TrendingUp, Lock, Database, Zap, Radio, Calendar, User,
+  Award, Network, Server, Cpu, Cloud, FileText, Microscope, Eye,
+};
 
-const principles = [
-  'Apertura', 'Inclusión', 'Participación multiactor', 'Transparencia',
-  'Neutralidad política', 'Respeto y no discriminación', 'Construcción de consensos',
-  'Enfoque de derechos humanos', 'Perspectiva de género', 'Participación juvenil',
-  'Carácter no comercial', 'Diálogo basado en evidencia',
-];
-
-const stakeholders = [
-  { icon: Building2, label: 'Gobierno', desc: 'Instituciones públicas' },
-  { icon: Heart, label: 'Sociedad Civil', desc: 'Organizaciones y activistas' },
-  { icon: TrendingUp, label: 'Sector Privado', desc: 'Industria tecnológica' },
-  { icon: Laptop, label: 'Com. Técnica', desc: 'Expertos en infraestructura' },
-  { icon: GraduationCap, label: 'Academia', desc: 'Universidades e investigación' },
-  { icon: Zap, label: 'Juventudes', desc: 'Líderes digitales jóvenes' },
-  { icon: Globe, label: 'Org. Internacionales', desc: 'Cooperación global' },
-  { icon: Radio, label: 'Medios', desc: 'Comunicadores digitales' },
-];
-
-const pastEditions = [
-  { year: '2023', title: 'IGF Guatemala 2023', lema: 'Por una Internet libre, segura y confiable', date: 'Octubre 2023' },
-  { year: '2022', title: 'IGF Guatemala 2022', lema: 'Gobernanza de Internet para el desarrollo sostenible', date: 'Noviembre 2022' },
-  { year: '2021', title: 'IGF Guatemala 2021', lema: 'Internet inclusivo y resiliente', date: 'Octubre 2021' },
-];
+function getIcon(name: string): LucideIcon {
+  return ICON_MAP[name] ?? Globe;
+}
 
 export default function Home() {
   const { settings } = useSiteSettings();
   const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
+  const [stats, setStats] = useState<HomeStat[]>([]);
+  const [whyMatters, setWhyMatters] = useState<HomeWhyMatter[]>([]);
+  const [principles, setPrinciples] = useState<HomePrinciple[]>([]);
+  const [stakeholders, setStakeholders] = useState<HomeStakeholder[]>([]);
+
+  useEffect(() => {
+    supabase
+      .from('home_stats')
+      .select('*')
+      .eq('published', true)
+      .order('sort_order')
+      .then(({ data }) => setStats((data as HomeStat[]) ?? []));
+
+    supabase
+      .from('home_why_matters')
+      .select('*')
+      .eq('published', true)
+      .order('sort_order')
+      .then(({ data }) => setWhyMatters((data as HomeWhyMatter[]) ?? []));
+
+    supabase
+      .from('home_principles')
+      .select('*')
+      .eq('published', true)
+      .order('sort_order')
+      .then(({ data }) => setPrinciples((data as HomePrinciple[]) ?? []));
+
+    supabase
+      .from('home_stakeholders')
+      .select('*')
+      .eq('published', true)
+      .order('sort_order')
+      .then(({ data }) => setStakeholders((data as HomeStakeholder[]) ?? []));
+  }, []);
 
   useEffect(() => {
     if (settings.show_blog === 'true') {
@@ -65,6 +76,11 @@ export default function Home() {
   const titleWords = settings.hero_title.split(' ');
   const titleFirst = titleWords.slice(0, -1).join(' ');
   const titleLast = titleWords[titleWords.length - 1];
+
+  const resourcesList = (settings.resources_list || '')
+    .split('\n')
+    .map((s) => s.trim())
+    .filter(Boolean);
 
   return (
     <div className="overflow-x-hidden">
@@ -84,7 +100,7 @@ export default function Home() {
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-sky-500/10 border border-sky-400/20 mb-10">
             <span className="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse" />
             <Globe className="w-3 h-3 text-sky-400" />
-            <span className="text-sky-300 text-xs font-semibold tracking-widest uppercase">Capítulo Nacional · IGF Global</span>
+            <span className="text-sky-300 text-xs font-semibold tracking-widest uppercase">{settings.home_badge_text}</span>
           </div>
 
           <h1 className="font-display font-bold text-white leading-[1.08] mb-6">
@@ -98,31 +114,34 @@ export default function Home() {
 
           <div className="flex flex-col sm:flex-row gap-3 justify-center mb-20">
             <Link to="/evento" className="btn-primary text-base px-7 py-3.5">
-              Conoce el evento anual
+              {settings.hero_btn_1_text}
               <ArrowRight className="w-4 h-4" />
             </Link>
             <Link to="/contacto" className="btn-outline text-base px-7 py-3.5">
-              Súmate a la comunidad
+              {settings.hero_btn_2_text}
             </Link>
             <Link to="/recursos" className="btn-outline text-base px-7 py-3.5">
-              Ver recursos
+              {settings.hero_btn_3_text}
             </Link>
           </div>
 
           {/* Stats row */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 border-t border-white/[0.08] pt-12 max-w-2xl mx-auto">
-            {[
-              { num: '8+', label: 'Ediciones' },
-              { num: '500+', label: 'Participantes' },
-              { num: '7', label: 'Sectores' },
-              { num: '8', label: 'Ejes temáticos' },
-            ].map((stat) => (
-              <div key={stat.label} className="text-center">
-                <div className="font-display font-bold text-2xl sm:text-3xl text-sky-300 mb-1">{stat.num}</div>
-                <div className="text-slate-400 text-xs font-medium">{stat.label}</div>
-              </div>
-            ))}
-          </div>
+          {stats.length > 0 && (
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 border-t border-white/[0.08] pt-12 max-w-2xl mx-auto">
+              {stats.map((stat) => {
+                const Icon = getIcon(stat.icon_name);
+                return (
+                  <div key={stat.id} className="text-center">
+                    <div className="flex items-center justify-center mb-1">
+                      <Icon className="w-4 h-4 text-sky-500/40 mr-1.5" />
+                      <div className="font-display font-bold text-2xl sm:text-3xl text-sky-300">{stat.number}</div>
+                    </div>
+                    <div className="text-slate-400 text-xs font-medium">{stat.label}</div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
         </div>
 
         {/* Bottom fade */}
@@ -144,12 +163,16 @@ export default function Home() {
               <p className="text-slate-500 leading-relaxed mb-5 text-[15px]">
                 {settings.about_body}
               </p>
-              <p className="text-slate-500 leading-relaxed mb-5 text-[15px]">
-                Funciona como un espacio de diálogo abierto, sin fines de lucro, donde múltiples sectores se reúnen en igualdad de condiciones para discutir los desafíos y oportunidades del ecosistema digital del país.
-              </p>
-              <p className="text-slate-500 leading-relaxed mb-8 text-[15px]">
-                No toma decisiones vinculantes, sino que genera recomendaciones, construye puentes y fortalece la participación de Guatemala en las discusiones globales.
-              </p>
+              {settings.about_extra_1 && (
+                <p className="text-slate-500 leading-relaxed mb-5 text-[15px]">
+                  {settings.about_extra_1}
+                </p>
+              )}
+              {settings.about_extra_2 && (
+                <p className="text-slate-500 leading-relaxed mb-8 text-[15px]">
+                  {settings.about_extra_2}
+                </p>
+              )}
               <Link to="/sobre" className="btn-ghost text-sm">
                 Conoce más sobre nosotros
                 <ChevronRight className="w-4 h-4" />
@@ -178,38 +201,40 @@ export default function Home() {
       </section>
 
       {/* ── POR QUÉ IMPORTA ── */}
-      <section className="py-24 bg-slate-50 bg-grid-light">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-2xl mb-14">
-            <p className="section-label">
-              <span className="w-5 h-px bg-sky-500" />
-              Relevancia
-            </p>
-            <h2 className="section-title text-4xl sm:text-5xl mb-5">
-              ¿Por qué importa la gobernanza de Internet?
-            </h2>
-            <p className="text-slate-500 text-[15px] leading-relaxed">
-              Las decisiones sobre Internet afectan derechos, desarrollo y democracia. Estos son los temas concretos que importan para Guatemala.
-            </p>
+      {whyMatters.length > 0 && (
+        <section className="py-24 bg-slate-50 bg-grid-light">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="max-w-2xl mb-14">
+              <p className="section-label">
+                <span className="w-5 h-px bg-sky-500" />
+                Relevancia
+              </p>
+              <h2 className="section-title text-4xl sm:text-5xl mb-5">
+                {settings.why_matters_title}
+              </h2>
+              <p className="text-slate-500 text-[15px] leading-relaxed">
+                {settings.why_matters_intro}
+              </p>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              {whyMatters.map((item) => {
+                const Icon = getIcon(item.icon_name);
+                return (
+                  <div key={item.id} className="card group flex items-center gap-4 px-5 py-4 cursor-default">
+                    <div className="w-10 h-10 rounded-xl bg-sky-50 group-hover:bg-sky-100 flex items-center justify-center flex-shrink-0 transition-colors">
+                      <Icon className="w-5 h-5 text-sky-600" />
+                    </div>
+                    <span className="text-slate-700 font-medium text-sm">{item.label}</span>
+                  </div>
+                );
+              })}
+            </div>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            {whyMatters.map(({ icon: Icon, label }) => (
-              <div
-                key={label}
-                className="card group flex items-center gap-4 px-5 py-4 cursor-default"
-              >
-                <div className="w-10 h-10 rounded-xl bg-sky-50 group-hover:bg-sky-100 flex items-center justify-center flex-shrink-0 transition-colors">
-                  <Icon className="w-5 h-5 text-sky-600" />
-                </div>
-                <span className="text-slate-700 font-medium text-sm">{label}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* ── PRINCIPIOS ── */}
-      {settings.show_principles === 'true' && (
+      {settings.show_principles === 'true' && principles.length > 0 && (
         <section className="py-24 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #1e3a8a 0%, #1565c0 60%, #0369a1 100%)' }}>
           <div className="absolute inset-0 bg-grid" />
           <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full bg-sky-600/8 blur-[120px] pointer-events-none" />
@@ -220,21 +245,18 @@ export default function Home() {
                 Valores
                 <span className="w-5 h-px bg-sky-500" />
               </p>
-              <h2 className="section-title-dark text-4xl sm:text-5xl mb-4">Principios del IGF Guatemala</h2>
+              <h2 className="section-title-dark text-4xl sm:text-5xl mb-4">{settings.principles_title}</h2>
               <p className="text-slate-400 max-w-xl mx-auto text-[15px]">
-                Los valores fundamentales que guían cada acción, conversación y decisión del capítulo.
+                {settings.principles_intro}
               </p>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
               {principles.map((p, i) => (
-                <div
-                  key={p}
-                  className="card-dark group px-5 py-4 text-center cursor-default"
-                >
+                <div key={p.id} className="card-dark group px-5 py-4 text-center cursor-default">
                   <div className="text-xs font-black text-sky-500/40 mb-2 font-mono tracking-widest">
                     {String(i + 1).padStart(2, '0')}
                   </div>
-                  <p className="text-white font-medium text-sm leading-relaxed">{p}</p>
+                  <p className="text-white font-medium text-sm leading-relaxed">{p.label}</p>
                 </div>
               ))}
             </div>
@@ -249,7 +271,7 @@ export default function Home() {
       )}
 
       {/* ── COMUNIDAD ── */}
-      {settings.show_community === 'true' && (
+      {settings.show_community === 'true' && stakeholders.length > 0 && (
         <section className="py-24 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-14">
@@ -258,21 +280,24 @@ export default function Home() {
                 Participantes
                 <span className="w-5 h-px bg-sky-500" />
               </p>
-              <h2 className="section-title text-4xl sm:text-5xl mb-4">Comunidad Multiactor</h2>
+              <h2 className="section-title text-4xl sm:text-5xl mb-4">{settings.community_title}</h2>
               <p className="text-slate-500 max-w-xl mx-auto text-[15px]">
-                Una plataforma compartida donde todos los sectores participan en igualdad de condiciones.
+                {settings.community_intro}
               </p>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-              {stakeholders.map(({ icon: Icon, label, desc }) => (
-                <div key={label} className="card group p-6 text-center cursor-default">
-                  <div className="w-12 h-12 mx-auto rounded-2xl bg-gradient-to-br from-sky-50 to-sky-100 group-hover:from-sky-100 group-hover:to-blue-100 flex items-center justify-center mb-4 transition-all">
-                    <Icon className="w-6 h-6 text-sky-600" />
+              {stakeholders.map((item) => {
+                const Icon = getIcon(item.icon_name);
+                return (
+                  <div key={item.id} className="card group p-6 text-center cursor-default">
+                    <div className="w-12 h-12 mx-auto rounded-2xl bg-gradient-to-br from-sky-50 to-sky-100 group-hover:from-sky-100 group-hover:to-blue-100 flex items-center justify-center mb-4 transition-all">
+                      <Icon className="w-6 h-6 text-sky-600" />
+                    </div>
+                    <h3 className="font-bold text-blue-950 text-sm mb-1">{item.label}</h3>
+                    <p className="text-slate-400 text-xs leading-relaxed">{item.description}</p>
                   </div>
-                  <h3 className="font-bold text-blue-950 text-sm mb-1">{label}</h3>
-                  <p className="text-slate-400 text-xs leading-relaxed">{desc}</p>
-                </div>
-              ))}
+                );
+              })}
             </div>
             <div className="text-center mt-10">
               <Link to="/comunidad" className="btn-ghost text-sm">
@@ -295,10 +320,10 @@ export default function Home() {
             <div>
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/15 border border-white/20 text-white text-xs font-semibold mb-6 tracking-wider uppercase">
                 <span className="w-1.5 h-1.5 rounded-full bg-white/80 animate-pulse" />
-                Próximo evento
+                {settings.event_cta_badge}
               </div>
               <h2 className="font-display font-bold text-white text-4xl sm:text-5xl mb-4 leading-tight">
-                Evento Anual<br />
+                {settings.event_cta_title}<br />
                 <span className="text-sky-200">IGF Guatemala {settings.event_year}</span>
               </h2>
               <p className="text-sky-100/80 italic text-base mb-6">
@@ -346,11 +371,15 @@ export default function Home() {
                 Historial
                 <span className="w-5 h-px bg-sky-500" />
               </p>
-              <h2 className="section-title text-4xl sm:text-5xl mb-4">Ediciones Anteriores</h2>
-              <p className="text-slate-500 max-w-md mx-auto text-[15px]">La memoria histórica del diálogo sobre gobernanza de Internet en Guatemala.</p>
+              <h2 className="section-title text-4xl sm:text-5xl mb-4">{settings.past_editions_title}</h2>
+              <p className="text-slate-500 max-w-md mx-auto text-[15px]">{settings.past_editions_intro}</p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-              {pastEditions.map((ed) => (
+              {[
+                { year: '2023', title: 'IGF Guatemala 2023', lema: 'Por una Internet libre, segura y confiable', date: 'Octubre 2023' },
+                { year: '2022', title: 'IGF Guatemala 2022', lema: 'Gobernanza de Internet para el desarrollo sostenible', date: 'Noviembre 2022' },
+                { year: '2021', title: 'IGF Guatemala 2021', lema: 'Internet inclusivo y resiliente', date: 'Octubre 2021' },
+              ].map((ed) => (
                 <div key={ed.year} className="card group p-7 hover:-translate-y-1 cursor-pointer">
                   <div className="font-display font-black text-[56px] leading-none text-slate-100 group-hover:text-sky-100 transition-colors mb-4 select-none">
                     {ed.year}
@@ -391,25 +420,20 @@ export default function Home() {
                   <span className="w-5 h-px bg-sky-500" />
                   Biblioteca
                 </p>
-                <h2 className="section-title text-4xl sm:text-5xl mb-5">Recursos y Materiales</h2>
+                <h2 className="section-title text-4xl sm:text-5xl mb-5">{settings.resources_title}</h2>
                 <p className="text-slate-500 text-[15px] leading-relaxed mb-6">
-                  Documentos, guías, relatorías, publicaciones y materiales para entender y participar en el debate sobre gobernanza de Internet.
+                  {settings.resources_intro}
                 </p>
-                <ul className="space-y-2.5 mb-8">
-                  {[
-                    'Documentos del IGF Global',
-                    'Guías sobre gobernanza de Internet',
-                    'Publicaciones sobre derechos digitales',
-                    'Relatorías y memorias de eventos',
-                    'Glosario de gobernanza de Internet',
-                    'Materiales para docentes y funcionarios',
-                  ].map((item) => (
-                    <li key={item} className="flex items-center gap-3 text-slate-600 text-sm">
-                      <div className="w-1.5 h-1.5 rounded-full bg-sky-500 flex-shrink-0" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
+                {resourcesList.length > 0 && (
+                  <ul className="space-y-2.5 mb-8">
+                    {resourcesList.map((item) => (
+                      <li key={item} className="flex items-center gap-3 text-slate-600 text-sm">
+                        <div className="w-1.5 h-1.5 rounded-full bg-sky-500 flex-shrink-0" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                )}
                 <Link to="/recursos" className="btn-primary text-sm">
                   Explorar biblioteca
                   <ArrowRight className="w-4 h-4" />

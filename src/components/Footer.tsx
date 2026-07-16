@@ -1,7 +1,17 @@
 import { Link } from 'react-router-dom';
 import { Mail, Twitter, Youtube, Facebook, ExternalLink, ArrowRight } from 'lucide-react';
+import { useSiteSettings } from '../hooks/useSiteSettings';
 
 export default function Footer() {
+  const { settings } = useSiteSettings();
+
+  const socialLinks = [
+    { icon: Youtube, label: 'YouTube', href: settings.youtube_channel_id || 'https://www.youtube.com/@IGFGuatemalaISOCGT' },
+    { icon: Facebook, label: 'Facebook', href: settings.facebook_page_url || '#' },
+    { icon: Twitter, label: 'Twitter', href: `https://twitter.com/${(settings.contact_twitter || 'IGFGuatemala').replace('@', '')}` },
+    { icon: Mail, label: 'Email', href: `mailto:${settings.contact_email || 'igf.guatemala.isocgt@gmail.com'}` },
+  ].filter((l) => l.href && l.href !== '#');
+
   return (
     <footer className="bg-slate-800 text-slate-400 border-t border-white/[0.06]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-10">
@@ -17,25 +27,22 @@ export default function Footer() {
               />
             </div>
             <p className="text-slate-500 text-sm leading-relaxed mb-6 max-w-xs">
-              Un espacio abierto, inclusivo y multiactor para dialogar sobre el futuro de Internet en Guatemala.
+              {settings.footer_description}
             </p>
             <Link
               to="/contacto"
               className="inline-flex items-center gap-2 text-sky-400 hover:text-sky-300 text-sm font-semibold transition-colors group"
             >
-              Súmate a la comunidad
+              {settings.footer_cta_text}
               <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
             </Link>
             <div className="flex gap-2 mt-5">
-              {[
-                { icon: Youtube, label: 'YouTube', href: 'https://www.youtube.com/@IGFGuatemalaISOCGT' },
-                { icon: Facebook, label: 'Facebook', href: 'https://www.facebook.com/share/1FvujVBQMp/' },
-                { icon: Twitter, label: 'Twitter', href: 'https://twitter.com/IGFGuatemala' },
-                { icon: Mail, label: 'Email', href: 'mailto:igf.guatemala.isocgt@gmail.com' },
-              ].map(({ icon: Icon, label, href }) => (
+              {socialLinks.map(({ icon: Icon, label, href }) => (
                 <a
                   key={label}
-                  href={href ?? '#'}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   aria-label={label}
                   className="w-9 h-9 rounded-xl bg-white/5 hover:bg-sky-500 border border-white/8 hover:border-transparent flex items-center justify-center transition-all duration-150 hover:scale-105"
                 >
