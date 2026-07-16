@@ -74,6 +74,7 @@ export default function Footer() {
             <ul className="space-y-2.5">
               {[
                 { label: 'Blog', href: '/blog' },
+                { label: 'Foro de Diálogo', href: '/foro' },
                 { label: 'Biblioteca', href: '/recursos' },
                 { label: 'Transparencia', href: '/transparencia' },
                 { label: 'Contacto', href: '/contacto' },

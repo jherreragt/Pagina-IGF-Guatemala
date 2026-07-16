@@ -33,6 +33,19 @@ import EventResources from './pages/admin/EventResources';
 import EventRegistrations from './pages/admin/EventRegistrations';
 import EventEditions from './pages/admin/EventEditions';
 
+// Forum pages
+import Forum from './pages/Forum';
+import ForumCategoryPage from './pages/ForumCategoryPage';
+import ForumThreadPage from './pages/ForumThreadPage';
+
+// Forum admin pages
+import ForumDashboard from './pages/admin/ForumDashboard';
+import ForumCategories from './pages/admin/ForumCategories';
+import ForumThreads from './pages/admin/ForumThreads';
+import ForumReports from './pages/admin/ForumReports';
+import ForumRulesAdmin from './pages/admin/ForumRulesAdmin';
+import ForumUsers from './pages/admin/ForumUsers';
+
 function ScrollToTop() {
   const { pathname } = useLocation();
   useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
@@ -105,6 +118,14 @@ export default function App() {
           <Route path="/admin/event/registrations" element={<ProtectedRoute><AdminLayout><EventRegistrations /></AdminLayout></ProtectedRoute>} />
           <Route path="/admin/event/editions" element={<ProtectedRoute><AdminLayout><EventEditions /></AdminLayout></ProtectedRoute>} />
 
+          {/* Forum admin routes */}
+          <Route path="/admin/forum" element={<ProtectedRoute><AdminLayout><ForumDashboard /></AdminLayout></ProtectedRoute>} />
+          <Route path="/admin/forum/categorias" element={<ProtectedRoute><AdminLayout><ForumCategories /></AdminLayout></ProtectedRoute>} />
+          <Route path="/admin/forum/discusiones" element={<ProtectedRoute><AdminLayout><ForumThreads /></AdminLayout></ProtectedRoute>} />
+          <Route path="/admin/forum/reportes" element={<ProtectedRoute><AdminLayout><ForumReports /></AdminLayout></ProtectedRoute>} />
+          <Route path="/admin/forum/reglas" element={<ProtectedRoute><AdminLayout><ForumRulesAdmin /></AdminLayout></ProtectedRoute>} />
+          <Route path="/admin/forum/usuarios" element={<ProtectedRoute><AdminLayout><ForumUsers /></AdminLayout></ProtectedRoute>} />
+
           {/* Public routes */}
           <Route path="/" element={<PublicLayout><Home /></PublicLayout>} />
           <Route path="/sobre" element={<PublicLayout><About /></PublicLayout>} />
@@ -118,6 +139,11 @@ export default function App() {
           <Route path="/blog" element={<PublicLayout><Blog /></PublicLayout>} />
           <Route path="/blog/:slug" element={<PublicLayout><BlogPost /></PublicLayout>} />
           <Route path="/noticias" element={<PublicLayout><Blog /></PublicLayout>} />
+
+          {/* Forum public routes */}
+          <Route path="/foro" element={<PublicLayout><Forum /></PublicLayout>} />
+          <Route path="/foro/:slug" element={<PublicLayout><ForumCategoryPage /></PublicLayout>} />
+          <Route path="/foro/t/:id" element={<PublicLayout><ForumThreadPage /></PublicLayout>} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

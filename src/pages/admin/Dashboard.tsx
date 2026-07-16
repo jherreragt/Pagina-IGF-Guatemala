@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   FileText, Settings, Globe, Eye, PenLine, Edit2,
-  CheckCircle2, Circle, ArrowRight
+  CheckCircle2, Circle, ArrowRight, MessageSquare
 } from 'lucide-react';
 import { supabase, BlogPost } from '../../lib/supabase';
 
@@ -53,6 +53,7 @@ export default function AdminDashboard() {
 
   const quick = [
     { label: 'Nuevo artículo', href: '/admin/blog/new', icon: FileText, desc: 'Crear un post para el blog' },
+    { label: 'Foro de diálogo', href: '/admin/forum', icon: MessageSquare, desc: 'Moderar discusiones y reportes' },
     { label: 'Configuración del sitio', href: '/admin/settings', icon: Settings, desc: 'Editar textos y secciones' },
     { label: 'Ver blog público', href: '/blog', icon: Eye, desc: 'Previsualizar el blog', external: true },
   ];
@@ -82,7 +83,7 @@ export default function AdminDashboard() {
       {/* Quick actions */}
       <div>
         <h2 className="text-lg font-semibold text-white mb-4">Acciones rápidas</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {quick.map(({ label, href, icon: Icon, desc, external }) => (
             external ? (
               <a

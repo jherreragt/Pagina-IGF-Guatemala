@@ -117,3 +117,87 @@ export type EventRegistration = {
   accepted_data: boolean;
   created_at: string;
 };
+
+// ── Forum types ────────────────────────────────────────────────────────
+export type ForumCategory = {
+  id: string;
+  name: string;
+  slug: string;
+  description: string;
+  icon_name: string;
+  color: string;
+  sort_order: number;
+  is_active: boolean;
+  thread_count: number;
+  created_at: string;
+  updated_at: string;
+};
+
+export type ForumThread = {
+  id: string;
+  category_id: string;
+  author_id: string | null;
+  author_name: string;
+  title: string;
+  body: string;
+  is_closed: boolean;
+  is_featured: boolean;
+  is_pinned: boolean;
+  view_count: number;
+  reply_count: number;
+  reaction_count: number;
+  last_activity_at: string;
+  created_at: string;
+  updated_at: string;
+};
+
+export type ForumPost = {
+  id: string;
+  thread_id: string;
+  author_id: string | null;
+  author_name: string;
+  body: string;
+  is_hidden: boolean;
+  reaction_count: number;
+  created_at: string;
+  updated_at: string;
+};
+
+export type ForumReaction = {
+  id: string;
+  user_id: string;
+  target_type: 'thread' | 'post';
+  target_id: string;
+  reaction: string;
+  created_at: string;
+};
+
+export type ForumReport = {
+  id: string;
+  reporter_id: string | null;
+  target_type: 'thread' | 'post';
+  target_id: string;
+  reason: string;
+  status: 'open' | 'resolved' | 'dismissed';
+  admin_notes: string;
+  resolved_by: string | null;
+  created_at: string;
+  resolved_at: string;
+};
+
+export type ForumRule = {
+  id: string;
+  title: string;
+  description: string;
+  sort_order: number;
+  is_active: boolean;
+  created_at: string;
+  updated_at: string;
+};
+
+export type ForumAdmin = {
+  id: string;
+  user_id: string;
+  display_name: string;
+  created_at: string;
+};

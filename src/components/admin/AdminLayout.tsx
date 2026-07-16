@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import {
   Globe, LayoutDashboard, FileText, Settings, LogOut,
   ChevronLeft, Menu, ExternalLink, Calendar,
-  Users, Download, ClipboardList, ChevronDown, ChevronRight
+  Users, Download, ClipboardList, ChevronDown, ChevronRight, MessageSquare
 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 
@@ -17,6 +17,15 @@ const eventSubItems = [
   { label: 'Registros', href: '/admin/event/registrations' },
 ];
 
+const forumSubItems = [
+  { label: 'Resumen', href: '/admin/forum' },
+  { label: 'Categorías', href: '/admin/forum/categorias' },
+  { label: 'Discusiones', href: '/admin/forum/discusiones' },
+  { label: 'Reportes', href: '/admin/forum/reportes' },
+  { label: 'Reglas', href: '/admin/forum/reglas' },
+  { label: 'Usuarios', href: '/admin/forum/usuarios' },
+];
+
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const { user, signOut } = useAuth();
   const location = useLocation();
@@ -25,6 +34,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const eventActive = location.pathname.startsWith('/admin/event');
+  const forumActive = location.pathname.startsWith('/admin/forum');
 
   async function handleSignOut() {
     await signOut();
@@ -91,6 +101,34 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             )}
           </div>
 
+          {/* Foro section */}
+          <div>
+            <Link to="/admin/forum"
+              className={`flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors ${forumActive ? 'bg-sky-600/20 text-sky-300' : 'text-slate-400 hover:text-white hover:bg-white/5'}`}>
+              <MessageSquare className="w-5 h-5 flex-shrink-0" />
+              {expanded && (
+                <>
+                  <span className="text-sm font-medium flex-1">Foro de Diálogo</span>
+                  {forumActive ? <ChevronDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
+                </>
+              )}
+            </Link>
+
+            {expanded && forumActive && (
+              <div className="ml-4 mt-0.5 pl-4 border-l border-white/10 space-y-0.5">
+                {forumSubItems.map(({ label, href }) => {
+                  const active = location.pathname === href;
+                  return (
+                    <Link key={href} to={href}
+                      className={`flex items-center px-3 py-2 rounded-lg text-xs transition-colors ${active ? 'text-white bg-sky-600/20 font-semibold' : 'text-slate-500 hover:text-slate-200 hover:bg-white/5'}`}>
+                      {label}
+                    </Link>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+
           {/* Settings */}
           {(() => {
             const active = location.pathname === '/admin/settings';
@@ -125,6 +163,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     const sub = eventSubItems.find((s) => location.pathname === s.href);
     if (sub) return `Evento — ${sub.label}`;
     if (location.pathname.startsWith('/admin/blog')) return 'Blog';
+    if (location.pathname === '/admin/forum') return 'Foro de Diálogo';
+    const fSub = forumSubItems.find((s) => location.pathname === s.href);
+    if (fSub) return `Foro — ${fSub.label}`;
     if (location.pathname === '/admin/settings') return 'Configuración';
     return 'Dashboard';
   })();

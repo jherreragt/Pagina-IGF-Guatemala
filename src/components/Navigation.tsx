@@ -5,6 +5,7 @@ import { Menu, X, Globe, ChevronDown, Twitter, Youtube, Linkedin, Mail } from 'l
 const primaryLinks = [
   { label: 'Inicio', href: '/' },
   { label: 'Evento Anual', href: '/evento' },
+  { label: 'Foro', href: '/foro' },
   { label: 'Blog', href: '/blog' },
   { label: 'Contacto', href: '/contacto' },
 ];
