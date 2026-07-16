@@ -7,6 +7,7 @@ import {
 import { useSiteSettings } from '../hooks/useSiteSettings';
 import { useEffect, useState } from 'react';
 import { supabase, BlogPost } from '../lib/supabase';
+import Countdown from '../components/Countdown';
 
 const whyMatters = [
   { icon: Wifi, label: 'Brecha digital' },
@@ -350,6 +351,10 @@ export default function Home() {
               <div className="flex flex-wrap gap-x-6 gap-y-2 text-sky-100/80 text-sm mb-8">
                 <span className="flex items-center gap-1.5"><Calendar className="w-3.5 h-3.5 text-sky-300" />{settings.event_date}</span>
                 <span className="flex items-center gap-1.5"><Globe className="w-3.5 h-3.5 text-sky-300" />{settings.event_location}</span>
+              </div>
+
+              <div className="mb-8">
+                <Countdown targetDate={new Date(settings.event_datetime_iso)} />
               </div>
               <div className="flex gap-3">
                 <Link to="/evento" className="inline-flex items-center gap-2 px-7 py-3.5 bg-white text-sky-700 font-bold rounded-xl hover:bg-sky-50 transition-all hover:scale-[1.02] shadow-lg">
