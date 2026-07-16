@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import {
-  Globe, Users, ShieldCheck, Wifi, Scale, Eye, BookOpen, MessageSquare,
+  Globe, Users, ShieldCheck, Wifi, Scale, BookOpen, MessageSquare,
   ArrowRight, ChevronRight, Building2, GraduationCap, Laptop, Heart,
   Lightbulb, TrendingUp, Lock, Database, Zap, Radio, Calendar, User
 } from 'lucide-react';
@@ -472,43 +472,6 @@ export default function Home() {
           playlistId={settings.youtube_playlist_id || undefined}
           channelName={settings.youtube_channel_name || 'IGF Guatemala'}
         />
-      </section>
-
-      {/* ── TRANSPARENCIA ── */}
-      <section className="py-24 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 100%)' }}>
-        <div className="absolute inset-0 bg-grid pointer-events-none" />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <p className="section-label-dark">
-                <span className="w-5 h-px bg-sky-500" />
-                Gobernanza abierta
-              </p>
-              <h2 className="section-title-dark text-4xl sm:text-5xl mb-5">Transparencia y Legitimidad</h2>
-              <p className="text-slate-400 text-[15px] leading-relaxed mb-8">
-                El IGF Guatemala opera bajo principios de transparencia total. Accede al comité organizador, criterios de participación, código de conducta y memorias del proceso.
-              </p>
-              <Link to="/transparencia" className="inline-flex items-center gap-2 px-6 py-3 border border-sky-500/40 text-sky-300 font-semibold rounded-xl hover:border-sky-400 hover:bg-sky-400/10 transition-all">
-                Ver sección de transparencia
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-            </div>
-            <div className="grid grid-cols-2 gap-3">
-              {[
-                { icon: Users, label: 'Comité Organizador', desc: 'Quiénes coordinan el proceso' },
-                { icon: BookOpen, label: 'Código de Conducta', desc: 'Normas de convivencia' },
-                { icon: Eye, label: 'Criterios', desc: 'Cómo se seleccionan sesiones' },
-                { icon: Globe, label: 'Aliados', desc: 'Organizaciones de apoyo' },
-              ].map(({ icon: Icon, label, desc }) => (
-                <div key={label} className="card-dark p-5">
-                  <Icon className="w-6 h-6 text-sky-400 mb-3" />
-                  <h4 className="font-semibold text-white text-sm mb-1">{label}</h4>
-                  <p className="text-slate-400 text-xs leading-relaxed">{desc}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
       </section>
 
       {/* ── BLOG ── */}
