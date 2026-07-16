@@ -87,7 +87,11 @@ export default function Navigation() {
 
             {/* Brand */}
             <Link to="/" className="flex items-center flex-shrink-0">
-              <img src="/igflogo2.png" alt="IGF Guatemala" className="h-10 w-auto" />
+              <img
+                src="/IGF-aprobado-invertido-blanco-e1730905954692.png"
+                alt="IGF Guatemala"
+                className="h-12 w-auto"
+              />
             </Link>
 
             {/* Desktop nav */}

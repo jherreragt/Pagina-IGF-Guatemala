@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Globe, Mail, Twitter, Youtube, Facebook, ExternalLink, ArrowRight } from 'lucide-react';
+import { Mail, Twitter, Youtube, Facebook, ExternalLink, ArrowRight } from 'lucide-react';
 
 export default function Footer() {
   return (
@@ -9,14 +9,12 @@ export default function Footer() {
 
           {/* Brand */}
           <div className="lg:col-span-2">
-            <div className="flex items-center gap-2.5 mb-5">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-sky-400 to-blue-600 flex items-center justify-center shadow-md">
-                <Globe className="w-5 h-5 text-white" strokeWidth={1.8} />
-              </div>
-              <div>
-                <div className="font-display font-bold text-white text-sm tracking-tight">IGF Guatemala</div>
-                <div className="text-sky-500 text-xs font-medium">Internet Governance Forum</div>
-              </div>
+            <div className="mb-5">
+              <img
+                src="/IGF-aprobado-invertido-blanco-e1730905954692.png"
+                alt="IGF Guatemala"
+                className="h-20 w-auto"
+              />
             </div>
             <p className="text-slate-500 text-sm leading-relaxed mb-6 max-w-xs">
               Un espacio abierto, inclusivo y multiactor para dialogar sobre el futuro de Internet en Guatemala.
