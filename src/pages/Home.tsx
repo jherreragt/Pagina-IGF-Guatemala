@@ -40,17 +40,6 @@ const stakeholders = [
   { icon: Radio, label: 'Medios', desc: 'Comunicadores digitales' },
 ];
 
-const themes = [
-  { icon: Lightbulb, title: 'Inteligencia artificial, datos y gobernanza digital', num: '01' },
-  { icon: Scale, title: 'Derechos digitales, democracia y libertad de expresión', num: '02' },
-  { icon: ShieldCheck, title: 'Ciberseguridad, confianza e infraestructura crítica', num: '03' },
-  { icon: Wifi, title: 'Acceso significativo e inclusión digital', num: '04' },
-  { icon: Database, title: 'Infraestructura pública digital e interoperabilidad', num: '05' },
-  { icon: Zap, title: 'Juventudes, educación digital y futuro del trabajo', num: '06' },
-  { icon: Radio, title: 'Integridad informativa y espacio cívico digital', num: '07' },
-  { icon: TrendingUp, title: 'Innovación, economía digital y desarrollo sostenible', num: '08' },
-];
-
 const pastEditions = [
   { year: '2023', title: 'IGF Guatemala 2023', lema: 'Por una Internet libre, segura y confiable', date: 'Octubre 2023' },
   { year: '2022', title: 'IGF Guatemala 2022', lema: 'Gobernanza de Internet para el desarrollo sostenible', date: 'Noviembre 2022' },
@@ -290,40 +279,6 @@ export default function Home() {
                 Conoce la comunidad
                 <ChevronRight className="w-4 h-4" />
               </Link>
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* ── EJES TEMÁTICOS ── */}
-      {settings.show_themes === 'true' && (
-        <section className="py-24 bg-slate-50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-14">
-              <div>
-                <p className="section-label">
-                  <span className="w-5 h-px bg-sky-500" />
-                  Agenda permanente
-                </p>
-                <h2 className="section-title text-4xl sm:text-5xl">Ejes Temáticos</h2>
-              </div>
-              <Link to="/ejes" className="btn-ghost text-sm self-start lg:self-auto flex-shrink-0">
-                Ver todos los ejes
-                <ChevronRight className="w-4 h-4" />
-              </Link>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              {themes.map(({ icon: Icon, title, num }) => (
-                <div key={num} className="card group p-6 hover:-translate-y-1 cursor-default">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-10 h-10 rounded-xl bg-sky-50 group-hover:bg-sky-100 flex items-center justify-center flex-shrink-0 transition-colors">
-                      <Icon className="w-5 h-5 text-sky-600" />
-                    </div>
-                    <span className="text-xs font-black font-mono text-sky-400/50 tracking-widest">{num}</span>
-                  </div>
-                  <p className="text-slate-700 font-semibold text-sm leading-relaxed">{title}</p>
-                </div>
-              ))}
             </div>
           </div>
         </section>
