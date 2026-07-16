@@ -32,6 +32,8 @@ import EventAllies from './pages/admin/EventAllies';
 import EventResources from './pages/admin/EventResources';
 import EventRegistrations from './pages/admin/EventRegistrations';
 import EventEditions from './pages/admin/EventEditions';
+import YouTubeVideosAdmin from './pages/admin/YouTubeVideos';
+import ContactSubmissionsAdmin from './pages/admin/ContactSubmissions';
 
 // Forum pages
 import Forum from './pages/Forum';
@@ -117,6 +119,8 @@ export default function App() {
           <Route path="/admin/event/resources" element={<ProtectedRoute><AdminLayout><EventResources /></AdminLayout></ProtectedRoute>} />
           <Route path="/admin/event/registrations" element={<ProtectedRoute><AdminLayout><EventRegistrations /></AdminLayout></ProtectedRoute>} />
           <Route path="/admin/event/editions" element={<ProtectedRoute><AdminLayout><EventEditions /></AdminLayout></ProtectedRoute>} />
+          <Route path="/admin/videos" element={<ProtectedRoute><AdminLayout><YouTubeVideosAdmin /></AdminLayout></ProtectedRoute>} />
+          <Route path="/admin/mensajes" element={<ProtectedRoute><AdminLayout><ContactSubmissionsAdmin /></AdminLayout></ProtectedRoute>} />
 
           {/* Forum admin routes */}
           <Route path="/admin/forum" element={<ProtectedRoute><AdminLayout><ForumDashboard /></AdminLayout></ProtectedRoute>} />

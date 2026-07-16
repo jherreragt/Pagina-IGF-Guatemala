@@ -201,3 +201,27 @@ export type ForumAdmin = {
   display_name: string;
   created_at: string;
 };
+
+export type YouTubeVideo = {
+  id: string;
+  youtube_id: string;
+  title: string;
+  description: string | null;
+  thumbnail_url: string | null;
+  category: string;
+  sort_order: number;
+  published: boolean;
+  created_at: string;
+  updated_at: string;
+};
+
+export type ContactSubmission = {
+  id: string;
+  name: string;
+  email: string;
+  org: string | null;
+  subject: string;
+  message: string;
+  status: string;
+  created_at: string;
+};
