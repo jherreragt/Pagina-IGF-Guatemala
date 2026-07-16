@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Globe, ChevronDown, Twitter, Youtube, Linkedin, Mail } from 'lucide-react';
+import { Menu, X, Twitter, Youtube, Facebook, Mail } from 'lucide-react';
 
 const primaryLinks = [
   { label: 'Inicio', href: '/' },
@@ -10,27 +10,15 @@ const primaryLinks = [
   { label: 'Contacto', href: '/contacto' },
 ];
 
-const moreLinks = [
-  { label: 'Sobre IGF Guatemala', href: '/sobre' },
-  { label: 'Principios', href: '/principios' },
-  { label: 'Comunidad', href: '/comunidad' },
-  { label: 'Ejes Temáticos', href: '/ejes' },
-  { label: 'Recursos', href: '/recursos' },
-  { label: 'Transparencia', href: '/transparencia' },
-];
-
 const socialLinks = [
-  { icon: Twitter, href: '#', label: 'Twitter' },
-  { icon: Youtube, href: '#', label: 'YouTube' },
-  { icon: Linkedin, href: '#', label: 'LinkedIn' },
-  { icon: Mail, href: 'mailto:info@igfguatemala.org', label: 'Correo' },
+  { icon: Youtube, href: 'https://www.youtube.com/@IGFGuatemalaISOCGT', label: 'YouTube' },
+  { icon: Facebook, href: 'https://www.facebook.com/share/1FvujVBQMp/', label: 'Facebook' },
+  { icon: Twitter, href: 'https://twitter.com/IGFGuatemala', label: 'Twitter' },
+  { icon: Mail, href: 'mailto:igf.guatemala.isocgt@gmail.com', label: 'Correo' },
 ];
-
-const allLinks = [...primaryLinks, ...moreLinks];
 
 export default function Navigation() {
   const [open, setOpen] = useState(false);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
 
@@ -42,12 +30,10 @@ export default function Navigation() {
 
   useEffect(() => {
     setOpen(false);
-    setDropdownOpen(false);
   }, [location.pathname]);
 
   const isHome = location.pathname === '/';
   const solid = scrolled || !isHome;
-  const isMoreActive = moreLinks.some(l => location.pathname === l.href);
 
   return (
     <>
@@ -116,40 +102,6 @@ export default function Navigation() {
                 );
               })}
 
-              {/* More dropdown */}
-              <div className="relative">
-                <button
-                  onClick={() => setDropdownOpen(!dropdownOpen)}
-                  onBlur={() => setTimeout(() => setDropdownOpen(false), 150)}
-                  className={`flex items-center gap-1 px-3.5 py-2 rounded-lg text-sm font-medium transition-all duration-150 ${
-                    isMoreActive
-                      ? 'text-white bg-white/10'
-                      : 'text-blue-100/80 hover:text-white hover:bg-white/[0.07]'
-                  }`}
-                >
-                  Más
-                  <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-150 ${dropdownOpen ? 'rotate-180' : ''}`} />
-                </button>
-
-                {dropdownOpen && (
-                  <div className="absolute top-full right-0 mt-1.5 w-52 bg-blue-800/98 backdrop-blur-xl border border-white/10 rounded-xl shadow-2xl shadow-black/30 py-1.5 animate-fade-in">
-                    {moreLinks.map((link) => {
-                      const active = location.pathname === link.href;
-                      return (
-                        <Link
-                          key={link.href}
-                          to={link.href}
-                          className={`flex items-center px-4 py-2.5 text-sm transition-colors duration-100 ${
-                            active ? 'text-sky-300 bg-white/5' : 'text-blue-100/80 hover:text-white hover:bg-white/5'
-                          }`}
-                        >
-                          {link.label}
-                        </Link>
-                      );
-                    })}
-                  </div>
-                )}
-              </div>
             </div>
 
             {/* CTA + hamburger */}
@@ -184,7 +136,7 @@ export default function Navigation() {
           className={`absolute top-16 sm:top-24 left-0 right-0 bg-blue-800/98 backdrop-blur-xl border-b border-white/10 shadow-2xl transition-all duration-300 ${open ? 'translate-y-0 opacity-100' : '-translate-y-4 opacity-0'}`}
         >
           <div className="max-w-7xl mx-auto px-4 py-4 grid grid-cols-2 gap-1">
-            {allLinks.map((link) => {
+            {primaryLinks.map((link) => {
               const active = location.pathname === link.href;
               return (
                 <Link
