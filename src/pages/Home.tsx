@@ -8,6 +8,7 @@ import { useSiteSettings } from '../hooks/useSiteSettings';
 import { useEffect, useState } from 'react';
 import { supabase, BlogPost } from '../lib/supabase';
 import Countdown from '../components/Countdown';
+import YouTubeWebinars from '../components/YouTubeWebinars';
 
 const whyMatters = [
   { icon: Wifi, label: 'Brecha digital' },
@@ -463,6 +464,15 @@ export default function Home() {
           </div>
         </section>
       )}
+
+      {/* ── WEBINARS YOUTUBE ── */}
+      <section className="py-24 bg-white">
+        <YouTubeWebinars
+          channelId={settings.youtube_channel_id || undefined}
+          playlistId={settings.youtube_playlist_id || undefined}
+          channelName={settings.youtube_channel_name || 'IGF Guatemala'}
+        />
+      </section>
 
       {/* ── TRANSPARENCIA ── */}
       <section className="py-24 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 100%)' }}>

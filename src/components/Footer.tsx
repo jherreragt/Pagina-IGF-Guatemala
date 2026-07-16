@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Globe, Mail, Twitter, Youtube, Linkedin, ExternalLink, ArrowRight } from 'lucide-react';
+import { Globe, Mail, Twitter, Youtube, Facebook, ExternalLink, ArrowRight } from 'lucide-react';
 
 export default function Footer() {
   return (
@@ -30,10 +30,10 @@ export default function Footer() {
             </Link>
             <div className="flex gap-2 mt-5">
               {[
-                { icon: Twitter, label: 'Twitter' },
-                { icon: Youtube, label: 'YouTube' },
-                { icon: Linkedin, label: 'LinkedIn' },
-                { icon: Mail, label: 'Email', href: 'mailto:info@igfguatemala.org' },
+                { icon: Youtube, label: 'YouTube', href: 'https://www.youtube.com/@IGFGuatemalaISOCGT' },
+                { icon: Facebook, label: 'Facebook', href: 'https://www.facebook.com/share/1FvujVBQMp/' },
+                { icon: Twitter, label: 'Twitter', href: 'https://twitter.com/IGFGuatemala' },
+                { icon: Mail, label: 'Email', href: 'mailto:igf.guatemala.isocgt@gmail.com' },
               ].map(({ icon: Icon, label, href }) => (
                 <a
                   key={label}

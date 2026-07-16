@@ -24,15 +24,15 @@ const DEFAULTS: SettingsMap = {
   show_resources_cta: 'true',
   show_blog: 'true',
   show_social_embeds: 'true',
-  contact_email: 'info@igfguatemala.org',
+  contact_email: 'igf.guatemala.isocgt@gmail.com',
   contact_address: 'Ciudad de Guatemala, Guatemala',
   contact_twitter: '@IGFGuatemala',
-  contact_youtube: 'IGF Guatemala',
-  facebook_page_url: '',
+  contact_youtube: 'IGF Guatemala ISOCGT',
+  facebook_page_url: 'https://www.facebook.com/share/1FvujVBQMp/',
   facebook_page_name: 'IGF Guatemala',
-  youtube_channel_id: '',
+  youtube_channel_id: 'https://www.youtube.com/@IGFGuatemalaISOCGT',
   youtube_playlist_id: '',
-  youtube_channel_name: 'IGF Guatemala',
+  youtube_channel_name: 'IGF Guatemala ISOCGT',
 };
 
 export function useSiteSettings() {

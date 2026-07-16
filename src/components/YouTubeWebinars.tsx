@@ -1,11 +1,5 @@
-import { Youtube, ExternalLink } from 'lucide-react';
 import { useState } from 'react';
-
-interface YouTubeWebinarsProps {
-  channelId?: string;
-  playlistId?: string;
-  channelName?: string;
-}
+import { Youtube, ExternalLink, X, Play } from 'lucide-react';
 
 interface Video {
   id: string;
@@ -13,22 +7,29 @@ interface Video {
   thumbnail: string;
 }
 
-const PLACEHOLDER_VIDEOS: Video[] = [
-  { id: 'dQw4w9WgXcQ', title: 'Webinar: Introducción a la gobernanza de Internet', thumbnail: 'https://images.pexels.com/photos/2776222/pexels-photo-2776222.jpeg?auto=compress&cs=tinysrgb&w=400' },
-  { id: 'dQw4w9WgXcQ', title: 'Foro: Derechos digitales en Guatemala', thumbnail: 'https://images.pexels.com/photos/267669/pexels-photo-267669.jpeg?auto=compress&cs=tinysrgb&w=400' },
-  { id: 'dQw4w9WgXcQ', title: 'Conversatorio: IA y sociedad civil', thumbnail: 'https://images.pexels.com/photos/1181271/pexels-photo-1181271.jpeg?auto=compress&cs=tinysrgb&w=400' },
-];
-
-function buildEmbedUrl(playlistId?: string, channelId?: string) {
-  if (playlistId) {
-    return `https://www.youtube.com/embed/videoseries?list=${playlistId}`;
-  }
-  if (channelId) {
-    const id = channelId.startsWith('@') ? channelId : `UC${channelId.replace(/^UC/, '')}`;
-    return `https://www.youtube.com/embed?listType=user_uploads&list=${id}`;
-  }
-  return '';
+interface YouTubeWebinarsProps {
+  channelId?: string;
+  playlistId?: string;
+  channelName?: string;
 }
+
+const PLACEHOLDER_VIDEOS: Video[] = [
+  {
+    id: 'dQw4w9WgXcQ',
+    title: 'Webinar: Introducción a la gobernanza de Internet',
+    thumbnail: 'https://images.pexels.com/photos/2776222/pexels-photo-2776222.jpeg?auto=compress&cs=tinysrgb&w=600',
+  },
+  {
+    id: 'dQw4w9WgXcQ',
+    title: 'Foro: Derechos digitales en Guatemala',
+    thumbnail: 'https://images.pexels.com/photos/267669/pexels-photo-267669.jpeg?auto=compress&cs=tinysrgb&w=600',
+  },
+  {
+    id: 'dQw4w9WgXcQ',
+    title: 'Conversatorio: IA y sociedad civil',
+    thumbnail: 'https://images.pexels.com/photos/1181271/pexels-photo-1181271.jpeg?auto=compress&cs=tinysrgb&w=600',
+  },
+];
 
 function buildChannelUrl(channelId?: string, playlistId?: string) {
   if (playlistId) return `https://www.youtube.com/playlist?list=${playlistId}`;
@@ -48,91 +49,125 @@ export default function YouTubeWebinars({
   const [selected, setSelected] = useState<Video | null>(null);
 
   const hasConfig = Boolean(channelId || playlistId);
-  const embedUrl = selected
-    ? `https://www.youtube.com/embed/${selected.id}`
-    : buildEmbedUrl(playlistId, channelId);
   const channelUrl = buildChannelUrl(channelId, playlistId);
+  const videos = PLACEHOLDER_VIDEOS;
 
   return (
-    <div className="rounded-2xl overflow-hidden border border-slate-200 bg-white">
-      {/* Player */}
-      <div className="relative w-full bg-slate-900" style={{ aspectRatio: '16 / 9' }}>
-        {hasConfig || selected ? (
-          <iframe
-            src={embedUrl}
-            title={selected?.title ?? `Webinars — ${channelName}`}
-            className="absolute inset-0 w-full h-full"
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          />
-        ) : (
-          <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-6">
-            <div className="w-14 h-14 rounded-2xl bg-red-100 flex items-center justify-center mb-3">
-              <Youtube className="w-7 h-7 text-red-600" />
-            </div>
-            <p className="text-slate-300 text-sm font-medium">Webinars anteriores</p>
-            <p className="text-slate-400 text-xs mt-1 max-w-xs">
-              Próximamente compartiremos aquí las grabaciones de nuestros webinars previos.
+    <>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Header */}
+        <div className="flex items-end justify-between mb-10 flex-wrap gap-4">
+          <div>
+            <p className="section-label">
+              <span className="w-5 h-px bg-sky-500" />
+              Multimedia
             </p>
+            <h2 className="section-title text-4xl sm:text-5xl">Webinars y videos previos</h2>
+            <p className="text-slate-500 text-[15px] mt-3 max-w-xl">
+              Revive las conversaciones, paneles y webinars del IGF Guatemala sobre gobernanza de Internet.
+            </p>
+          </div>
+          {hasConfig && channelUrl && (
+            <a
+              href={channelUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-red-600 hover:bg-red-500 text-white text-sm font-semibold rounded-xl transition-all hover:scale-[1.02] shadow-md shadow-red-500/20"
+            >
+              <Youtube className="w-4 h-4" />
+              Ver canal completo
+              <ExternalLink className="w-3.5 h-3.5" />
+            </a>
+          )}
+        </div>
+
+        {/* Video grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {videos.map((video) => (
+            <button
+              key={video.title}
+              onClick={() => setSelected(video)}
+              className="group text-left rounded-2xl overflow-hidden bg-white border border-slate-100 hover:border-sky-200 hover:shadow-card-hover transition-all hover:-translate-y-1"
+            >
+              <div className="relative h-48 overflow-hidden">
+                <img
+                  src={video.thumbnail}
+                  alt={video.title}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/70 via-slate-900/10 to-transparent" />
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="w-14 h-14 rounded-full bg-red-600 group-hover:bg-red-500 group-hover:scale-110 flex items-center justify-center shadow-xl transition-all duration-300">
+                    <Play className="w-6 h-6 text-white ml-0.5 fill-white" />
+                  </div>
+                </div>
+                <div className="absolute bottom-3 left-3 flex items-center gap-1.5">
+                  <Youtube className="w-4 h-4 text-white" />
+                  <span className="text-white text-xs font-semibold">{channelName}</span>
+                </div>
+              </div>
+              <div className="p-5">
+                <h3 className="font-bold text-blue-950 text-[15px] leading-snug group-hover:text-sky-700 transition-colors line-clamp-2">
+                  {video.title}
+                </h3>
+              </div>
+            </button>
+          ))}
+        </div>
+
+        {!hasConfig && (
+          <div className="mt-8 text-center">
+            <a
+              href="https://www.youtube.com/@IGFGuatemala"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-sky-600 hover:text-sky-700 text-sm font-semibold transition-colors"
+            >
+              <Youtube className="w-4 h-4" />
+              Visitar canal de YouTube
+              <ExternalLink className="w-3.5 h-3.5" />
+            </a>
           </div>
         )}
       </div>
 
-      {/* Footer with channel link */}
-      {hasConfig && channelUrl && (
-        <div className="flex items-center justify-between px-4 py-3 border-t border-slate-100">
-          <div className="flex items-center gap-2">
-            <Youtube className="w-5 h-5 text-red-600" />
-            <span className="text-sm font-semibold text-blue-950">{channelName}</span>
-          </div>
-          <a
-            href={channelUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 text-xs font-semibold text-sky-600 hover:text-sky-700 transition-colors"
+      {/* Modal player */}
+      {selected && (
+        <div
+          className="fixed inset-0 z-[70] flex items-center justify-center p-4 animate-fade-in"
+          onClick={() => setSelected(null)}
+        >
+          <div className="absolute inset-0 bg-slate-950/85 backdrop-blur-sm" />
+          <div
+            className="relative w-full max-w-4xl bg-slate-900 rounded-2xl overflow-hidden shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
           >
-            Ver canal
-            <ExternalLink className="w-3 h-3" />
-          </a>
-        </div>
-      )}
-
-      {/* Placeholder video list (shown when no channel configured yet) */}
-      {!hasConfig && (
-        <div className="p-4 border-t border-slate-100">
-          <p className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-3">
-            Webinars destacados
-          </p>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-            {PLACEHOLDER_VIDEOS.map((v) => (
-              <button
-                key={v.title}
-                onClick={() => setSelected(v)}
-                className="group text-left rounded-xl overflow-hidden border border-slate-100 hover:border-sky-200 hover:shadow-card transition-all"
-              >
-                <div className="relative h-24 overflow-hidden">
-                  <img
-                    src={v.thumbnail}
-                    alt={v.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                  <div className="absolute inset-0 bg-slate-900/30 group-hover:bg-slate-900/20 transition-colors flex items-center justify-center">
-                    <div className="w-9 h-9 rounded-full bg-red-600 group-hover:bg-red-500 flex items-center justify-center shadow-lg transition-colors">
-                      <svg viewBox="0 0 24 24" className="w-4 h-4 text-white ml-0.5" fill="currentColor">
-                        <path d="M8 5v14l11-7z" />
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-                <p className="text-xs font-medium text-slate-700 p-2.5 line-clamp-2 group-hover:text-sky-700 transition-colors">
-                  {v.title}
-                </p>
-              </button>
-            ))}
+            <button
+              onClick={() => setSelected(null)}
+              className="absolute top-3 right-3 z-10 w-9 h-9 rounded-lg bg-slate-800/80 hover:bg-slate-700 flex items-center justify-center transition-colors"
+            >
+              <X className="w-4 h-4 text-white" />
+            </button>
+            <div className="relative w-full bg-black" style={{ aspectRatio: '16 / 9' }}>
+              <iframe
+                src={`https://www.youtube.com/embed/${selected.id}?autoplay=1`}
+                title={selected.title}
+                className="absolute inset-0 w-full h-full"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            </div>
+            <div className="p-5">
+              <div className="flex items-center gap-2 mb-2">
+                <Youtube className="w-5 h-5 text-red-600" />
+                <span className="text-slate-300 text-sm font-semibold">{channelName}</span>
+              </div>
+              <h3 className="text-white font-bold text-lg">{selected.title}</h3>
+            </div>
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 }
