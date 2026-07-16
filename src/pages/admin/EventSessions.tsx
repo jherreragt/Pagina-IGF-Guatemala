@@ -19,7 +19,7 @@ const AXES = [
 
 const EMPTY: Omit<EventSession, 'id' | 'created_at' | 'edition_id'> = {
   title: '', description: '', session_type: 'Panel', axis: '', start_time: '',
-  end_time: '', event_date: '2026-10-15', room: '', speakers_text: '', sort_order: 0, published: true,
+  end_time: '', event_date: '2026-11-05', room: '', speakers_text: '', sort_order: 0, published: true,
 };
 
 export default function EventSessions() {
@@ -56,7 +56,7 @@ export default function EventSessions() {
     setIsNew(false);
     setEditing(s);
     setForm({ title: s.title, description: s.description ?? '', session_type: s.session_type, axis: s.axis ?? '',
-      start_time: s.start_time ?? '', end_time: s.end_time ?? '', event_date: s.event_date ?? '2026-10-15',
+      start_time: s.start_time ?? '', end_time: s.end_time ?? '', event_date: s.event_date ?? '2026-11-05',
       room: s.room ?? '', speakers_text: s.speakers_text ?? '', sort_order: s.sort_order, published: s.published });
     setError('');
   }

@@ -277,7 +277,7 @@ export default function EventEditions() {
                 <input
                   value={form.event_date ?? ''}
                   onChange={(e) => setForm((f) => ({ ...f, event_date: e.target.value }))}
-                  placeholder="15 de octubre de 2027"
+                  placeholder="5 de noviembre de 2027"
                   className="w-full px-3 py-2.5 bg-slate-900 border border-white/10 rounded-xl text-white text-sm focus:outline-none focus:border-sky-500 transition-colors"
                 />
               </div>

@@ -70,7 +70,7 @@ export default function Event() {
   const eventLocation  = edition?.event_location ?? settings.event_location;
   const eventModality  = edition?.event_modality ?? settings.event_modality;
   const eventLema      = edition?.lema           ?? settings.event_lema;
-  const eventDatetimeIso = edition?.datetime_iso ?? settings.event_datetime_iso ?? '2026-10-15T09:00:00';
+  const eventDatetimeIso = edition?.datetime_iso ?? settings.event_datetime_iso ?? '2026-11-05T09:00:00';
   const registrationOpen = edition ? edition.registration_open : settings.event_registration_open === 'true';
   const sessionsOpen     = edition ? edition.sessions_open     : settings.event_sessions_open === 'true';
 
@@ -291,7 +291,7 @@ export default function Event() {
                   { label: 'Apertura de convocatoria', date: '1 de julio 2026' },
                   { label: 'Cierre de convocatoria', date: '31 de agosto 2026' },
                   { label: 'Notificación de resultados', date: '15 de septiembre 2026' },
-                  { label: 'Evento', date: eventDate || '15 de octubre 2026' },
+                  { label: 'Evento', date: eventDate || '5 de noviembre de 2026' },
                 ].map(({ label, date }) => (
                   <li key={label} className="flex justify-between gap-4">
                     <span className="text-blue-200 text-sm">{label}</span>
@@ -702,7 +702,7 @@ export default function Event() {
             <div className="space-y-5">
               {[
                 { icon: MapPin, title: 'Lugar', info: eventLocation || 'Centro de Convenciones, Ciudad de Guatemala' },
-                { icon: Calendar, title: 'Fecha y horario', info: `${eventDate || '15 de octubre de 2026'} · 8:00 AM – 6:00 PM` },
+                { icon: Calendar, title: 'Fecha y horario', info: `${eventDate || '5 de noviembre de 2026'} · 8:00 AM – 6:00 PM` },
                 { icon: Monitor, title: 'Modalidad', info: eventModality || 'Presencial con transmisión en vivo' },
                 { icon: Users, title: 'Accesibilidad', info: 'El recinto es accesible para personas con movilidad reducida. Servicios de interpretación disponibles.' },
               ].map(({ icon: Icon, title, info }) => (
