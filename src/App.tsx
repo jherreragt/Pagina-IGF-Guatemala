@@ -4,6 +4,7 @@ import { AuthProvider } from './contexts/AuthContext';
 import Navigation from './components/Navigation';
 import Footer from './components/Footer';
 import ProtectedRoute from './components/ProtectedRoute';
+import EventPopup from './components/EventPopup';
 import AdminLayout from './components/admin/AdminLayout';
 
 // Public pages
@@ -63,6 +64,7 @@ function PublicLayout({ children }: { children: React.ReactNode }) {
       <Navigation />
       <main className="flex-1">{children}</main>
       <Footer />
+      <EventPopup />
     </div>
   );
 }
