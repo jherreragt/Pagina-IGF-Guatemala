@@ -56,8 +56,8 @@ export default function BlogList() {
     <div className="space-y-6 max-w-5xl">
       <div className="flex items-start justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-white">Blog</h1>
-          <p className="text-slate-400 text-sm mt-1">Gestiona los artículos del blog del IGF Guatemala.</p>
+          <h1 className="text-2xl font-bold text-slate-900">Blog</h1>
+          <p className="text-slate-500 text-sm mt-1">Gestiona los artículos del blog del IGF Guatemala.</p>
         </div>
         <Link
           to="/admin/blog/new"
@@ -77,15 +77,15 @@ export default function BlogList() {
             placeholder="Buscar artículos..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-10 pr-4 py-2.5 bg-slate-800 border border-white/10 rounded-xl text-white placeholder-slate-500 text-sm focus:outline-none focus:border-sky-500 transition-colors"
+            className="w-full pl-10 pr-4 py-2.5 bg-white border border-slate-200 rounded-xl text-slate-900 placeholder-slate-500 text-sm focus:outline-none focus:border-sky-500 transition-colors"
           />
         </div>
-        <div className="flex rounded-xl border border-white/10 overflow-hidden">
+        <div className="flex rounded-xl border border-slate-200 overflow-hidden">
           {(['all', 'published', 'drafts'] as const).map((f) => (
             <button
               key={f}
               onClick={() => setFilter(f)}
-              className={`px-4 py-2.5 text-xs font-medium transition-colors ${filter === f ? 'bg-sky-600 text-white' : 'bg-slate-800 text-slate-400 hover:text-white'}`}
+              className={`px-4 py-2.5 text-xs font-medium transition-colors ${filter === f ? 'bg-sky-600 text-white' : 'bg-white text-slate-500 hover:text-slate-900'}`}
             >
               {f === 'all' ? 'Todos' : f === 'published' ? 'Publicados' : 'Borradores'}
             </button>
@@ -94,13 +94,13 @@ export default function BlogList() {
       </div>
 
       {/* Posts table */}
-      <div className="bg-slate-800/50 border border-white/10 rounded-2xl overflow-hidden">
+      <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden">
         {loading ? (
           <div className="p-10 text-center text-slate-500 text-sm">Cargando artículos...</div>
         ) : filtered.length === 0 ? (
           <div className="p-12 text-center">
             <FileText className="w-10 h-10 text-slate-600 mx-auto mb-3" />
-            <p className="text-slate-400 text-sm">
+            <p className="text-slate-500 text-sm">
               {search || filter !== 'all' ? 'No se encontraron artículos con los filtros seleccionados.' : 'Aún no hay artículos. ¡Crea el primero!'}
             </p>
             {!search && filter === 'all' && (
@@ -110,9 +110,9 @@ export default function BlogList() {
             )}
           </div>
         ) : (
-          <div className="divide-y divide-white/5">
+          <div className="divide-y divide-slate-100">
             {filtered.map((post) => (
-              <div key={post.id} className="flex items-center gap-4 px-5 py-4 hover:bg-white/5 transition-colors">
+              <div key={post.id} className="flex items-center gap-4 px-5 py-4 hover:bg-slate-100 transition-colors">
                 <div className="flex-shrink-0">
                   {post.published
                     ? <CheckCircle2 className="w-4 h-4 text-green-400" />
@@ -120,7 +120,7 @@ export default function BlogList() {
                   }
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-white text-sm font-medium truncate">{post.title}</p>
+                  <p className="text-slate-900 text-sm font-medium truncate">{post.title}</p>
                   <div className="flex items-center gap-3 mt-0.5">
                     <span className="text-slate-500 text-xs">{post.category}</span>
                     <span className="text-slate-600 text-xs">·</span>
@@ -136,20 +136,20 @@ export default function BlogList() {
                   <button
                     onClick={() => togglePublish(post)}
                     title={post.published ? 'Despublicar' : 'Publicar'}
-                    className="p-2 text-slate-400 hover:text-sky-400 hover:bg-sky-500/10 rounded-lg transition-colors"
+                    className="p-2 text-slate-500 hover:text-sky-400 hover:bg-sky-500/10 rounded-lg transition-colors"
                   >
                     {post.published ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                   </button>
                   <Link
                     to={`/admin/blog/edit/${post.id}`}
-                    className="p-2 text-slate-400 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
+                    className="p-2 text-slate-500 hover:text-white hover:bg-slate-100 rounded-lg transition-colors"
                   >
                     <Edit2 className="w-4 h-4" />
                   </Link>
                   <button
                     onClick={() => deletePost(post.id)}
                     disabled={deleting === post.id}
-                    className="p-2 text-slate-400 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-colors disabled:opacity-50"
+                    className="p-2 text-slate-500 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-colors disabled:opacity-50"
                   >
                     <Trash2 className="w-4 h-4" />
                   </button>

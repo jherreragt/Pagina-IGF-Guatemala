@@ -59,8 +59,8 @@ export default function ForumThreads() {
   return (
     <div className="space-y-6 max-w-5xl">
       <div>
-        <h1 className="text-2xl font-bold text-white">Moderar discusiones</h1>
-        <p className="text-slate-400 text-sm mt-1">Fijar, destacar, cerrar o eliminar discusiones del foro.</p>
+        <h1 className="text-2xl font-bold text-slate-900">Moderar discusiones</h1>
+        <p className="text-slate-500 text-sm mt-1">Fijar, destacar, cerrar o eliminar discusiones del foro.</p>
       </div>
 
       {/* Search + filter */}
@@ -72,10 +72,10 @@ export default function ForumThreads() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Buscar discusiones..."
-            className="w-full pl-10 pr-4 py-2 bg-slate-800 border border-white/10 rounded-lg text-white text-sm focus:outline-none focus:border-sky-500"
+            className="w-full pl-10 pr-4 py-2 bg-white border border-slate-200 rounded-lg text-slate-900 text-sm focus:outline-none focus:border-sky-500"
           />
         </div>
-        <div className="flex items-center gap-1 bg-slate-800 rounded-lg p-1">
+        <div className="flex items-center gap-1 bg-white rounded-lg p-1">
           {[
             { key: 'all' as const, label: 'Todas' },
             { key: 'open' as const, label: 'Abiertas' },
@@ -86,7 +86,7 @@ export default function ForumThreads() {
             <button
               key={key}
               onClick={() => setFilter(key)}
-              className={`px-3 py-1.5 rounded-md text-xs font-semibold transition-all ${filter === key ? 'bg-sky-600 text-white' : 'text-slate-400 hover:text-white'}`}
+              className={`px-3 py-1.5 rounded-md text-xs font-semibold transition-all ${filter === key ? 'bg-sky-600 text-white' : 'text-slate-500 hover:text-slate-900'}`}
             >
               {label}
             </button>
@@ -98,17 +98,17 @@ export default function ForumThreads() {
       {loading ? (
         <div className="text-center py-10 text-slate-500 text-sm">Cargando...</div>
       ) : filtered.length === 0 ? (
-        <div className="bg-slate-800/50 border border-white/10 rounded-2xl p-10 text-center">
+        <div className="bg-white border border-slate-200 rounded-2xl p-10 text-center">
           <MessageSquare className="w-8 h-8 text-slate-600 mx-auto mb-3" />
-          <p className="text-slate-400 text-sm">No hay discusiones que coincidan.</p>
+          <p className="text-slate-500 text-sm">No hay discusiones que coincidan.</p>
         </div>
       ) : (
-        <div className="bg-slate-800/50 border border-white/10 rounded-2xl overflow-hidden">
-          <div className="divide-y divide-white/5">
+        <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden">
+          <div className="divide-y divide-slate-100">
             {filtered.map((t) => {
               const cat = catMap[t.category_id];
               return (
-                <div key={t.id} className="px-5 py-4 hover:bg-white/5 transition-colors">
+                <div key={t.id} className="px-5 py-4 hover:bg-slate-100 transition-colors">
                   <div className="flex items-start justify-between gap-3">
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-1 flex-wrap">
@@ -117,7 +117,7 @@ export default function ForumThreads() {
                         {t.is_featured && <span className="inline-flex items-center gap-1 text-xs text-sky-400"><Sparkles className="w-3 h-3" /> Destacada</span>}
                         {t.is_closed && <span className="inline-flex items-center gap-1 text-xs text-red-400"><Lock className="w-3 h-3" /> Cerrada</span>}
                       </div>
-                      <p className="text-white text-sm font-medium truncate">{t.title}</p>
+                      <p className="text-slate-900 text-sm font-medium truncate">{t.title}</p>
                       <div className="flex items-center gap-4 mt-2 text-xs text-slate-500">
                         <span>{t.author_name}</span>
                         <span className="flex items-center gap-1"><Reply className="w-3 h-3" />{t.reply_count}</span>
@@ -126,16 +126,16 @@ export default function ForumThreads() {
                       </div>
                     </div>
                     <div className="flex items-center gap-1 flex-shrink-0">
-                      <button onClick={() => togglePinned(t)} title="Fijar/soltar" className={`w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${t.is_pinned ? 'bg-amber-500/20 text-amber-400' : 'text-slate-400 hover:text-amber-400 hover:bg-amber-500/10'}`}>
+                      <button onClick={() => togglePinned(t)} title="Fijar/soltar" className={`w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${t.is_pinned ? 'bg-amber-500/20 text-amber-400' : 'text-slate-500 hover:text-amber-400 hover:bg-amber-500/10'}`}>
                         <Pin className="w-4 h-4" />
                       </button>
-                      <button onClick={() => toggleFeatured(t)} title="Destacar" className={`w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${t.is_featured ? 'bg-sky-500/20 text-sky-400' : 'text-slate-400 hover:text-sky-400 hover:bg-sky-500/10'}`}>
+                      <button onClick={() => toggleFeatured(t)} title="Destacar" className={`w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${t.is_featured ? 'bg-sky-500/20 text-sky-400' : 'text-slate-500 hover:text-sky-400 hover:bg-sky-500/10'}`}>
                         <Sparkles className="w-4 h-4" />
                       </button>
-                      <button onClick={() => toggleClosed(t)} title="Cerrar/abrir" className={`w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${t.is_closed ? 'bg-red-500/20 text-red-400' : 'text-slate-400 hover:text-red-400 hover:bg-red-500/10'}`}>
+                      <button onClick={() => toggleClosed(t)} title="Cerrar/abrir" className={`w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${t.is_closed ? 'bg-red-500/20 text-red-400' : 'text-slate-500 hover:text-red-400 hover:bg-red-500/10'}`}>
                         <Lock className="w-4 h-4" />
                       </button>
-                      <button onClick={() => handleDelete(t)} title="Eliminar" className="w-8 h-8 rounded-lg flex items-center justify-center text-slate-400 hover:text-red-400 hover:bg-red-500/10 transition-colors">
+                      <button onClick={() => handleDelete(t)} title="Eliminar" className="w-8 h-8 rounded-lg flex items-center justify-center text-slate-500 hover:text-red-400 hover:bg-red-500/10 transition-colors">
                         <Trash2 className="w-4 h-4" />
                       </button>
                     </div>

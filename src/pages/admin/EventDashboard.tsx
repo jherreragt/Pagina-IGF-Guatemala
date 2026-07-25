@@ -52,8 +52,8 @@ export default function EventDashboard() {
   return (
     <div className="space-y-8 max-w-5xl">
       <div>
-        <h1 className="text-2xl font-bold text-white">Evento Anual</h1>
-        <p className="text-slate-400 text-sm mt-1">Administra los contenidos del evento anual IGF Guatemala.</p>
+        <h1 className="text-2xl font-bold text-slate-900">Evento Anual</h1>
+        <p className="text-slate-500 text-sm mt-1">Administra los contenidos del evento anual IGF Guatemala.</p>
       </div>
 
       {!editionLoading && (
@@ -65,9 +65,9 @@ export default function EventDashboard() {
                   <span className="w-2 h-2 rounded-full bg-sky-400 animate-pulse" />
                   <span className="text-sky-400 text-xs font-semibold uppercase tracking-wider">Edición activa</span>
                 </div>
-                <p className="text-white font-bold text-lg">{edition.title}</p>
+                <p className="text-slate-900 font-bold text-lg">{edition.title}</p>
                 {edition.event_date && (
-                  <p className="text-slate-400 text-sm">{edition.event_date} · {edition.event_location}</p>
+                  <p className="text-slate-500 text-sm">{edition.event_date} · {edition.event_location}</p>
                 )}
                 {edition.lema && (
                   <p className="text-slate-500 text-xs italic mt-1">"{edition.lema}"</p>
@@ -75,19 +75,19 @@ export default function EventDashboard() {
               </div>
               <Link
                 to="/admin/event/editions"
-                className="flex items-center gap-1.5 px-4 py-2 bg-sky-600/20 hover:bg-sky-600 border border-sky-500/30 hover:border-transparent text-sky-300 hover:text-white text-sm font-semibold rounded-xl transition-all flex-shrink-0"
+                className="flex items-center gap-1.5 px-4 py-2 bg-sky-600/20 hover:bg-sky-600 border border-sky-500/30 hover:border-transparent text-sky-700 hover:text-slate-900 text-sm font-semibold rounded-xl transition-all flex-shrink-0"
               >
                 <Layers className="w-4 h-4" /> Cambiar edición
               </Link>
             </div>
           ) : (
             <div className="flex items-center justify-between gap-4 flex-wrap">
-              <p className="text-amber-300 text-sm font-medium">
+              <p className="text-amber-700 text-sm font-medium">
                 No hay ninguna edición activa. El sitio público muestra todos los contenidos sin filtrar.
               </p>
               <Link
                 to="/admin/event/editions"
-                className="flex items-center gap-1.5 px-4 py-2 bg-amber-500/20 hover:bg-amber-500 border border-amber-500/30 text-amber-300 hover:text-white text-sm font-semibold rounded-xl transition-all flex-shrink-0"
+                className="flex items-center gap-1.5 px-4 py-2 bg-amber-500/20 hover:bg-amber-500 border border-amber-500/30 text-amber-700 hover:text-slate-900 text-sm font-semibold rounded-xl transition-all flex-shrink-0"
               >
                 <Layers className="w-4 h-4" /> Gestionar ediciones
               </Link>
@@ -101,12 +101,12 @@ export default function EventDashboard() {
           <Link
             key={label}
             to={href}
-            className="bg-slate-800/50 border border-white/10 rounded-2xl p-5 hover:border-sky-500/40 hover:bg-slate-800 transition-all"
+            className="bg-white border border-slate-200 rounded-2xl p-5 hover:border-sky-500/40 hover:bg-white transition-all"
           >
             <div className={`w-9 h-9 rounded-xl bg-${color}-500/15 flex items-center justify-center mb-3`}>
               <Icon className={`w-4 h-4 text-${color}-400`} />
             </div>
-            <div className="text-2xl font-black text-white mb-1">
+            <div className="text-2xl font-black text-slate-900 mb-1">
               {loading ? '—' : value}
             </div>
             <div className="text-slate-500 text-xs leading-snug">{label}</div>
@@ -115,19 +115,19 @@ export default function EventDashboard() {
       </div>
 
       <div>
-        <h2 className="text-lg font-semibold text-white mb-4">Acciones rápidas</h2>
+        <h2 className="text-lg font-semibold text-slate-900 mb-4">Acciones rápidas</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {quickLinks.map(({ label, desc, href, icon: Icon }) => (
             <Link
               key={label}
               to={href}
-              className="flex items-start gap-4 p-5 bg-slate-800/50 border border-white/10 rounded-xl hover:border-sky-500/40 hover:bg-slate-800 transition-all"
+              className="flex items-start gap-4 p-5 bg-white border border-slate-200 rounded-xl hover:border-sky-500/40 hover:bg-white transition-all"
             >
               <div className="w-9 h-9 rounded-lg bg-sky-500/10 flex items-center justify-center flex-shrink-0">
                 <Icon className="w-4 h-4 text-sky-400" />
               </div>
               <div>
-                <p className="text-white font-medium text-sm">{label}</p>
+                <p className="text-slate-900 font-medium text-sm">{label}</p>
                 <p className="text-slate-500 text-xs mt-0.5">{desc}</p>
               </div>
               <ArrowRight className="w-4 h-4 text-slate-600 ml-auto self-center flex-shrink-0" />

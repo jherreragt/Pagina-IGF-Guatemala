@@ -119,8 +119,8 @@ export default function EventEditions() {
       <div className={`${panelOpen ? 'hidden xl:block xl:w-1/2' : 'w-full'} space-y-5`}>
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-bold text-white">Ediciones del evento</h1>
-            <p className="text-slate-400 text-sm mt-1">
+            <h1 className="text-2xl font-bold text-slate-900">Ediciones del evento</h1>
+            <p className="text-slate-500 text-sm mt-1">
               Cada año es una edición independiente con su propio contenido.
             </p>
           </div>
@@ -135,9 +135,9 @@ export default function EventEditions() {
         {loading ? (
           <div className="p-10 text-center text-slate-500 text-sm">Cargando...</div>
         ) : editions.length === 0 ? (
-          <div className="p-12 text-center bg-slate-800/50 border border-white/10 rounded-2xl">
+          <div className="p-12 text-center bg-white border border-slate-200 rounded-2xl">
             <Calendar className="w-10 h-10 text-slate-600 mx-auto mb-3" />
-            <p className="text-slate-400 text-sm mb-4">No hay ediciones registradas.</p>
+            <p className="text-slate-500 text-sm mb-4">No hay ediciones registradas.</p>
             <button
               onClick={openNew}
               className="inline-flex items-center gap-2 px-4 py-2 bg-sky-600 text-white text-sm font-semibold rounded-lg hover:bg-sky-500 transition-colors"
@@ -150,26 +150,26 @@ export default function EventEditions() {
             {editions.map((ed) => (
               <div
                 key={ed.id}
-                className={`bg-slate-800/50 border rounded-2xl p-5 transition-all ${
+                className={`bg-white border rounded-2xl p-5 transition-all ${
                   ed.is_active
                     ? 'border-sky-500/50 bg-sky-500/5'
-                    : 'border-white/10 hover:border-white/20'
+                    : 'border-slate-200 hover:border-slate-200'
                 }`}
               >
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-1">
-                      <span className="font-display font-black text-2xl text-white">{ed.year}</span>
+                      <span className="font-display font-black text-2xl text-slate-900">{ed.year}</span>
                       {ed.is_active && (
-                        <span className="flex items-center gap-1 px-2 py-0.5 bg-sky-500/20 border border-sky-500/30 rounded-full text-sky-300 text-xs font-semibold">
+                        <span className="flex items-center gap-1 px-2 py-0.5 bg-sky-500/20 border border-sky-500/30 rounded-full text-sky-700 text-xs font-semibold">
                           <span className="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse" />
                           Activa
                         </span>
                       )}
                     </div>
-                    <p className="text-white font-medium text-sm mb-0.5">{ed.title}</p>
+                    <p className="text-slate-900 font-medium text-sm mb-0.5">{ed.title}</p>
                     {ed.lema && (
-                      <p className="text-slate-400 text-xs italic mb-2 line-clamp-1">"{ed.lema}"</p>
+                      <p className="text-slate-500 text-xs italic mb-2 line-clamp-1">"{ed.lema}"</p>
                     )}
                     <div className="flex flex-wrap gap-3 text-xs text-slate-500">
                       {ed.event_date && (
@@ -194,7 +194,7 @@ export default function EventEditions() {
                         onClick={() => activateEdition(ed.id)}
                         disabled={activating === ed.id}
                         title="Activar esta edición en el sitio público"
-                        className="flex items-center gap-1.5 px-3 py-1.5 bg-sky-600/20 hover:bg-sky-600 border border-sky-500/30 hover:border-transparent text-sky-300 hover:text-white text-xs font-semibold rounded-lg transition-all disabled:opacity-50"
+                        className="flex items-center gap-1.5 px-3 py-1.5 bg-sky-600/20 hover:bg-sky-600 border border-sky-500/30 hover:border-transparent text-sky-700 hover:text-slate-900 text-xs font-semibold rounded-lg transition-all disabled:opacity-50"
                       >
                         {activating === ed.id
                           ? <div className="w-3 h-3 border border-current border-t-transparent rounded-full animate-spin" />
@@ -204,13 +204,13 @@ export default function EventEditions() {
                     )}
                     <button
                       onClick={() => openEdit(ed)}
-                      className="p-1.5 text-slate-400 hover:text-white hover:bg-white/10 rounded transition-colors"
+                      className="p-1.5 text-slate-500 hover:text-white hover:bg-slate-100 rounded transition-colors"
                     >
                       <Edit2 className="w-3.5 h-3.5" />
                     </button>
                     <button
                       onClick={() => deleteEdition(ed)}
-                      className="p-1.5 text-slate-400 hover:text-red-400 hover:bg-red-500/10 rounded transition-colors"
+                      className="p-1.5 text-slate-500 hover:text-red-400 hover:bg-red-500/10 rounded transition-colors"
                     >
                       <Trash2 className="w-3.5 h-3.5" />
                     </button>
@@ -225,10 +225,10 @@ export default function EventEditions() {
       {/* Edit panel */}
       {panelOpen && (
         <div className="flex-1 xl:max-w-lg">
-          <div className="bg-slate-800/50 border border-white/10 rounded-2xl p-6 space-y-5">
+          <div className="bg-white border border-slate-200 rounded-2xl p-6 space-y-5">
             <div className="flex items-center justify-between">
-              <h2 className="text-white font-bold">{isNew ? 'Nueva edición' : 'Editar edición'}</h2>
-              <button onClick={closePanel} className="text-slate-400 hover:text-white transition-colors">
+              <h2 className="text-slate-900 font-bold">{isNew ? 'Nueva edición' : 'Editar edición'}</h2>
+              <button onClick={closePanel} className="text-slate-500 hover:text-slate-900 transition-colors">
                 <X className="w-5 h-5" />
               </button>
             </div>
@@ -242,71 +242,71 @@ export default function EventEditions() {
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-medium text-slate-400 mb-1">Año *</label>
+                  <label className="block text-xs font-medium text-slate-500 mb-1">Año *</label>
                   <input
                     value={form.year}
                     onChange={(e) => handleYearChange(e.target.value)}
                     placeholder="2027"
-                    className="w-full px-3 py-2.5 bg-slate-900 border border-white/10 rounded-xl text-white text-sm focus:outline-none focus:border-sky-500 transition-colors"
+                    className="w-full px-3 py-2.5 bg-white border border-slate-200 rounded-xl text-slate-900 text-sm focus:outline-none focus:border-sky-500 transition-colors"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-medium text-slate-400 mb-1">Título *</label>
+                  <label className="block text-xs font-medium text-slate-500 mb-1">Título *</label>
                   <input
                     value={form.title}
                     onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))}
                     placeholder="IGF Guatemala 2027"
-                    className="w-full px-3 py-2.5 bg-slate-900 border border-white/10 rounded-xl text-white text-sm focus:outline-none focus:border-sky-500 transition-colors"
+                    className="w-full px-3 py-2.5 bg-white border border-slate-200 rounded-xl text-slate-900 text-sm focus:outline-none focus:border-sky-500 transition-colors"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-slate-400 mb-1">Lema</label>
+                <label className="block text-xs font-medium text-slate-500 mb-1">Lema</label>
                 <textarea
                   value={form.lema ?? ''}
                   onChange={(e) => setForm((f) => ({ ...f, lema: e.target.value }))}
                   rows={2}
                   placeholder="Lema o tema central del evento"
-                  className="w-full px-3 py-2.5 bg-slate-900 border border-white/10 rounded-xl text-white text-sm focus:outline-none focus:border-sky-500 transition-colors resize-none"
+                  className="w-full px-3 py-2.5 bg-white border border-slate-200 rounded-xl text-slate-900 text-sm focus:outline-none focus:border-sky-500 transition-colors resize-none"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-slate-400 mb-1">Fecha (texto para mostrar)</label>
+                <label className="block text-xs font-medium text-slate-500 mb-1">Fecha (texto para mostrar)</label>
                 <input
                   value={form.event_date ?? ''}
                   onChange={(e) => setForm((f) => ({ ...f, event_date: e.target.value }))}
                   placeholder="5 de noviembre de 2027"
-                  className="w-full px-3 py-2.5 bg-slate-900 border border-white/10 rounded-xl text-white text-sm focus:outline-none focus:border-sky-500 transition-colors"
+                  className="w-full px-3 py-2.5 bg-white border border-slate-200 rounded-xl text-slate-900 text-sm focus:outline-none focus:border-sky-500 transition-colors"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-slate-400 mb-1">Fecha ISO (para cuenta regresiva)</label>
+                <label className="block text-xs font-medium text-slate-500 mb-1">Fecha ISO (para cuenta regresiva)</label>
                 <input
                   value={form.datetime_iso ?? ''}
                   onChange={(e) => setForm((f) => ({ ...f, datetime_iso: e.target.value }))}
                   placeholder="2027-10-15T09:00:00"
-                  className="w-full px-3 py-2.5 bg-slate-900 border border-white/10 rounded-xl text-white text-sm focus:outline-none focus:border-sky-500 transition-colors font-mono"
+                  className="w-full px-3 py-2.5 bg-white border border-slate-200 rounded-xl text-slate-900 text-sm focus:outline-none focus:border-sky-500 transition-colors font-mono"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-slate-400 mb-1">Lugar</label>
+                <label className="block text-xs font-medium text-slate-500 mb-1">Lugar</label>
                 <input
                   value={form.event_location}
                   onChange={(e) => setForm((f) => ({ ...f, event_location: e.target.value }))}
-                  className="w-full px-3 py-2.5 bg-slate-900 border border-white/10 rounded-xl text-white text-sm focus:outline-none focus:border-sky-500 transition-colors"
+                  className="w-full px-3 py-2.5 bg-white border border-slate-200 rounded-xl text-slate-900 text-sm focus:outline-none focus:border-sky-500 transition-colors"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-slate-400 mb-1">Modalidad</label>
+                <label className="block text-xs font-medium text-slate-500 mb-1">Modalidad</label>
                 <input
                   value={form.event_modality}
                   onChange={(e) => setForm((f) => ({ ...f, event_modality: e.target.value }))}
-                  className="w-full px-3 py-2.5 bg-slate-900 border border-white/10 rounded-xl text-white text-sm focus:outline-none focus:border-sky-500 transition-colors"
+                  className="w-full px-3 py-2.5 bg-white border border-slate-200 rounded-xl text-slate-900 text-sm focus:outline-none focus:border-sky-500 transition-colors"
                 />
               </div>
 
@@ -315,8 +315,8 @@ export default function EventEditions() {
                   { key: 'registration_open' as const, label: 'Registro abierto' },
                   { key: 'sessions_open' as const, label: 'Convocatoria de sesiones abierta' },
                 ].map(({ key, label }) => (
-                  <label key={key} className="flex items-center justify-between p-3 bg-slate-900/60 rounded-xl cursor-pointer">
-                    <span className="text-slate-300 text-sm">{label}</span>
+                  <label key={key} className="flex items-center justify-between p-3 bg-white/60 rounded-xl cursor-pointer">
+                    <span className="text-slate-500 text-sm">{label}</span>
                     <div
                       onClick={() => setForm((f) => ({ ...f, [key]: !f[key] }))}
                       className={`relative w-11 h-6 rounded-full transition-colors cursor-pointer ${form[key] ? 'bg-sky-600' : 'bg-slate-700'}`}
@@ -334,7 +334,7 @@ export default function EventEditions() {
                   <CheckCircle2 className="w-4 h-4" />Guardado
                 </span>
               )}
-              <button onClick={closePanel} className="ml-auto px-4 py-2.5 bg-slate-700 hover:bg-slate-600 text-white text-sm font-medium rounded-xl transition-colors">
+              <button onClick={closePanel} className="ml-auto px-4 py-2.5 bg-slate-700 hover:bg-slate-100 text-white text-sm font-medium rounded-xl transition-colors">
                 Cancelar
               </button>
               <button
@@ -342,7 +342,7 @@ export default function EventEditions() {
                 disabled={saving}
                 className="flex items-center gap-2 px-5 py-2.5 bg-sky-600 hover:bg-sky-500 disabled:opacity-50 text-white font-semibold text-sm rounded-xl transition-colors"
               >
-                {saving ? <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : <Save className="w-4 h-4" />}
+                {saving ? <div className="w-4 h-4 border-2 border-slate-300 border-t-white rounded-full animate-spin" /> : <Save className="w-4 h-4" />}
                 {saving ? 'Guardando...' : 'Guardar'}
               </button>
             </div>

@@ -112,8 +112,8 @@ export default function YouTubeVideosAdmin() {
     <div className="space-y-6 max-w-5xl">
       <div className="flex items-start justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-white">Videos de YouTube</h1>
-          <p className="text-slate-400 text-sm mt-1">Administra los webinars y videos que se muestran en la página principal.</p>
+          <h1 className="text-2xl font-bold text-slate-900">Videos de YouTube</h1>
+          <p className="text-slate-500 text-sm mt-1">Administra los webinars y videos que se muestran en la página principal.</p>
         </div>
         <button
           onClick={openNew}
@@ -129,9 +129,9 @@ export default function YouTubeVideosAdmin() {
           <Loader2 className="w-6 h-6 text-sky-400 animate-spin" />
         </div>
       ) : videos.length === 0 ? (
-        <div className="bg-slate-800/50 border border-white/10 rounded-2xl p-12 text-center">
+        <div className="bg-white border border-slate-200 rounded-2xl p-12 text-center">
           <Youtube className="w-10 h-10 text-slate-600 mx-auto mb-3" />
-          <p className="text-slate-400 text-sm">No hay videos agregados todavía.</p>
+          <p className="text-slate-500 text-sm">No hay videos agregados todavía.</p>
           <button onClick={openNew} className="mt-4 inline-flex items-center gap-2 px-4 py-2 bg-sky-600 text-white text-sm font-semibold rounded-lg hover:bg-sky-500 transition-colors">
             <Plus className="w-4 h-4" />
             Agregar primer video
@@ -140,7 +140,7 @@ export default function YouTubeVideosAdmin() {
       ) : (
         <div className="space-y-3">
           {videos.map((v) => (
-            <div key={v.id} className="flex items-center gap-4 p-4 bg-slate-800/50 border border-white/10 rounded-xl hover:bg-slate-800/80 transition-colors">
+            <div key={v.id} className="flex items-center gap-4 p-4 bg-white border border-slate-200 rounded-xl hover:bg-white transition-colors">
               <div className="w-28 h-16 rounded-lg overflow-hidden bg-slate-700 flex-shrink-0">
                 <img
                   src={v.thumbnail_url || `https://img.youtube.com/vi/${v.youtube_id}/hqdefault.jpg`}
@@ -151,21 +151,21 @@ export default function YouTubeVideosAdmin() {
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 mb-1">
                   <span className="px-2 py-0.5 rounded-full text-xs font-medium bg-sky-500/10 text-sky-400">{v.category}</span>
-                  <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${v.published ? 'bg-green-500/10 text-green-400' : 'bg-slate-500/10 text-slate-400'}`}>
+                  <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${v.published ? 'bg-green-500/10 text-green-400' : 'bg-slate-500/10 text-slate-500'}`}>
                     {v.published ? 'Publicado' : 'Oculto'}
                   </span>
                 </div>
-                <p className="text-white text-sm font-medium truncate">{v.title}</p>
+                <p className="text-slate-900 text-sm font-medium truncate">{v.title}</p>
                 <p className="text-slate-500 text-xs mt-0.5">ID: {v.youtube_id} · Orden: {v.sort_order}</p>
               </div>
               <div className="flex items-center gap-1">
-                <button onClick={() => togglePublished(v)} className="p-2 text-slate-400 hover:text-sky-400 transition-colors" title={v.published ? 'Ocultar' : 'Publicar'}>
+                <button onClick={() => togglePublished(v)} className="p-2 text-slate-500 hover:text-sky-400 transition-colors" title={v.published ? 'Ocultar' : 'Publicar'}>
                   {v.published ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
                 </button>
-                <button onClick={() => openEdit(v)} className="p-2 text-slate-400 hover:text-sky-400 transition-colors">
+                <button onClick={() => openEdit(v)} className="p-2 text-slate-500 hover:text-sky-400 transition-colors">
                   <Edit2 className="w-4 h-4" />
                 </button>
-                <button onClick={() => handleDelete(v.id)} className="p-2 text-slate-400 hover:text-red-400 transition-colors">
+                <button onClick={() => handleDelete(v.id)} className="p-2 text-slate-500 hover:text-red-400 transition-colors">
                   <Trash2 className="w-4 h-4" />
                 </button>
               </div>
@@ -178,10 +178,10 @@ export default function YouTubeVideosAdmin() {
       {showForm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setShowForm(false)} />
-          <div className="relative w-full max-w-lg bg-slate-800 border border-white/10 rounded-2xl shadow-2xl max-h-[90vh] overflow-y-auto">
-            <div className="flex items-center justify-between px-6 py-4 border-b border-white/10">
-              <h2 className="text-white font-bold text-lg">{editingId ? 'Editar video' : 'Nuevo video'}</h2>
-              <button onClick={() => setShowForm(false)} className="text-slate-400 hover:text-white transition-colors">
+          <div className="relative w-full max-w-lg bg-white border border-slate-200 rounded-2xl shadow-2xl max-h-[90vh] overflow-y-auto">
+            <div className="flex items-center justify-between px-6 py-4 border-b border-slate-200">
+              <h2 className="text-slate-900 font-bold text-lg">{editingId ? 'Editar video' : 'Nuevo video'}</h2>
+              <button onClick={() => setShowForm(false)} className="text-slate-500 hover:text-slate-900 transition-colors">
                 <X className="w-5 h-5" />
               </button>
             </div>
@@ -190,32 +190,32 @@ export default function YouTubeVideosAdmin() {
                 <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-lg text-red-400 text-sm">{error}</div>
               )}
               <div>
-                <label className="block text-sm font-medium text-slate-300 mb-1.5">ID del video de YouTube <span className="text-red-400">*</span></label>
+                <label className="block text-sm font-medium text-slate-500 mb-1.5">ID del video de YouTube <span className="text-red-400">*</span></label>
                 <input
                   type="text"
                   value={form.youtube_id}
                   onChange={(e) => setForm({ ...form, youtube_id: e.target.value })}
                   placeholder="dQw4w9WgXcQ"
-                  className="w-full px-3 py-2.5 bg-slate-900 border border-white/10 rounded-lg text-white text-sm focus:outline-none focus:border-sky-500"
+                  className="w-full px-3 py-2.5 bg-white border border-slate-200 rounded-lg text-slate-900 text-sm focus:outline-none focus:border-sky-500"
                 />
-                <p className="text-slate-500 text-xs mt-1">El ID está en la URL: youtube.com/watch?v=<strong className="text-slate-400">XXXX</strong></p>
+                <p className="text-slate-500 text-xs mt-1">El ID está en la URL: youtube.com/watch?v=<strong className="text-slate-500">XXXX</strong></p>
               </div>
               <div>
-                <label className="block text-sm font-medium text-slate-300 mb-1.5">Título <span className="text-red-400">*</span></label>
+                <label className="block text-sm font-medium text-slate-500 mb-1.5">Título <span className="text-red-400">*</span></label>
                 <input
                   type="text"
                   value={form.title}
                   onChange={(e) => setForm({ ...form, title: e.target.value })}
                   placeholder="Título del video"
-                  className="w-full px-3 py-2.5 bg-slate-900 border border-white/10 rounded-lg text-white text-sm focus:outline-none focus:border-sky-500"
+                  className="w-full px-3 py-2.5 bg-white border border-slate-200 rounded-lg text-slate-900 text-sm focus:outline-none focus:border-sky-500"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-slate-300 mb-1.5">Categoría</label>
+                <label className="block text-sm font-medium text-slate-500 mb-1.5">Categoría</label>
                 <select
                   value={form.category}
                   onChange={(e) => setForm({ ...form, category: e.target.value })}
-                  className="w-full px-3 py-2.5 bg-slate-900 border border-white/10 rounded-lg text-white text-sm focus:outline-none focus:border-sky-500"
+                  className="w-full px-3 py-2.5 bg-white border border-slate-200 rounded-lg text-slate-900 text-sm focus:outline-none focus:border-sky-500"
                 >
                   <option>Webinar</option>
                   <option>Foro</option>
@@ -227,50 +227,50 @@ export default function YouTubeVideosAdmin() {
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-medium text-slate-300 mb-1.5">Descripción</label>
+                <label className="block text-sm font-medium text-slate-500 mb-1.5">Descripción</label>
                 <textarea
                   value={form.description}
                   onChange={(e) => setForm({ ...form, description: e.target.value })}
                   rows={3}
                   placeholder="Descripción opcional"
-                  className="w-full px-3 py-2.5 bg-slate-900 border border-white/10 rounded-lg text-white text-sm focus:outline-none focus:border-sky-500 resize-none"
+                  className="w-full px-3 py-2.5 bg-white border border-slate-200 rounded-lg text-slate-900 text-sm focus:outline-none focus:border-sky-500 resize-none"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-slate-300 mb-1.5">URL de miniatura (opcional)</label>
+                <label className="block text-sm font-medium text-slate-500 mb-1.5">URL de miniatura (opcional)</label>
                 <input
                   type="text"
                   value={form.thumbnail_url}
                   onChange={(e) => setForm({ ...form, thumbnail_url: e.target.value })}
                   placeholder="https://..."
-                  className="w-full px-3 py-2.5 bg-slate-900 border border-white/10 rounded-lg text-white text-sm focus:outline-none focus:border-sky-500"
+                  className="w-full px-3 py-2.5 bg-white border border-slate-200 rounded-lg text-slate-900 text-sm focus:outline-none focus:border-sky-500"
                 />
                 <p className="text-slate-500 text-xs mt-1">Dejar vacío para usar la miniatura por defecto de YouTube</p>
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-slate-300 mb-1.5">Orden</label>
+                  <label className="block text-sm font-medium text-slate-500 mb-1.5">Orden</label>
                   <input
                     type="number"
                     value={form.sort_order}
                     onChange={(e) => setForm({ ...form, sort_order: parseInt(e.target.value) || 0 })}
-                    className="w-full px-3 py-2.5 bg-slate-900 border border-white/10 rounded-lg text-white text-sm focus:outline-none focus:border-sky-500"
+                    className="w-full px-3 py-2.5 bg-white border border-slate-200 rounded-lg text-slate-900 text-sm focus:outline-none focus:border-sky-500"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-slate-300 mb-1.5">Publicado</label>
+                  <label className="block text-sm font-medium text-slate-500 mb-1.5">Publicado</label>
                   <button
                     type="button"
                     onClick={() => setForm({ ...form, published: !form.published })}
-                    className={`w-full px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${form.published ? 'bg-green-600/20 text-green-400 border border-green-500/30' : 'bg-slate-900 text-slate-400 border border-white/10'}`}
+                    className={`w-full px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${form.published ? 'bg-green-600/20 text-green-400 border border-green-500/30' : 'bg-white text-slate-500 border border-slate-200'}`}
                   >
                     {form.published ? 'Visible' : 'Oculto'}
                   </button>
                 </div>
               </div>
             </div>
-            <div className="flex gap-3 px-6 py-4 border-t border-white/10">
-              <button onClick={() => setShowForm(false)} className="flex-1 px-4 py-2.5 bg-slate-700 hover:bg-slate-600 text-white text-sm font-semibold rounded-xl transition-colors">
+            <div className="flex gap-3 px-6 py-4 border-t border-slate-200">
+              <button onClick={() => setShowForm(false)} className="flex-1 px-4 py-2.5 bg-slate-700 hover:bg-slate-100 text-white text-sm font-semibold rounded-xl transition-colors">
                 Cancelar
               </button>
               <button

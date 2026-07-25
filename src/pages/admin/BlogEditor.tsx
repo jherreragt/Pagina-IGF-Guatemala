@@ -135,15 +135,15 @@ export default function BlogEditor() {
         <div className="flex items-center gap-3">
           <button
             onClick={() => navigate('/admin/blog')}
-            className="p-2 text-slate-400 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
+            className="p-2 text-slate-500 hover:text-white hover:bg-slate-100 rounded-lg transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
           </button>
           <div>
-            <h1 className="text-xl font-bold text-white">{isNew ? 'Nuevo artículo' : 'Editar artículo'}</h1>
+            <h1 className="text-xl font-bold text-slate-900">{isNew ? 'Nuevo artículo' : 'Editar artículo'}</h1>
             <div className="flex items-center gap-2 mt-0.5">
               <span className={`w-2 h-2 rounded-full ${form.published ? 'bg-green-400' : 'bg-amber-400'}`} />
-              <span className="text-slate-400 text-xs">{form.published ? 'Publicado' : 'Borrador'}</span>
+              <span className="text-slate-500 text-xs">{form.published ? 'Publicado' : 'Borrador'}</span>
             </div>
           </div>
         </div>
@@ -157,7 +157,7 @@ export default function BlogEditor() {
           <button
             onClick={() => handleSave()}
             disabled={saving || !form.title}
-            className="flex items-center gap-2 px-4 py-2.5 bg-slate-700 hover:bg-slate-600 disabled:opacity-50 text-white font-medium text-sm rounded-xl transition-colors"
+            className="flex items-center gap-2 px-4 py-2.5 bg-slate-700 hover:bg-slate-100 disabled:opacity-50 text-white font-medium text-sm rounded-xl transition-colors"
           >
             <Save className="w-4 h-4" />
             Guardar borrador
@@ -187,9 +187,9 @@ export default function BlogEditor() {
       <div className="grid lg:grid-cols-3 gap-6">
         {/* Main content */}
         <div className="lg:col-span-2 space-y-5">
-          <div className="bg-slate-800/50 border border-white/10 rounded-2xl p-6 space-y-5">
+          <div className="bg-white border border-slate-200 rounded-2xl p-6 space-y-5">
             <div>
-              <label className="block text-sm font-medium text-slate-300 mb-1.5">
+              <label className="block text-sm font-medium text-slate-500 mb-1.5">
                 Título <span className="text-red-400">*</span>
               </label>
               <input
@@ -197,12 +197,12 @@ export default function BlogEditor() {
                 value={form.title}
                 onChange={(e) => handleTitleChange(e.target.value)}
                 placeholder="Título del artículo"
-                className="w-full px-4 py-3 bg-slate-900 border border-white/10 rounded-xl text-white placeholder-slate-500 text-lg font-medium focus:outline-none focus:border-sky-500 transition-colors"
+                className="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-slate-900 placeholder-slate-500 text-lg font-medium focus:outline-none focus:border-sky-500 transition-colors"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-300 mb-1.5">
+              <label className="block text-sm font-medium text-slate-500 mb-1.5">
                 Slug (URL)
               </label>
               <div className="flex gap-2">
@@ -211,14 +211,14 @@ export default function BlogEditor() {
                   value={form.slug}
                   onChange={(e) => { setSlugManual(true); setForm((f) => ({ ...f, slug: e.target.value })); }}
                   placeholder="slug-del-articulo"
-                  className="flex-1 px-4 py-2.5 bg-slate-900 border border-white/10 rounded-xl text-slate-300 placeholder-slate-600 text-sm font-mono focus:outline-none focus:border-sky-500 transition-colors"
+                  className="flex-1 px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-slate-500 placeholder-slate-600 text-sm font-mono focus:outline-none focus:border-sky-500 transition-colors"
                 />
               </div>
               <p className="text-slate-600 text-xs mt-1">/blog/{form.slug || 'slug-del-articulo'}</p>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-300 mb-1.5">
+              <label className="block text-sm font-medium text-slate-500 mb-1.5">
                 Resumen / Extracto
               </label>
               <textarea
@@ -226,13 +226,13 @@ export default function BlogEditor() {
                 onChange={(e) => setForm((f) => ({ ...f, excerpt: e.target.value }))}
                 placeholder="Breve descripción del artículo para listados y SEO..."
                 rows={3}
-                className="w-full px-4 py-2.5 bg-slate-900 border border-white/10 rounded-xl text-white placeholder-slate-500 text-sm focus:outline-none focus:border-sky-500 transition-colors resize-none"
+                className="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-slate-900 placeholder-slate-500 text-sm focus:outline-none focus:border-sky-500 transition-colors resize-none"
               />
             </div>
           </div>
 
-          <div className="bg-slate-800/50 border border-white/10 rounded-2xl p-6">
-            <label className="block text-sm font-medium text-slate-300 mb-1.5">
+          <div className="bg-white border border-slate-200 rounded-2xl p-6">
+            <label className="block text-sm font-medium text-slate-500 mb-1.5">
               Contenido
             </label>
             <textarea
@@ -240,7 +240,7 @@ export default function BlogEditor() {
               onChange={(e) => setForm((f) => ({ ...f, content: e.target.value }))}
               placeholder="Escribe el contenido del artículo aquí. Puedes usar saltos de línea para separar párrafos."
               rows={20}
-              className="w-full px-4 py-3 bg-slate-900 border border-white/10 rounded-xl text-white placeholder-slate-500 text-sm focus:outline-none focus:border-sky-500 transition-colors resize-y font-mono leading-relaxed"
+              className="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-slate-900 placeholder-slate-500 text-sm focus:outline-none focus:border-sky-500 transition-colors resize-y font-mono leading-relaxed"
             />
             <p className="text-slate-600 text-xs mt-2">Los párrafos separados por líneas en blanco se mostrarán correctamente en el sitio.</p>
           </div>
@@ -248,38 +248,38 @@ export default function BlogEditor() {
 
         {/* Sidebar */}
         <div className="space-y-5">
-          <div className="bg-slate-800/50 border border-white/10 rounded-2xl p-5 space-y-5">
-            <h3 className="text-sm font-semibold text-slate-300">Información del artículo</h3>
+          <div className="bg-white border border-slate-200 rounded-2xl p-5 space-y-5">
+            <h3 className="text-sm font-semibold text-slate-500">Información del artículo</h3>
 
             <div>
-              <label className="block text-xs font-medium text-slate-400 mb-1.5">Categoría</label>
+              <label className="block text-xs font-medium text-slate-500 mb-1.5">Categoría</label>
               <select
                 value={form.category}
                 onChange={(e) => setForm((f) => ({ ...f, category: e.target.value }))}
-                className="w-full px-3 py-2.5 bg-slate-900 border border-white/10 rounded-xl text-white text-sm focus:outline-none focus:border-sky-500 transition-colors"
+                className="w-full px-3 py-2.5 bg-white border border-slate-200 rounded-xl text-slate-900 text-sm focus:outline-none focus:border-sky-500 transition-colors"
               >
                 {CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
               </select>
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-slate-400 mb-1.5">Autor</label>
+              <label className="block text-xs font-medium text-slate-500 mb-1.5">Autor</label>
               <input
                 type="text"
                 value={form.author}
                 onChange={(e) => setForm((f) => ({ ...f, author: e.target.value }))}
-                className="w-full px-3 py-2.5 bg-slate-900 border border-white/10 rounded-xl text-white text-sm focus:outline-none focus:border-sky-500 transition-colors"
+                className="w-full px-3 py-2.5 bg-white border border-slate-200 rounded-xl text-slate-900 text-sm focus:outline-none focus:border-sky-500 transition-colors"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-slate-400 mb-1.5">URL de imagen de portada</label>
+              <label className="block text-xs font-medium text-slate-500 mb-1.5">URL de imagen de portada</label>
               <input
                 type="url"
                 value={form.cover_url}
                 onChange={(e) => setForm((f) => ({ ...f, cover_url: e.target.value }))}
                 placeholder="https://..."
-                className="w-full px-3 py-2.5 bg-slate-900 border border-white/10 rounded-xl text-white placeholder-slate-600 text-sm focus:outline-none focus:border-sky-500 transition-colors"
+                className="w-full px-3 py-2.5 bg-white border border-slate-200 rounded-xl text-slate-900 placeholder-slate-600 text-sm focus:outline-none focus:border-sky-500 transition-colors"
               />
               {form.cover_url && (
                 <img src={form.cover_url} alt="Preview" className="mt-2 w-full h-28 object-cover rounded-lg" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />
@@ -287,7 +287,7 @@ export default function BlogEditor() {
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-slate-400 mb-1.5">Etiquetas</label>
+              <label className="block text-xs font-medium text-slate-500 mb-1.5">Etiquetas</label>
               <div className="flex gap-2 mb-2">
                 <input
                   type="text"
@@ -295,7 +295,7 @@ export default function BlogEditor() {
                   onChange={(e) => setTagInput(e.target.value)}
                   onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); addTag(); } }}
                   placeholder="Agregar etiqueta"
-                  className="flex-1 px-3 py-2 bg-slate-900 border border-white/10 rounded-lg text-white placeholder-slate-600 text-xs focus:outline-none focus:border-sky-500 transition-colors"
+                  className="flex-1 px-3 py-2 bg-white border border-slate-200 rounded-lg text-slate-900 placeholder-slate-600 text-xs focus:outline-none focus:border-sky-500 transition-colors"
                 />
                 <button
                   type="button"
@@ -308,7 +308,7 @@ export default function BlogEditor() {
               {form.tags.length > 0 && (
                 <div className="flex flex-wrap gap-1.5">
                   {form.tags.map((tag) => (
-                    <span key={tag} className="inline-flex items-center gap-1 px-2.5 py-1 bg-sky-500/10 border border-sky-500/20 rounded-full text-sky-300 text-xs">
+                    <span key={tag} className="inline-flex items-center gap-1 px-2.5 py-1 bg-sky-500/10 border border-sky-500/20 rounded-full text-sky-700 text-xs">
                       {tag}
                       <button onClick={() => removeTag(tag)} className="hover:text-red-400 transition-colors">
                         <X className="w-2.5 h-2.5" />
@@ -323,9 +323,9 @@ export default function BlogEditor() {
           <button
             onClick={() => handleSave()}
             disabled={saving || !form.title}
-            className="w-full flex items-center justify-center gap-2 py-3 bg-slate-700 hover:bg-slate-600 disabled:opacity-50 text-white font-semibold text-sm rounded-xl transition-colors"
+            className="w-full flex items-center justify-center gap-2 py-3 bg-slate-700 hover:bg-slate-100 disabled:opacity-50 text-white font-semibold text-sm rounded-xl transition-colors"
           >
-            {saving ? <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : <Save className="w-4 h-4" />}
+            {saving ? <div className="w-4 h-4 border-2 border-slate-300 border-t-white rounded-full animate-spin" /> : <Save className="w-4 h-4" />}
             {saving ? 'Guardando...' : 'Guardar cambios'}
           </button>
         </div>

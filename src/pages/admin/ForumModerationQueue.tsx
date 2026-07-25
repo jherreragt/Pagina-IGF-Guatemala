@@ -83,8 +83,8 @@ export default function ForumModerationQueue() {
     <div className="space-y-6 max-w-5xl">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-white">Cola de moderación</h1>
-          <p className="text-slate-400 text-sm mt-1">
+          <h1 className="text-2xl font-bold text-slate-900">Cola de moderación</h1>
+          <p className="text-slate-500 text-sm mt-1">
             Primer aporte de personas nuevas, esperando aprobación.
           </p>
         </div>
@@ -97,7 +97,7 @@ export default function ForumModerationQueue() {
 
       <div className="bg-sky-500/5 border border-sky-500/20 rounded-xl p-4 flex gap-3">
         <ShieldCheck className="w-5 h-5 text-sky-400 flex-shrink-0 mt-0.5" />
-        <p className="text-slate-300 text-xs leading-relaxed">
+        <p className="text-slate-500 text-xs leading-relaxed">
           Cuando alguien publica por primera vez en el foro, su aporte queda pendiente hasta
           que un moderador lo aprueba. Aportes posteriores se publican automáticamente.
           Esto ayuda a prevenir spam y trolls sin frenar a quienes ya participan.
@@ -107,10 +107,10 @@ export default function ForumModerationQueue() {
       {loading ? (
         <div className="text-center py-10 text-slate-500 text-sm">Cargando pendientes...</div>
       ) : total === 0 ? (
-        <div className="bg-slate-800/50 border border-white/10 rounded-2xl p-12 text-center">
+        <div className="bg-white border border-slate-200 rounded-2xl p-12 text-center">
           <CheckCircle2 className="w-10 h-10 text-green-400/60 mx-auto mb-3" />
-          <p className="text-white font-semibold text-sm">No hay nada pendiente</p>
-          <p className="text-slate-400 text-xs mt-1">Todo el contenido nuevo está aprobado.</p>
+          <p className="text-slate-900 font-semibold text-sm">No hay nada pendiente</p>
+          <p className="text-slate-500 text-xs mt-1">Todo el contenido nuevo está aprobado.</p>
         </div>
       ) : (
         <div className="space-y-5">
@@ -119,7 +119,7 @@ export default function ForumModerationQueue() {
             <div>
               <div className="flex items-center gap-2 mb-3">
                 <MessageSquare className="w-4 h-4 text-sky-400" />
-                <h2 className="text-white font-semibold text-sm">
+                <h2 className="text-slate-900 font-semibold text-sm">
                   Discusiones ({threads.length})
                 </h2>
               </div>
@@ -127,7 +127,7 @@ export default function ForumModerationQueue() {
                 {threads.map((thread) => (
                   <div
                     key={thread.id}
-                    className="bg-slate-800/50 border border-white/10 rounded-2xl p-5"
+                    className="bg-white border border-slate-200 rounded-2xl p-5"
                   >
                     <div className="flex items-start justify-between gap-4 mb-3">
                       <div className="min-w-0 flex-1">
@@ -135,15 +135,15 @@ export default function ForumModerationQueue() {
                           <span className="px-2 py-0.5 rounded-full text-xs font-medium bg-sky-500/10 text-sky-400">
                             {thread.category_name ?? 'Categoría'}
                           </span>
-                          <span className="inline-flex items-center gap-1 text-xs text-slate-400">
+                          <span className="inline-flex items-center gap-1 text-xs text-slate-500">
                             <User className="w-3 h-3" /> {thread.author_name}
                           </span>
                           <span className="text-xs text-slate-500">
                             {new Date(thread.created_at).toLocaleDateString('es-GT')}
                           </span>
                         </div>
-                        <h3 className="text-white font-semibold text-sm mb-1.5">{thread.title}</h3>
-                        <p className="text-slate-400 text-xs leading-relaxed line-clamp-3">
+                        <h3 className="text-slate-900 font-semibold text-sm mb-1.5">{thread.title}</h3>
+                        <p className="text-slate-500 text-xs leading-relaxed line-clamp-3">
                           {thread.body}
                         </p>
                       </div>
@@ -151,14 +151,14 @@ export default function ForumModerationQueue() {
                         <button
                           onClick={() => approveThread(thread.id)}
                           disabled={acting === thread.id}
-                          className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-green-600 hover:bg-green-500 text-white text-xs font-semibold rounded-lg transition-colors disabled:bg-slate-700"
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-green-600 hover:bg-green-500 text-white text-xs font-semibold rounded-lg transition-colors disabled:bg-slate-300"
                         >
                           <CheckCircle2 className="w-3.5 h-3.5" /> Aprobar
                         </button>
                         <button
                           onClick={() => rejectThread(thread.id)}
                           disabled={acting === thread.id}
-                          className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-red-600/80 hover:bg-red-500 text-white text-xs font-semibold rounded-lg transition-colors disabled:bg-slate-700"
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-red-600/80 hover:bg-red-500 text-white text-xs font-semibold rounded-lg transition-colors disabled:bg-slate-300"
                         >
                           <XCircle className="w-3.5 h-3.5" /> Rechazar
                         </button>
@@ -166,7 +166,7 @@ export default function ForumModerationQueue() {
                     </div>
                     <Link
                       to={`/foro/t/${thread.id}`}
-                      className="inline-flex items-center gap-1 text-xs text-sky-400 hover:text-sky-300 transition-colors"
+                      className="inline-flex items-center gap-1 text-xs text-sky-400 hover:text-sky-700 transition-colors"
                     >
                       <Eye className="w-3 h-3" /> Ver en el foro
                     </Link>
@@ -181,7 +181,7 @@ export default function ForumModerationQueue() {
             <div>
               <div className="flex items-center gap-2 mb-3">
                 <Reply className="w-4 h-4 text-blue-400" />
-                <h2 className="text-white font-semibold text-sm">
+                <h2 className="text-slate-900 font-semibold text-sm">
                   Respuestas ({posts.length})
                 </h2>
               </div>
@@ -189,12 +189,12 @@ export default function ForumModerationQueue() {
                 {posts.map((post) => (
                   <div
                     key={post.id}
-                    className="bg-slate-800/50 border border-white/10 rounded-2xl p-5"
+                    className="bg-white border border-slate-200 rounded-2xl p-5"
                   >
                     <div className="flex items-start justify-between gap-4 mb-3">
                       <div className="min-w-0 flex-1">
                         <div className="flex items-center gap-2 mb-1.5">
-                          <span className="inline-flex items-center gap-1 text-xs text-slate-400">
+                          <span className="inline-flex items-center gap-1 text-xs text-slate-500">
                             <User className="w-3 h-3" /> {post.author_name}
                           </span>
                           <span className="text-xs text-slate-500">
@@ -203,10 +203,10 @@ export default function ForumModerationQueue() {
                         </div>
                         {post.thread_title && (
                           <p className="text-slate-500 text-xs mb-1.5">
-                            En: <span className="text-slate-300">{post.thread_title}</span>
+                            En: <span className="text-slate-500">{post.thread_title}</span>
                           </p>
                         )}
-                        <p className="text-slate-300 text-xs leading-relaxed line-clamp-3">
+                        <p className="text-slate-500 text-xs leading-relaxed line-clamp-3">
                           {post.body}
                         </p>
                       </div>
@@ -214,14 +214,14 @@ export default function ForumModerationQueue() {
                         <button
                           onClick={() => approvePost(post.id)}
                           disabled={acting === post.id}
-                          className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-green-600 hover:bg-green-500 text-white text-xs font-semibold rounded-lg transition-colors disabled:bg-slate-700"
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-green-600 hover:bg-green-500 text-white text-xs font-semibold rounded-lg transition-colors disabled:bg-slate-300"
                         >
                           <CheckCircle2 className="w-3.5 h-3.5" /> Aprobar
                         </button>
                         <button
                           onClick={() => rejectPost(post.id)}
                           disabled={acting === post.id}
-                          className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-red-600/80 hover:bg-red-500 text-white text-xs font-semibold rounded-lg transition-colors disabled:bg-slate-700"
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-red-600/80 hover:bg-red-500 text-white text-xs font-semibold rounded-lg transition-colors disabled:bg-slate-300"
                         >
                           <XCircle className="w-3.5 h-3.5" /> Rechazar
                         </button>

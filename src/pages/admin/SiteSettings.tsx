@@ -76,9 +76,9 @@ export default function SiteSettings() {
 
     if (setting.type === 'boolean') {
       return (
-        <label key={setting.key} className="flex items-center justify-between p-4 bg-slate-900/60 rounded-xl cursor-pointer hover:bg-slate-900 transition-colors">
+        <label key={setting.key} className="flex items-center justify-between p-4 bg-white/60 rounded-xl cursor-pointer hover:bg-white transition-colors">
           <div>
-            <p className="text-white text-sm font-medium">{setting.label}</p>
+            <p className="text-slate-900 text-sm font-medium">{setting.label}</p>
             <p className="text-slate-500 text-xs mt-0.5 font-mono">{setting.key}</p>
           </div>
           <div
@@ -93,28 +93,28 @@ export default function SiteSettings() {
 
     if (setting.type === 'textarea') {
       return (
-        <div key={setting.key} className="p-4 bg-slate-900/60 rounded-xl">
-          <label className="block text-sm font-medium text-slate-300 mb-1">{setting.label}</label>
+        <div key={setting.key} className="p-4 bg-white/60 rounded-xl">
+          <label className="block text-sm font-medium text-slate-500 mb-1">{setting.label}</label>
           <p className="text-slate-600 text-xs mb-2 font-mono">{setting.key}</p>
           <textarea
             value={val}
             onChange={(e) => setValues((v) => ({ ...v, [setting.key]: e.target.value }))}
             rows={4}
-            className="w-full px-3 py-2.5 bg-slate-800 border border-white/10 rounded-lg text-white text-sm focus:outline-none focus:border-sky-500 transition-colors resize-y"
+            className="w-full px-3 py-2.5 bg-white border border-slate-200 rounded-lg text-slate-900 text-sm focus:outline-none focus:border-sky-500 transition-colors resize-y"
           />
         </div>
       );
     }
 
     return (
-      <div key={setting.key} className="p-4 bg-slate-900/60 rounded-xl">
-        <label className="block text-sm font-medium text-slate-300 mb-1">{setting.label}</label>
+      <div key={setting.key} className="p-4 bg-white/60 rounded-xl">
+        <label className="block text-sm font-medium text-slate-500 mb-1">{setting.label}</label>
         <p className="text-slate-600 text-xs mb-2 font-mono">{setting.key}</p>
         <input
           type="text"
           value={val}
           onChange={(e) => setValues((v) => ({ ...v, [setting.key]: e.target.value }))}
-          className="w-full px-3 py-2.5 bg-slate-800 border border-white/10 rounded-lg text-white text-sm focus:outline-none focus:border-sky-500 transition-colors"
+          className="w-full px-3 py-2.5 bg-white border border-slate-200 rounded-lg text-slate-900 text-sm focus:outline-none focus:border-sky-500 transition-colors"
         />
       </div>
     );
@@ -132,8 +132,8 @@ export default function SiteSettings() {
     <div className="max-w-3xl space-y-6">
       <div className="flex items-start justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-white">Configuración del sitio</h1>
-          <p className="text-slate-400 text-sm mt-1">Edita los textos y secciones del sitio público del IGF Guatemala.</p>
+          <h1 className="text-2xl font-bold text-slate-900">Configuración del sitio</h1>
+          <p className="text-slate-500 text-sm mt-1">Edita los textos y secciones del sitio público del IGF Guatemala.</p>
         </div>
         <div className="flex gap-3 items-center">
           {saved && (
@@ -146,7 +146,7 @@ export default function SiteSettings() {
             disabled={saving}
             className="flex items-center gap-2 px-5 py-2.5 bg-sky-600 hover:bg-sky-500 disabled:opacity-50 text-white font-semibold text-sm rounded-xl transition-colors"
           >
-            {saving ? <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : <Save className="w-4 h-4" />}
+            {saving ? <div className="w-4 h-4 border-2 border-slate-300 border-t-white rounded-full animate-spin" /> : <Save className="w-4 h-4" />}
             {saving ? 'Guardando...' : 'Guardar cambios'}
           </button>
         </div>
@@ -163,19 +163,19 @@ export default function SiteSettings() {
         if (fields.length === 0) return null;
         const isOpen = openSections[section];
         return (
-          <div key={section} className="bg-slate-800/50 border border-white/10 rounded-2xl overflow-hidden">
+          <div key={section} className="bg-white border border-slate-200 rounded-2xl overflow-hidden">
             <button
               onClick={() => toggleSection(section)}
-              className="w-full flex items-center justify-between px-6 py-4 hover:bg-white/5 transition-colors"
+              className="w-full flex items-center justify-between px-6 py-4 hover:bg-slate-100 transition-colors"
             >
               <div className="text-left">
-                <p className="text-white font-semibold text-sm">{SECTION_LABELS[section] ?? section}</p>
+                <p className="text-slate-900 font-semibold text-sm">{SECTION_LABELS[section] ?? section}</p>
                 <p className="text-slate-500 text-xs mt-0.5">{fields.length} campo{fields.length !== 1 ? 's' : ''}</p>
               </div>
-              {isOpen ? <ChevronUp className="w-4 h-4 text-slate-400" /> : <ChevronDown className="w-4 h-4 text-slate-400" />}
+              {isOpen ? <ChevronUp className="w-4 h-4 text-slate-500" /> : <ChevronDown className="w-4 h-4 text-slate-500" />}
             </button>
             {isOpen && (
-              <div className="px-6 pb-6 space-y-3 border-t border-white/5 pt-4">
+              <div className="px-6 pb-6 space-y-3 border-t border-slate-100 pt-4">
                 {fields.map(renderField)}
               </div>
             )}
@@ -189,7 +189,7 @@ export default function SiteSettings() {
           disabled={saving}
           className="w-full flex items-center justify-center gap-2 py-3.5 bg-sky-600 hover:bg-sky-500 disabled:opacity-50 text-white font-bold rounded-xl transition-colors"
         >
-          {saving ? <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : <Save className="w-5 h-5" />}
+          {saving ? <div className="w-4 h-4 border-2 border-slate-300 border-t-white rounded-full animate-spin" /> : <Save className="w-5 h-5" />}
           {saving ? 'Guardando...' : 'Guardar todos los cambios'}
         </button>
       </div>

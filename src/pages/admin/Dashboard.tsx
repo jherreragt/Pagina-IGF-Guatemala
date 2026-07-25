@@ -85,8 +85,8 @@ export default function AdminDashboard() {
   return (
     <div className="space-y-8 max-w-5xl">
       <div>
-        <h1 className="text-2xl font-bold text-white">Dashboard</h1>
-        <p className="text-slate-400 text-sm mt-1">Panel de administración del IGF Guatemala.</p>
+        <h1 className="text-2xl font-bold text-slate-900">Dashboard</h1>
+        <p className="text-slate-500 text-sm mt-1">Panel de administración del IGF Guatemala.</p>
       </div>
 
       {/* Stats */}
@@ -95,15 +95,15 @@ export default function AdminDashboard() {
           <Link
             key={label}
             to={href}
-            className="bg-slate-800/50 border border-white/10 rounded-2xl p-5 hover:border-sky-500/40 hover:bg-slate-800 transition-all group"
+            className="bg-white border border-slate-200 rounded-2xl p-5 hover:border-sky-500/40 hover:bg-white transition-all group"
           >
             <div className={`w-9 h-9 rounded-lg ${iconClass} flex items-center justify-center mb-3`}>
               <Icon className="w-4 h-4" />
             </div>
-            <div className="text-2xl font-black text-white mb-0.5">
+            <div className="text-2xl font-black text-slate-900 mb-0.5">
               {loading ? '—' : value}
             </div>
-            <div className="text-slate-400 text-xs">{label}</div>
+            <div className="text-slate-500 text-xs">{label}</div>
             <div className="text-slate-500 text-xs mt-0.5">{sub}</div>
           </Link>
         ))}
@@ -111,19 +111,19 @@ export default function AdminDashboard() {
 
       {/* Quick actions */}
       <div>
-        <h2 className="text-lg font-semibold text-white mb-4">Acciones rápidas</h2>
+        <h2 className="text-lg font-semibold text-slate-900 mb-4">Acciones rápidas</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {quick.map(({ label, href, icon: Icon, desc }) => (
             <Link
               key={label}
               to={href}
-              className="flex items-start gap-4 p-5 bg-slate-800/50 border border-white/10 rounded-xl hover:border-sky-500/40 hover:bg-slate-800 transition-all group"
+              className="flex items-start gap-4 p-5 bg-white border border-slate-200 rounded-xl hover:border-sky-500/40 hover:bg-white transition-all group"
             >
               <div className="w-9 h-9 rounded-lg bg-sky-500/10 flex items-center justify-center flex-shrink-0">
                 <Icon className="w-4 h-4 text-sky-400" />
               </div>
               <div>
-                <p className="text-white font-medium text-sm">{label}</p>
+                <p className="text-slate-900 font-medium text-sm">{label}</p>
                 <p className="text-slate-500 text-xs mt-0.5">{desc}</p>
               </div>
             </Link>
@@ -135,34 +135,34 @@ export default function AdminDashboard() {
         {/* Recent posts */}
         <div>
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold text-white">Artículos recientes</h2>
-            <Link to="/admin/blog" className="text-sky-400 text-sm hover:text-sky-300 transition-colors flex items-center gap-1">
+            <h2 className="text-lg font-semibold text-slate-900">Artículos recientes</h2>
+            <Link to="/admin/blog" className="text-sky-400 text-sm hover:text-sky-700 transition-colors flex items-center gap-1">
               Ver todos <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </div>
-          <div className="bg-slate-800/50 border border-white/10 rounded-2xl overflow-hidden">
+          <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden">
             {loading ? (
               <div className="p-8 text-center text-slate-500 text-sm">Cargando...</div>
             ) : recentPosts.length === 0 ? (
               <div className="p-8 text-center">
                 <FileText className="w-8 h-8 text-slate-600 mx-auto mb-3" />
-                <p className="text-slate-400 text-sm">Aún no hay artículos.</p>
+                <p className="text-slate-500 text-sm">Aún no hay artículos.</p>
               </div>
             ) : (
-              <div className="divide-y divide-white/5">
+              <div className="divide-y divide-slate-100">
                 {recentPosts.map((post) => (
-                  <div key={post.id} className="flex items-center justify-between px-5 py-3 hover:bg-white/5 transition-colors">
+                  <div key={post.id} className="flex items-center justify-between px-5 py-3 hover:bg-slate-100 transition-colors">
                     <div className="flex items-center gap-3 min-w-0">
                       {post.published
                         ? <CheckCircle2 className="w-4 h-4 text-green-400 flex-shrink-0" />
                         : <Circle className="w-4 h-4 text-slate-500 flex-shrink-0" />
                       }
                       <div className="min-w-0">
-                        <p className="text-white text-sm font-medium truncate">{post.title}</p>
+                        <p className="text-slate-900 text-sm font-medium truncate">{post.title}</p>
                         <p className="text-slate-500 text-xs mt-0.5">{post.category}</p>
                       </div>
                     </div>
-                    <Link to={`/admin/blog/edit/${post.id}`} className="text-slate-400 hover:text-sky-400 transition-colors flex-shrink-0 ml-3">
+                    <Link to={`/admin/blog/edit/${post.id}`} className="text-slate-500 hover:text-sky-400 transition-colors flex-shrink-0 ml-3">
                       <Edit2 className="w-4 h-4" />
                     </Link>
                   </div>
@@ -175,26 +175,26 @@ export default function AdminDashboard() {
         {/* Recent messages */}
         <div>
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold text-white">Mensajes recientes</h2>
-            <Link to="/admin/mensajes" className="text-sky-400 text-sm hover:text-sky-300 transition-colors flex items-center gap-1">
+            <h2 className="text-lg font-semibold text-slate-900">Mensajes recientes</h2>
+            <Link to="/admin/mensajes" className="text-sky-400 text-sm hover:text-sky-700 transition-colors flex items-center gap-1">
               Ver todos <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </div>
-          <div className="bg-slate-800/50 border border-white/10 rounded-2xl overflow-hidden">
+          <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden">
             {loading ? (
               <div className="p-8 text-center text-slate-500 text-sm">Cargando...</div>
             ) : recentMessages.length === 0 ? (
               <div className="p-8 text-center">
                 <Mail className="w-8 h-8 text-slate-600 mx-auto mb-3" />
-                <p className="text-slate-400 text-sm">Sin mensajes nuevos.</p>
+                <p className="text-slate-500 text-sm">Sin mensajes nuevos.</p>
               </div>
             ) : (
-              <div className="divide-y divide-white/5">
+              <div className="divide-y divide-slate-100">
                 {recentMessages.map((msg) => (
                   <Link
                     key={msg.id}
                     to="/admin/mensajes"
-                    className="flex items-center justify-between px-5 py-3 hover:bg-white/5 transition-colors"
+                    className="flex items-center justify-between px-5 py-3 hover:bg-slate-100 transition-colors"
                   >
                     <div className="flex items-center gap-3 min-w-0">
                       {msg.status === 'new'
@@ -202,7 +202,7 @@ export default function AdminDashboard() {
                         : <Circle className="w-4 h-4 text-slate-500 flex-shrink-0" />
                       }
                       <div className="min-w-0">
-                        <p className="text-white text-sm font-medium truncate">{msg.name}</p>
+                        <p className="text-slate-900 text-sm font-medium truncate">{msg.name}</p>
                         <p className="text-slate-500 text-xs mt-0.5 truncate">{msg.subject}</p>
                       </div>
                     </div>

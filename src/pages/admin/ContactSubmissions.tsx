@@ -60,8 +60,8 @@ export default function ContactSubmissionsAdmin() {
   return (
     <div className="space-y-6 max-w-5xl">
       <div>
-        <h1 className="text-2xl font-bold text-white">Mensajes de Contacto</h1>
-        <p className="text-slate-400 text-sm mt-1">
+        <h1 className="text-2xl font-bold text-slate-900">Mensajes de Contacto</h1>
+        <p className="text-slate-500 text-sm mt-1">
           Gestiona los mensajes recibidos desde el formulario de contacto del sitio.
           {newCount > 0 && <span className="text-sky-400 ml-1">· {newCount} sin leer</span>}
         </p>
@@ -69,12 +69,12 @@ export default function ContactSubmissionsAdmin() {
 
       {/* Filters */}
       <div className="flex items-center gap-3 flex-wrap">
-        <div className="flex gap-1 bg-slate-800/50 border border-white/10 rounded-xl p-1">
+        <div className="flex gap-1 bg-white border border-slate-200 rounded-xl p-1">
           {(['all', 'new', 'read', 'replied'] as const).map((f) => (
             <button
               key={f}
               onClick={() => setFilter(f)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${filter === f ? 'bg-sky-600 text-white' : 'text-slate-400 hover:text-white'}`}
+              className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${filter === f ? 'bg-sky-600 text-white' : 'text-slate-500 hover:text-slate-900'}`}
             >
               {f === 'all' ? 'Todos' : statusLabels[f]}
             </button>
@@ -87,7 +87,7 @@ export default function ContactSubmissionsAdmin() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Buscar..."
-            className="w-full pl-9 pr-3 py-2 bg-slate-800/50 border border-white/10 rounded-xl text-white text-sm focus:outline-none focus:border-sky-500"
+            className="w-full pl-9 pr-3 py-2 bg-white border border-slate-200 rounded-xl text-slate-900 text-sm focus:outline-none focus:border-sky-500"
           />
         </div>
       </div>
@@ -97,27 +97,27 @@ export default function ContactSubmissionsAdmin() {
           <Loader2 className="w-6 h-6 text-sky-400 animate-spin" />
         </div>
       ) : filtered.length === 0 ? (
-        <div className="bg-slate-800/50 border border-white/10 rounded-2xl p-12 text-center">
+        <div className="bg-white border border-slate-200 rounded-2xl p-12 text-center">
           <Inbox className="w-10 h-10 text-slate-600 mx-auto mb-3" />
-          <p className="text-slate-400 text-sm">No hay mensajes {filter !== 'all' ? 'con este filtro' : 'todavía'}.</p>
+          <p className="text-slate-500 text-sm">No hay mensajes {filter !== 'all' ? 'con este filtro' : 'todavía'}.</p>
         </div>
       ) : (
         <div className="space-y-2">
           {filtered.map((s) => (
             <div
               key={s.id}
-              className={`flex items-center gap-4 p-4 bg-slate-800/50 border rounded-xl hover:bg-slate-800/80 transition-colors cursor-pointer ${s.status === 'new' ? 'border-sky-500/30' : 'border-white/10'}`}
+              className={`flex items-center gap-4 p-4 bg-white border rounded-xl hover:bg-white transition-colors cursor-pointer ${s.status === 'new' ? 'border-sky-500/30' : 'border-slate-200'}`}
               onClick={() => { setSelected(s); if (s.status === 'new') markStatus(s.id, 'read'); }}
             >
               <div className={`w-2 h-2 rounded-full flex-shrink-0 ${s.status === 'new' ? 'bg-sky-400' : 'bg-transparent'}`} />
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 mb-1">
-                  <p className="text-white text-sm font-medium truncate">{s.name}</p>
+                  <p className="text-slate-900 text-sm font-medium truncate">{s.name}</p>
                   <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${statusColors[s.status]}`}>
                     {statusLabels[s.status]}
                   </span>
                 </div>
-                <p className="text-slate-400 text-xs truncate">{s.subject} · {s.email}</p>
+                <p className="text-slate-500 text-xs truncate">{s.subject} · {s.email}</p>
               </div>
               <div className="text-right flex-shrink-0">
                 <p className="text-slate-500 text-xs">{new Date(s.created_at).toLocaleDateString('es-GT')}</p>
@@ -131,10 +131,10 @@ export default function ContactSubmissionsAdmin() {
       {selected && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setSelected(null)} />
-          <div className="relative w-full max-w-lg bg-slate-800 border border-white/10 rounded-2xl shadow-2xl max-h-[90vh] overflow-y-auto">
-            <div className="flex items-center justify-between px-6 py-4 border-b border-white/10">
-              <h2 className="text-white font-bold text-lg">Mensaje de contacto</h2>
-              <button onClick={() => setSelected(null)} className="text-slate-400 hover:text-white transition-colors">
+          <div className="relative w-full max-w-lg bg-white border border-slate-200 rounded-2xl shadow-2xl max-h-[90vh] overflow-y-auto">
+            <div className="flex items-center justify-between px-6 py-4 border-b border-slate-200">
+              <h2 className="text-slate-900 font-bold text-lg">Mensaje de contacto</h2>
+              <button onClick={() => setSelected(null)} className="text-slate-500 hover:text-slate-900 transition-colors">
                 <X className="w-5 h-5" />
               </button>
             </div>
@@ -142,7 +142,7 @@ export default function ContactSubmissionsAdmin() {
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <p className="text-slate-500 text-xs mb-1">Nombre</p>
-                  <p className="text-white text-sm font-medium">{selected.name}</p>
+                  <p className="text-slate-900 text-sm font-medium">{selected.name}</p>
                 </div>
                 <div>
                   <p className="text-slate-500 text-xs mb-1">Email</p>
@@ -151,26 +151,26 @@ export default function ContactSubmissionsAdmin() {
                 {selected.org && (
                   <div>
                     <p className="text-slate-500 text-xs mb-1">Organización</p>
-                    <p className="text-white text-sm">{selected.org}</p>
+                    <p className="text-slate-900 text-sm">{selected.org}</p>
                   </div>
                 )}
                 <div>
                   <p className="text-slate-500 text-xs mb-1">Asunto</p>
-                  <p className="text-white text-sm">{selected.subject}</p>
+                  <p className="text-slate-900 text-sm">{selected.subject}</p>
                 </div>
                 <div>
                   <p className="text-slate-500 text-xs mb-1">Fecha</p>
-                  <p className="text-white text-sm">{new Date(selected.created_at).toLocaleString('es-GT')}</p>
+                  <p className="text-slate-900 text-sm">{new Date(selected.created_at).toLocaleString('es-GT')}</p>
                 </div>
               </div>
               <div>
                 <p className="text-slate-500 text-xs mb-2">Mensaje</p>
-                <div className="p-4 bg-slate-900/60 rounded-xl text-slate-300 text-sm leading-relaxed whitespace-pre-wrap">
+                <div className="p-4 bg-white/60 rounded-xl text-slate-500 text-sm leading-relaxed whitespace-pre-wrap">
                   {selected.message}
                 </div>
               </div>
             </div>
-            <div className="flex items-center gap-2 px-6 py-4 border-t border-white/10">
+            <div className="flex items-center gap-2 px-6 py-4 border-t border-slate-200">
               <a
                 href={`mailto:${selected.email}?subject=Re: ${selected.subject}&body=Hola ${selected.name},%0D%0A%0D%0A`}
                 onClick={() => markStatus(selected.id, 'replied')}
@@ -187,7 +187,7 @@ export default function ContactSubmissionsAdmin() {
               </button>
               <button
                 onClick={() => handleDelete(selected.id)}
-                className="ml-auto p-2.5 text-slate-400 hover:text-red-400 transition-colors"
+                className="ml-auto p-2.5 text-slate-500 hover:text-red-400 transition-colors"
               >
                 <Trash2 className="w-4 h-4" />
               </button>
