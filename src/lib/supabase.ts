@@ -143,6 +143,9 @@ export type ForumThread = {
   is_closed: boolean;
   is_featured: boolean;
   is_pinned: boolean;
+  is_hidden: boolean;
+  moderation_status: 'approved' | 'pending';
+  moderation_note: string;
   view_count: number;
   reply_count: number;
   reaction_count: number;
@@ -158,6 +161,8 @@ export type ForumPost = {
   author_name: string;
   body: string;
   is_hidden: boolean;
+  moderation_status: 'approved' | 'pending';
+  moderation_note: string;
   reaction_count: number;
   created_at: string;
   updated_at: string;
@@ -172,12 +177,17 @@ export type ForumReaction = {
   created_at: string;
 };
 
+export type ForumReportReasonCategory =
+  | 'discriminacion' | 'acoso' | 'discurso_odio'
+  | 'spam' | 'ataques_personales' | 'desinformacion' | 'otro';
+
 export type ForumReport = {
   id: string;
   reporter_id: string | null;
   target_type: 'thread' | 'post';
   target_id: string;
   reason: string;
+  reason_category: ForumReportReasonCategory;
   status: 'open' | 'resolved' | 'dismissed';
   admin_notes: string;
   resolved_by: string | null;
@@ -200,6 +210,23 @@ export type ForumAdmin = {
   user_id: string;
   display_name: string;
   created_at: string;
+};
+
+export type ForumCodeOfConductSection = {
+  id: string;
+  title: string;
+  body: string;
+  sort_order: number;
+  is_active: boolean;
+  created_at: string;
+  updated_at: string;
+};
+
+export type ForumConductAcceptance = {
+  id: string;
+  user_id: string;
+  version: number;
+  accepted_at: string;
 };
 
 export type YouTubeVideo = {

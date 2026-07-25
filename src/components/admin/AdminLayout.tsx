@@ -22,7 +22,9 @@ const forumSubItems = [
   { label: 'Categorías', href: '/admin/forum/categorias' },
   { label: 'Discusiones', href: '/admin/forum/discusiones' },
   { label: 'Reportes', href: '/admin/forum/reportes' },
+  { label: 'Cola de moderación', href: '/admin/forum/cola' },
   { label: 'Reglas', href: '/admin/forum/reglas' },
+  { label: 'Lineamientos', href: '/admin/forum/lineamientos' },
   { label: 'Usuarios', href: '/admin/forum/usuarios' },
 ];
 

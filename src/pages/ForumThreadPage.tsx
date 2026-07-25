@@ -1,17 +1,21 @@
 import { useEffect, useState, useCallback } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import {
   MessageSquare, ChevronLeft, Reply, ThumbsUp, Flag, Pin, Lock,
-  AlertCircle, Send, Eye, EyeOff, Trash2, ShieldAlert, Sparkles, X,
+  AlertCircle, Send, EyeOff, Trash2, ShieldAlert, Sparkles, X,
+  ShieldCheck, EyeOff as HideIcon, Clock,
 } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import ForumAuthModal from '../components/forum/ForumAuthModal';
+import ForumConductModal from '../components/forum/ForumConductModal';
 import ForumRulesModal from '../components/forum/ForumRulesModal';
-import { supabase, ForumThread, ForumPost, ForumCategory } from '../lib/supabase';
+import { useConductAccepted, useForumAdmin, REPORT_CATEGORY_LABELS, REPORT_CATEGORIES } from '../hooks/useForumModeration';
+import { supabase, ForumThread, ForumPost, ForumCategory, ForumReportReasonCategory } from '../lib/supabase';
 import { getForumIcon, getForumColor, timeAgo } from '../lib/forum-helpers';
 
 export default function ForumThreadPage() {
   const { id: threadId } = useParams<{ id: string }>();
+  const navigate = useNavigate();
   const { user } = useAuth();
 
   const [thread, setThread] = useState<ForumThread | null>(null);
@@ -23,8 +27,12 @@ export default function ForumThreadPage() {
   const [error, setError] = useState('');
   const [authOpen, setAuthOpen] = useState(false);
   const [rulesOpen, setRulesOpen] = useState(false);
+  const [conductOpen, setConductOpen] = useState(false);
+  const { accepted: conductAccepted, recheck: recheckConduct } = useConductAccepted();
+  const { isAdmin } = useForumAdmin();
   const [myReactions, setMyReactions] = useState<Set<string>>(new Set());
   const [reportTarget, setReportTarget] = useState<{ type: 'thread' | 'post'; id: string } | null>(null);
+  const [reportCategory, setReportCategory] = useState<ForumReportReasonCategory>('otro');
   const [reportReason, setReportReason] = useState('');
   const [reportSubmitting, setReportSubmitting] = useState(false);
   const [reportDone, setReportDone] = useState(false);
@@ -109,6 +117,7 @@ export default function ForumThreadPage() {
   async function handleReply(e: React.FormEvent) {
     e.preventDefault();
     if (!user) { setAuthOpen(true); return; }
+    if (!conductAccepted) { setConductOpen(true); return; }
     if (!replyBody.trim()) return;
     if (thread?.is_closed) return;
     setSubmitting(true);
@@ -130,6 +139,34 @@ export default function ForumThreadPage() {
     setError('');
     loadPosts();
     loadThread();
+  }
+
+  async function handleModerateThread(field: 'is_pinned' | 'is_closed' | 'is_featured' | 'is_hidden', value: boolean) {
+    if (!thread || !isAdmin) return;
+    await supabase.from('forum_threads').update({ [field]: value }).eq('id', thread.id);
+    loadThread();
+  }
+
+  async function handleModeratePost(postId: string, field: 'is_hidden' | 'moderation_status', value: boolean | string) {
+    if (!isAdmin) return;
+    await supabase.from('forum_posts').update({ [field]: value }).eq('id', postId);
+    loadPosts();
+    loadThread();
+  }
+
+  async function handleAdminDeletePost(postId: string) {
+    if (!isAdmin) return;
+    if (!confirm('¿Eliminar esta respuesta? Esta acción no se puede deshacer.')) return;
+    await supabase.from('forum_posts').delete().eq('id', postId);
+    loadPosts();
+    loadThread();
+  }
+
+  async function handleAdminDeleteThread() {
+    if (!isAdmin || !thread) return;
+    if (!confirm('¿Eliminar esta discusión? Esta acción no se puede deshacer.')) return;
+    await supabase.from('forum_threads').delete().eq('id', thread.id);
+    navigate('/foro');
   }
 
   async function handleReact(targetType: 'thread' | 'post', targetId: string) {
@@ -162,12 +199,17 @@ export default function ForumThreadPage() {
   async function handleReport(e: React.FormEvent) {
     e.preventDefault();
     if (!user || !reportTarget) return;
+    if (reportCategory === 'otro' && !reportReason.trim()) {
+      setError('Selecciona un motivo o descríbelo.');
+      return;
+    }
     setReportSubmitting(true);
     const { error: reportError } = await supabase.from('forum_reports').insert({
       reporter_id: user.id,
       target_type: reportTarget.type,
       target_id: reportTarget.id,
-      reason: reportReason.trim(),
+      reason: reportReason.trim() || REPORT_CATEGORY_LABELS[reportCategory],
+      reason_category: reportCategory,
     });
     setReportSubmitting(false);
     if (reportError) {
@@ -176,6 +218,7 @@ export default function ForumThreadPage() {
     }
     setReportDone(true);
     setReportReason('');
+    setReportCategory('otro');
     setTimeout(() => { setReportTarget(null); setReportDone(false); }, 2000);
   }
 
@@ -308,6 +351,61 @@ export default function ForumThreadPage() {
           <div className="px-6 pb-6 border-t border-slate-50 pt-5">
             <p className="text-slate-700 text-[15px] leading-relaxed whitespace-pre-wrap">{thread.body}</p>
           </div>
+
+          {/* Pending-review banner — visible to author and admins */}
+          {thread.moderation_status === 'pending' && (isOwner || isAdmin) && (
+            <div className="px-6 py-3 border-t border-amber-200 bg-amber-50">
+              <div className="flex items-center gap-2 text-amber-800 text-xs">
+                <Clock className="w-4 h-4 flex-shrink-0" />
+                <span className="font-semibold">
+                  {isOwner
+                    ? 'Tu discusión está en revisión. Un moderador la aprobará pronto. Mientras tanto, no es visible para otras personas.'
+                    : 'Esta discusión está pendiente de aprobación.'}
+                </span>
+              </div>
+            </div>
+          )}
+
+          {/* Moderator controls */}
+          {isAdmin && (
+            <div className="px-6 py-3 border-t border-slate-100 bg-sky-50/50">
+              <div className="flex items-center gap-2 flex-wrap">
+                <span className="inline-flex items-center gap-1.5 text-xs font-bold text-sky-700 mr-1">
+                  <ShieldCheck className="w-3.5 h-3.5" /> Moderación
+                </span>
+                <button
+                  onClick={() => handleModerateThread('is_pinned', !thread.is_pinned)}
+                  className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-semibold transition-colors ${thread.is_pinned ? 'bg-amber-100 text-amber-700' : 'bg-white text-slate-500 hover:bg-amber-50 hover:text-amber-600 border border-slate-200'}`}
+                >
+                  <Pin className="w-3 h-3" /> {thread.is_pinned ? 'Fijada' : 'Fijar'}
+                </button>
+                <button
+                  onClick={() => handleModerateThread('is_featured', !thread.is_featured)}
+                  className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-semibold transition-colors ${thread.is_featured ? 'bg-sky-100 text-sky-700' : 'bg-white text-slate-500 hover:bg-sky-50 hover:text-sky-600 border border-slate-200'}`}
+                >
+                  <Sparkles className="w-3 h-3" /> {thread.is_featured ? 'Destacada' : 'Destacar'}
+                </button>
+                <button
+                  onClick={() => handleModerateThread('is_closed', !thread.is_closed)}
+                  className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-semibold transition-colors ${thread.is_closed ? 'bg-red-100 text-red-600' : 'bg-white text-slate-500 hover:bg-red-50 hover:text-red-500 border border-slate-200'}`}
+                >
+                  <Lock className="w-3 h-3" /> {thread.is_closed ? 'Cerrada' : 'Cerrar'}
+                </button>
+                <button
+                  onClick={() => handleModerateThread('is_hidden', !thread.is_hidden)}
+                  className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-semibold transition-colors ${thread.is_hidden ? 'bg-slate-200 text-slate-700' : 'bg-white text-slate-500 hover:bg-slate-100 border border-slate-200'}`}
+                >
+                  <HideIcon className="w-3 h-3" /> {thread.is_hidden ? 'Oculta' : 'Ocultar'}
+                </button>
+                <button
+                  onClick={handleAdminDeleteThread}
+                  className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-semibold bg-white text-red-500 hover:bg-red-50 border border-red-200 transition-colors ml-auto"
+                >
+                  <Trash2 className="w-3 h-3" /> Eliminar
+                </button>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Posts header */}
@@ -380,6 +478,27 @@ export default function ForumThreadPage() {
                       </button>
                     )}
                   </div>
+
+                  {/* Post moderation controls */}
+                  {isAdmin && (
+                    <div className="flex items-center gap-2 mt-3 pt-3 border-t border-sky-100 bg-sky-50/40 -mx-5 -mb-5 px-5 py-2 rounded-b-2xl">
+                      <span className="text-xs font-bold text-sky-700 inline-flex items-center gap-1">
+                        <ShieldCheck className="w-3 h-3" />
+                      </span>
+                      <button
+                        onClick={() => handleModeratePost(post.id, 'is_hidden', !post.is_hidden)}
+                        className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-xs font-semibold bg-white text-slate-500 hover:bg-slate-100 border border-slate-200 transition-colors"
+                      >
+                        <HideIcon className="w-3 h-3" /> {post.is_hidden ? 'Mostrar' : 'Ocultar'}
+                      </button>
+                      <button
+                        onClick={() => handleAdminDeletePost(post.id)}
+                        className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-xs font-semibold bg-white text-red-500 hover:bg-red-50 border border-red-200 transition-colors ml-auto"
+                      >
+                        <Trash2 className="w-3 h-3" /> Eliminar
+                      </button>
+                    </div>
+                  )}
                 </div>
               );
             })}
@@ -398,6 +517,22 @@ export default function ForumThreadPage() {
               <p className="text-slate-500 text-sm mb-3">Inicia sesión para participar en la discusión.</p>
               <button onClick={() => setAuthOpen(true)} className="inline-flex items-center gap-2 px-5 py-2.5 bg-sky-600 text-white text-sm font-semibold rounded-xl hover:bg-sky-500 transition-colors">
                 Iniciar sesión / Registrarse
+              </button>
+            </div>
+          ) : user && !conductAccepted ? (
+            <div className="text-center py-6">
+              <ShieldCheck className="w-7 h-7 text-sky-500 mx-auto mb-2" />
+              <p className="text-slate-700 text-sm font-semibold mb-1">
+                Acepta los lineamientos para participar
+              </p>
+              <p className="text-slate-400 text-xs mb-4 max-w-sm mx-auto">
+                Para publicar en el foro debes aceptar los Lineamientos de Respeto y Convivencia.
+              </p>
+              <button
+                onClick={() => setConductOpen(true)}
+                className="inline-flex items-center gap-2 px-5 py-2.5 bg-sky-600 text-white text-sm font-semibold rounded-xl hover:bg-sky-500 transition-colors"
+              >
+                <ShieldCheck className="w-4 h-4" /> Ver y aceptar lineamientos
               </button>
             </div>
           ) : (
@@ -468,13 +603,34 @@ export default function ForumThreadPage() {
                     Cuéntanos por qué este contenido es inapropiado. Un moderador lo revisará.
                   </p>
                   <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-1.5">Motivo</label>
+                    <label className="block text-sm font-medium text-slate-700 mb-1.5">Categoría del reporte</label>
+                    <div className="grid grid-cols-1 gap-1.5">
+                      {REPORT_CATEGORIES.map((cat) => (
+                        <button
+                          key={cat}
+                          type="button"
+                          onClick={() => setReportCategory(cat as ForumReportReasonCategory)}
+                          className={`text-left px-3 py-2 rounded-lg text-sm font-medium transition-colors border ${
+                            reportCategory === cat
+                              ? 'bg-sky-50 border-sky-300 text-sky-700'
+                              : 'bg-white border-slate-200 text-slate-600 hover:border-sky-200'
+                          }`}
+                        >
+                          {REPORT_CATEGORY_LABELS[cat]}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-slate-700 mb-1.5">
+                      Detalles {reportCategory === 'otro' && <span className="text-red-500">*</span>}
+                    </label>
                     <textarea
                       value={reportReason}
                       onChange={(e) => setReportReason(e.target.value)}
-                      placeholder="Describe el problema..."
-                      rows={4}
-                      required
+                      placeholder={reportCategory === 'otro' ? 'Describe el problema...' : 'Opcional: agrega más detalles'}
+                      rows={3}
+                      required={reportCategory === 'otro'}
                       maxLength={500}
                       className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 text-sm focus:outline-none focus:border-sky-400 focus:ring-1 focus:ring-sky-400/30 transition-colors resize-none"
                     />
@@ -494,7 +650,12 @@ export default function ForumThreadPage() {
         </div>
       )}
 
-      <ForumAuthModal open={authOpen} onClose={() => setAuthOpen(false)} />
+      <ForumAuthModal open={authOpen} onClose={() => setAuthOpen(false)} onSuccess={() => recheckConduct()} />
+      <ForumConductModal
+        open={conductOpen}
+        onClose={() => setConductOpen(false)}
+        onAccepted={() => recheckConduct()}
+      />
       <ForumRulesModal open={rulesOpen} onClose={() => setRulesOpen(false)} />
     </div>
   );

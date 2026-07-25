@@ -6,8 +6,10 @@ import {
 } from 'lucide-react';
 import PageHero from '../components/PageHero';
 import ForumAuthModal from '../components/forum/ForumAuthModal';
+import ForumConductModal from '../components/forum/ForumConductModal';
 import ForumRulesModal from '../components/forum/ForumRulesModal';
 import { useAuth } from '../contexts/AuthContext';
+import { useConductAccepted } from '../hooks/useForumModeration';
 import { supabase, ForumCategory, ForumThread } from '../lib/supabase';
 import { getForumIcon, getForumColor, timeAgo } from '../lib/forum-helpers';
 
@@ -21,6 +23,7 @@ export default function ForumCategoryPage() {
   const [loading, setLoading] = useState(true);
   const [authOpen, setAuthOpen] = useState(false);
   const [rulesOpen, setRulesOpen] = useState(false);
+  const [conductOpen, setConductOpen] = useState(false);
   const [showNewThread, setShowNewThread] = useState(false);
   const [newTitle, setNewTitle] = useState('');
   const [newBody, setNewBody] = useState('');
@@ -54,6 +57,8 @@ export default function ForumCategoryPage() {
     });
   }, [category, sortBy]);
 
+  const { accepted: conductAccepted, recheck: recheckConduct } = useConductAccepted();
+
   function getDisplayName(): string {
     if (!user) return 'Anónimo';
     const meta = user.user_metadata as Record<string, string> | undefined;
@@ -64,6 +69,10 @@ export default function ForumCategoryPage() {
     e.preventDefault();
     if (!user) {
       setAuthOpen(true);
+      return;
+    }
+    if (!conductAccepted) {
+      setConductOpen(true);
       return;
     }
     if (!newTitle.trim() || !newBody.trim()) {
@@ -297,7 +306,12 @@ export default function ForumCategoryPage() {
         </div>
       )}
 
-      <ForumAuthModal open={authOpen} onClose={() => setAuthOpen(false)} />
+      <ForumConductModal
+        open={conductOpen}
+        onClose={() => setConductOpen(false)}
+        onAccepted={() => recheckConduct()}
+      />
+      <ForumAuthModal open={authOpen} onClose={() => setAuthOpen(false)} onSuccess={() => recheckConduct()} />
       <ForumRulesModal open={rulesOpen} onClose={() => setRulesOpen(false)} />
     </div>
   );

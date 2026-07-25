@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import {
-  Flag, CheckCircle2, XCircle, Eye, Trash2, MessageSquare, Reply,
+  Flag, CheckCircle2, XCircle, Eye, Trash2, MessageSquare, Reply, Tag,
 } from 'lucide-react';
 import { supabase, ForumReport } from '../../lib/supabase';
+import { REPORT_CATEGORY_LABELS } from '../../hooks/useForumModeration';
 
 export default function ForumReports() {
   const [reports, setReports] = useState<ForumReport[]>([]);
@@ -106,6 +107,11 @@ export default function ForumReports() {
                       }`}>
                         {r.status === 'open' ? 'Abierto' : r.status === 'resolved' ? 'Resuelto' : 'Descartado'}
                       </span>
+                      {r.reason_category && r.reason_category !== 'otro' && (
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-sky-500/10 text-sky-400">
+                          <Tag className="w-3 h-3" /> {REPORT_CATEGORY_LABELS[r.reason_category] ?? r.reason_category}
+                        </span>
+                      )}
                       <span className="text-xs text-slate-500">{r.target_type === 'thread' ? 'Discusión' : 'Respuesta'}</span>
                       <span className="text-xs text-slate-500">{new Date(r.created_at).toLocaleDateString('es-GT')}</span>
                     </div>

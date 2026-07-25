@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   MessageSquare, ThumbsUp, Reply, Flag, Users, Layers,
-  ArrowRight, AlertTriangle, CheckCircle2, FolderTree, ShieldCheck,
+  ArrowRight, AlertTriangle, CheckCircle2, FolderTree, ShieldCheck, Clock,
 } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 
@@ -66,6 +66,8 @@ export default function ForumDashboard() {
     { label: 'Revisar reportes', href: '/admin/forum/reportes', icon: Flag, desc: 'Gestionar contenido reportado' },
     { label: 'Reglas de participación', href: '/admin/forum/reglas', icon: ShieldCheck, desc: 'Editar las normas del foro' },
     { label: 'Gestionar usuarios', href: '/admin/forum/usuarios', icon: Users, desc: 'Administrar moderadores y usuarios' },
+    { label: 'Cola de moderación', href: '/admin/forum/cola', icon: Clock, desc: 'Aprobar o rechazar primeros aportes' },
+    { label: 'Lineamientos de convivencia', href: '/admin/forum/lineamientos', icon: ShieldCheck, desc: 'Editar el código de conducta del foro' },
   ];
 
   return (

@@ -48,6 +48,8 @@ import ForumThreads from './pages/admin/ForumThreads';
 import ForumReports from './pages/admin/ForumReports';
 import ForumRulesAdmin from './pages/admin/ForumRulesAdmin';
 import ForumUsers from './pages/admin/ForumUsers';
+import ForumModerationQueue from './pages/admin/ForumModerationQueue';
+import ForumConductAdmin from './pages/admin/ForumConductAdmin';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -131,6 +133,8 @@ export default function App() {
           <Route path="/admin/forum/reportes" element={<ProtectedRoute><AdminLayout><ForumReports /></AdminLayout></ProtectedRoute>} />
           <Route path="/admin/forum/reglas" element={<ProtectedRoute><AdminLayout><ForumRulesAdmin /></AdminLayout></ProtectedRoute>} />
           <Route path="/admin/forum/usuarios" element={<ProtectedRoute><AdminLayout><ForumUsers /></AdminLayout></ProtectedRoute>} />
+          <Route path="/admin/forum/cola" element={<ProtectedRoute><AdminLayout><ForumModerationQueue /></AdminLayout></ProtectedRoute>} />
+          <Route path="/admin/forum/lineamientos" element={<ProtectedRoute><AdminLayout><ForumConductAdmin /></AdminLayout></ProtectedRoute>} />
 
           {/* Public routes */}
           <Route path="/" element={<PublicLayout><Home /></PublicLayout>} />
