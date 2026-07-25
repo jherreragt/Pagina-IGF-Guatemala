@@ -101,6 +101,7 @@ La base de datos se configura ejecutando las migraciones incluidas en `supabase/
 | `20260716001005_create_contact_submissions_table.sql` | Tabla de mensajes del formulario de contacto |
 | `20260716003430_create_youtube_videos_table.sql` | Tabla de videos de YouTube mostrados en la home |
 | `20260716004854_add_home_content_tables_and_settings.sql.sql` | Tablas de contenido de la home (estadísticas, temas, principios, comunidad) y textos administrables |
+| `20260725143151_forum_moderation_upgrade.sql` | Moderación del foro: código de conducta, aceptaciones, estados de moderación, categorías de reporte, cola de primeros aportes |
 
 ### Opción A — Desde el panel de Supabase
 
@@ -133,12 +134,15 @@ supabase db push
 | `event_registrations` | Registros de asistencia al evento |
 | `youtube_videos` | Videos de YouTube embebidos en la home |
 | `forum_categories` | Categorías del foro de diálogo |
-| `forum_threads` | Hilos de discusión |
-| `forum_posts` | Respuestas dentro de los hilos |
+| `forum_threads` | Hilos de discusión (con estado de moderación, fijado, destacado, oculto, cerrado) |
+| `forum_posts` | Respuestas dentro de los hilos (con estado de moderación y oculto) |
 | `forum_reactions` | Reacciones a hilos y respuestas |
-| `forum_reports` | Reportes de contenido inapropiado |
+| `forum_reports` | Reportes de contenido inapropiado (con categoría de motivo) |
 | `forum_rules` | Reglas del foro |
-| `forum_admins` | Administradores del foro |
+| `forum_admins` | Administradores y moderadores del foro |
+| `forum_code_of_conduct` | Secciones del código de conducta (lineamientos de convivencia) |
+| `forum_conduct_meta` | Versión actual del código de conducta |
+| `forum_conduct_acceptances` | Registro de aceptaciones del código por cada usuario |
 | `contact_submissions` | Mensajes recibidos por el formulario de contacto |
 
 Todas las tablas tienen **Row Level Security (RLS)** activada. Las tablas de contenido público permiten lectura a usuarios anónimos y autenticados; las tablas del foro usan `auth.uid()` para verificar propiedad.
@@ -240,9 +244,11 @@ Acceso en `/admin` (requiere iniciar sesión). Todas las rutas están protegidas
 | `/admin/forum` | Dashboard del foro |
 | `/admin/forum/categorias` | Categorías del foro |
 | `/admin/forum/discusiones` | Hilos de discusión |
-| `/admin/forum/reportes` | Reportes de contenido |
+| `/admin/forum/reportes` | Reportes de contenido (con categoría de motivo) |
+| `/admin/forum/cola` | Cola de moderación: aprobar o rechazar primeros aportes |
 | `/admin/forum/reglas` | Reglas del foro |
-| `/admin/forum/usuarios` | Usuarios del foro |
+| `/admin/forum/lineamientos` | Editar el código de conducta y subir versión |
+| `/admin/forum/usuarios` | Usuarios y moderadores del foro |
 
 ### Sistema de configuración (site_settings)
 
@@ -256,9 +262,67 @@ Todos los textos editables del sitio se almacenan en la tabla `site_settings`. C
 
 El hook `useSiteSettings` carga todas las configuraciones al iniciar la app y las mantiene disponibles en cualquier componente. Si una configuración no existe en la base de datos, se usa un valor por defecto.
 
-### Sistema de ediciones del evento
+### Foro de diálogo
 
-El evento anual se gestiona por ediciones. La edición marcada como `is_active` es la que se muestra en el sitio público. Esto permite preparar la próxima edición sin afectar la visible, y conservar el historial de ediciones anteriores.
+El foro es un espacio de discusión pública organizado por categorías temáticas. Cada persona puede crear discusiones (hilos) y responder dentro de ellas, con reacciones ("me gusta") y reportes de contenido inapropiado. El sistema incluye varias capas de moderación para mantener un espacio seguro y constructivo.
+
+#### Registro y participación
+
+1. **Creación de cuenta:** Para participar hay que registrarse con correo y contraseña. Al hacerlo, se debe marcar una casilla aceptando los **Lineamientos de Respeto y Convivencia** (el código de conducta del foro). La aceptación queda registrada con la versión del código vigente en ese momento.
+2. **Re-aceptación al actualizar:** Si los administradores cambian el contenido del código de conducta, pueden subir la versión desde el panel. Al hacerlo, todas las personas con cuentas existentes deberán aceptar de nuevo los lineamientos antes de poder seguir publicando.
+3. **Control de propiedad:** Cada persona solo puede editar o eliminar sus propias discusiones y respuestas. Las políticas de RLS verifican la identidad mediante `auth.uid()`.
+
+#### Cola de moderación del primer aporte
+
+La primera vez que alguien publica (una discusión o una respuesta), su aporte queda en estado **pendiente** hasta que un moderador lo apruebe o rechace. Esto ayuda a prevenir spam y trolls sin frenar a quienes ya participan:
+
+- El aporte pendiente **no es visible** para otras personas en el foro.
+- Quien lo escribió ve un aviso indicando que está en revisión.
+- Los moderadores lo revisan desde **`/admin/forum/cola`**, donde pueden aprobarlo (se publica) o rechazarlo (se elimina).
+- Los aportes posteriores de la misma persona se publican automáticamente, sin necesidad de aprobación.
+
+#### Moderación directa
+
+Los moderadores pueden actuar sobre cualquier discusión o respuesta desde la propia página pública del foro, sin ir al panel de administración:
+
+- **Fijar** — mantener una discusión arriba del listado.
+- **Destacar** — resaltar una discusión como relevante.
+- **Cerrar** — bloquear nuevas respuestas en una discusión.
+- **Ocultar** — ocultar un aporte del foro público sin eliminarlo.
+- **Eliminar** — borrar permanentemente una discusión o respuesta.
+
+#### Reportes con categoría
+
+Cualquier persona registrada puede reportar contenido inapropiado. El formulario de reporte ofrece categorías predefinidas para clasificar el motivo:
+
+| Categoría | Descripción |
+|---|---|
+| Discriminación | Contenido que discrimina por identidad, etnia, género, etc. |
+| Acoso | Intimidación, amenazas o acoso hacia una persona |
+| Discurso de odio | Mensajes que incitan al odio o la violencia |
+| Spam | Contenido promocional o repetitivo no relacionado |
+| Ataques personales | Insultos o descalificaciones hacia otra persona |
+| Desinformación | Información falsa o engañosa deliberada |
+| Otro | Cualquier otro motivo (requiere descripción) |
+
+Los reportes llegan al panel de administración (**`/admin/forum/reportes`**) donde se muestra la categoría como etiqueta, facilitando identificar patrones. Un moderador puede marcar cada reporte como resuelto o descartado.
+
+#### Panel de administración del foro
+
+Desde **`/admin/forum`** se accede al dashboard del foro, que enlaza a todas las herramientas de gestión:
+
+- **Categorías** — crear y editar las categorías temáticas del foro.
+- **Discusiones** — listado completo de hilos, con búsqueda y filtros.
+- **Reportes** — cola de reportes con categoría, estado y acciones.
+- **Cola de moderación** — aprobar o rechazar los primeros aportes de personas nuevas.
+- **Reglas** — editar las reglas operativas del foro.
+- **Lineamientos** — editar el código de conducta y subir la versión cuando cambie.
+- **Usuarios** — gestionar moderadores y usuarios del foro.
+
+#### Roles
+
+- **Usuario:** puede crear discusiones, responder, reaccionar y reportar. Su primer aporte pasa por la cola de moderación.
+- **Moderador / Administrador:** tiene acceso al panel de administración, puede aprobar o rechazar aportes pendientes, y moderar contenido directamente (fijar, destacar, cerrar, ocultar, eliminar). Los moderadores se asignan desde **`/admin/forum/usuarios`**.
 
 ### Autenticación
 
