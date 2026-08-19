@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Globe, ArrowRight, ExternalLink, Users, Heart, BookOpen } from 'lucide-react';
+import { Globe, ArrowRight, ExternalLink, Users, Heart, BookOpen, Rocket, MessageSquare } from 'lucide-react';
 import PageHero from '../components/PageHero';
 
 const historyTimeline = [
@@ -142,29 +142,35 @@ export default function About() {
           {/* Fases del IGF */}
           <div className="border-t border-slate-100 pt-12">
             <h2 className="font-display font-bold text-brand-900 text-3xl mb-8">Fases del IGF</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="p-7 bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-all">
                 <div className="w-12 h-12 rounded-xl bg-brand-100 flex items-center justify-center mb-4">
-                  <Users className="w-6 h-6 text-brand-600" />
+                  <Rocket className="w-6 h-6 text-brand-600" />
                 </div>
-                <h3 className="font-display font-bold text-brand-900 text-xl mb-3">Conversatorios</h3>
-                <p className="text-slate-600 text-sm leading-relaxed mb-3">
-                  Se llevarán a cabo varios conversatorios con expertos, sobre distintos temas de gobernanza de interés en nuestro país. Inician el 21 de octubre.
+                <h3 className="font-display font-bold text-brand-900 text-xl mb-3">Kick Off</h3>
+                <p className="text-brand-600 text-sm font-semibold mb-2">9 de septiembre</p>
+                <p className="text-slate-600 text-sm leading-relaxed">
+                  Evento de lanzamiento del proceso IGF Guatemala, donde se presentan los ejes temáticos y se da inicio a la participación ciudadana.
                 </p>
-                <p className="text-slate-500 text-sm leading-relaxed">
-                  Los temas son de actualidad, pensamos que son de importancia a los usuarios de Internet de nuestro país.
+              </div>
+              <div className="p-7 bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-all">
+                <div className="w-12 h-12 rounded-xl bg-brand-100 flex items-center justify-center mb-4">
+                  <MessageSquare className="w-6 h-6 text-brand-600" />
+                </div>
+                <h3 className="font-display font-bold text-brand-900 text-xl mb-3">Foros electrónicos</h3>
+                <p className="text-brand-600 text-sm font-semibold mb-2">Por determinarse</p>
+                <p className="text-slate-600 text-sm leading-relaxed">
+                  Discusiones virtuales abiertas donde la ciudadanía debate los temas de gobernanza de Internet y propone recomendaciones para el país.
                 </p>
               </div>
               <div className="p-7 bg-brand-900 rounded-2xl shadow-sm hover:shadow-md transition-all">
                 <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center mb-4">
                   <Globe className="w-6 h-6 text-brand-300" />
                 </div>
-                <h3 className="font-display font-bold text-white text-xl mb-3">Evento IGF</h3>
-                <p className="text-brand-100 text-sm leading-relaxed mb-3">
-                  Se presentarán el 24 de noviembre en un solo evento en el cual presentaremos las conclusiones y recomendaciones de los conversatorios, los cuales estarán también en discusión por quienes participen.
-                </p>
-                <p className="text-brand-200 text-sm leading-relaxed">
-                  Es un evento dinámico y participativo que busca compartir el conocimiento generado durante los conversatorios.
+                <h3 className="font-display font-bold text-white text-xl mb-3">Clausura del IGF</h3>
+                <p className="text-brand-300 text-sm font-semibold mb-2">9 de noviembre</p>
+                <p className="text-brand-100 text-sm leading-relaxed">
+                  Evento presencial de cierre donde se presentan las conclusiones y recomendaciones de los foros electrónicos y conversatorios.
                 </p>
               </div>
             </div>

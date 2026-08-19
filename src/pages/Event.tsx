@@ -4,7 +4,7 @@ import {
   Calendar, MapPin, Monitor, Users, ChevronRight, ArrowRight,
   Lightbulb, ShieldCheck, Scale, Wifi, Database, Zap, Radio, TrendingUp,
   Building2, GraduationCap, Laptop, Heart, Globe,
-  FileText, Send, Check, Clock, Filter, Download, BookOpen, User
+  FileText, Send, Check, Clock, Filter, Download, BookOpen, User, Rocket, MessageSquare
 } from 'lucide-react';
 import Countdown from '../components/Countdown';
 import { useSiteSettings } from '../hooks/useSiteSettings';
@@ -70,7 +70,7 @@ export default function Event() {
   const eventLocation  = edition?.event_location ?? settings.event_location;
   const eventModality  = edition?.event_modality ?? settings.event_modality;
   const eventLema      = edition?.lema           ?? settings.event_lema;
-  const eventDatetimeIso = edition?.datetime_iso ?? settings.event_datetime_iso ?? '2026-11-05T09:00:00';
+  const eventDatetimeIso = edition?.datetime_iso ?? settings.event_datetime_iso ?? '2026-11-09T09:00:00';
   const registrationOpen = edition ? edition.registration_open : settings.event_registration_open === 'true';
   const sessionsOpen     = edition ? edition.sessions_open     : settings.event_sessions_open === 'true';
 
@@ -234,24 +234,35 @@ export default function Event() {
               <span className="w-8 h-0.5 bg-brand-500" />Etapas del proceso<span className="w-8 h-0.5 bg-brand-500" />
             </div>
             <h2 className="text-4xl font-bold text-brand-900 mb-4">Fases del IGF</h2>
-            <p className="text-slate-500 max-w-2xl mx-auto">El proceso se desarrolla en dos etapas: los conversatorios temáticos y el evento de cierre.</p>
+            <p className="text-slate-500 max-w-2xl mx-auto">El proceso se desarrolla en tres etapas: el Kick Off, los foros electrónicos y la Clausura del IGF.</p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
             <div className="p-8 bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-all">
               <div className="flex items-center gap-4 mb-5">
                 <div className="w-14 h-14 rounded-2xl bg-brand-100 flex items-center justify-center flex-shrink-0">
-                  <Users className="w-7 h-7 text-brand-600" />
+                  <Rocket className="w-7 h-7 text-brand-600" />
                 </div>
                 <div>
-                  <h3 className="font-display font-bold text-brand-900 text-2xl">Conversatorios</h3>
-                  <p className="text-brand-600 text-sm font-semibold mt-0.5">Inician el 21 de octubre</p>
+                  <h3 className="font-display font-bold text-brand-900 text-xl">Kick Off</h3>
+                  <p className="text-brand-600 text-sm font-semibold mt-0.5">9 de septiembre</p>
                 </div>
               </div>
-              <p className="text-slate-600 text-[15px] leading-relaxed mb-3">
-                Se llevarán a cabo varios conversatorios con expertos, sobre distintos temas de gobernanza de interés en nuestro país.
+              <p className="text-slate-600 text-sm leading-relaxed">
+                Evento de lanzamiento del proceso IGF Guatemala, donde se presentan los ejes temáticos y se da inicio a la participación ciudadana.
               </p>
-              <p className="text-slate-500 text-sm leading-relaxed">
-                Los temas son de actualidad, pensamos que son de importancia a los usuarios de Internet de nuestro país.
+            </div>
+            <div className="p-8 bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-all">
+              <div className="flex items-center gap-4 mb-5">
+                <div className="w-14 h-14 rounded-2xl bg-brand-100 flex items-center justify-center flex-shrink-0">
+                  <MessageSquare className="w-7 h-7 text-brand-600" />
+                </div>
+                <div>
+                  <h3 className="font-display font-bold text-brand-900 text-xl">Foros electrónicos</h3>
+                  <p className="text-brand-600 text-sm font-semibold mt-0.5">Por determinarse</p>
+                </div>
+              </div>
+              <p className="text-slate-600 text-sm leading-relaxed">
+                Discusiones virtuales abiertas donde la ciudadanía debate los temas de gobernanza de Internet y propone recomendaciones para el país.
               </p>
             </div>
             <div className="p-8 bg-brand-900 rounded-2xl shadow-sm hover:shadow-md transition-all">
@@ -260,15 +271,12 @@ export default function Event() {
                   <Globe className="w-7 h-7 text-brand-300" />
                 </div>
                 <div>
-                  <h3 className="font-display font-bold text-white text-2xl">Evento IGF</h3>
-                  <p className="text-brand-300 text-sm font-semibold mt-0.5">24 de noviembre</p>
+                  <h3 className="font-display font-bold text-white text-xl">Clausura del IGF</h3>
+                  <p className="text-brand-300 text-sm font-semibold mt-0.5">9 de noviembre</p>
                 </div>
               </div>
-              <p className="text-brand-100 text-[15px] leading-relaxed mb-3">
-                Se presentarán en un solo evento en el cual presentaremos las conclusiones y recomendaciones de los conversatorios, los cuales estarán también en discusión por quienes participen.
-              </p>
-              <p className="text-brand-200 text-sm leading-relaxed">
-                Es un evento dinámico y participativo que busca compartir el conocimiento generado durante los conversatorios.
+              <p className="text-brand-100 text-sm leading-relaxed">
+                Evento presencial de cierre donde se presentan las conclusiones y recomendaciones de los foros electrónicos y conversatorios.
               </p>
             </div>
           </div>
@@ -337,10 +345,9 @@ export default function Event() {
               <h3 className="font-bold text-white text-lg mb-4">Fechas clave</h3>
               <ul className="space-y-3">
                 {[
-                  { label: 'Apertura de convocatoria', date: '1 de julio 2026' },
-                  { label: 'Cierre de convocatoria', date: '31 de agosto 2026' },
-                  { label: 'Notificación de resultados', date: '15 de septiembre 2026' },
-                  { label: 'Evento', date: eventDate || '5 de noviembre de 2026' },
+                  { label: 'Kick Off', date: '9 de septiembre 2026' },
+                  { label: 'Foros electrónicos', date: 'Por determinarse' },
+                  { label: 'Clausura del IGF', date: '9 de noviembre 2026' },
                 ].map(({ label, date }) => (
                   <li key={label} className="flex justify-between gap-4">
                     <span className="text-blue-200 text-sm">{label}</span>
@@ -751,7 +758,7 @@ export default function Event() {
             <div className="space-y-5">
               {[
                 { icon: MapPin, title: 'Lugar', info: eventLocation || 'Centro de Convenciones, Ciudad de Guatemala' },
-                { icon: Calendar, title: 'Fecha y horario', info: `${eventDate || '5 de noviembre de 2026'} · 8:00 AM – 6:00 PM` },
+                { icon: Calendar, title: 'Fecha y horario', info: `${eventDate || '9 de noviembre de 2026'} · 8:00 AM – 6:00 PM` },
                 { icon: Monitor, title: 'Modalidad', info: eventModality || 'Presencial con transmisión en vivo' },
                 { icon: Users, title: 'Accesibilidad', info: 'El recinto es accesible para personas con movilidad reducida. Servicios de interpretación disponibles.' },
               ].map(({ icon: Icon, title, info }) => (
