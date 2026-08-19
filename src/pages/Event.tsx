@@ -149,7 +149,7 @@ export default function Event() {
       {/* Hero */}
       <section
         className="relative min-h-screen flex items-center justify-center overflow-hidden"
-        style={{ background: 'linear-gradient(135deg, #1a3a6e 0%, #1565c0 50%, #0288d1 100%)' }}
+        style={{ background: 'linear-gradient(135deg, #0a1118 0%, #16293f 50%, #274f7e 100%)' }}
       >
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute -top-20 left-1/4 w-[500px] h-[500px] rounded-full bg-sky-600/10 blur-[120px]" />

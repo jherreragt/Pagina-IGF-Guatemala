@@ -10,7 +10,7 @@ export default function PageHero({ icon, eyebrow, title, subtitle, titleAccent }
   return (
     <section
       className="relative pt-32 pb-20 overflow-hidden"
-      style={{ background: 'linear-gradient(135deg, #1a3a6e 0%, #1565c0 60%, #0288d1 100%)' }}
+      style={{ background: 'linear-gradient(135deg, #0a1118 0%, #16293f 60%, #274f7e 100%)' }}
     >
       <div className="absolute inset-0 bg-grid pointer-events-none" />
       <div className="absolute top-0 right-0 w-[400px] h-[400px] rounded-full bg-sky-600/8 blur-[100px] pointer-events-none" />

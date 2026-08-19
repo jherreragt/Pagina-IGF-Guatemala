@@ -74,7 +74,7 @@ export default function EventPopup() {
         className={`relative w-full sm:max-w-2xl mx-4 mb-4 sm:mx-auto rounded-2xl shadow-2xl overflow-hidden ${
           closing ? 'popup-slide-down' : 'popup-slide-up'
         }`}
-        style={{ background: 'linear-gradient(135deg, #1a3a6e 0%, #1565c0 50%, #0288d1 100%)' }}
+        style={{ background: 'linear-gradient(135deg, #0a1118 0%, #16293f 50%, #274f7e 100%)' }}
       >
         {/* Decorative glow */}
         <div className="absolute -top-16 -right-10 w-48 h-48 rounded-full bg-sky-400/15 blur-3xl pointer-events-none" />

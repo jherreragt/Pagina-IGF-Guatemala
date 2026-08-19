@@ -254,7 +254,7 @@ export default function Forum() {
       </section>
 
       {/* CTA banner */}
-      <section className="py-16 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #0369a1 0%, #0284c7 50%, #0ea5e9 100%)' }}>
+      <section className="py-16 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #16293f 0%, #1d3a5d 50%, #274f7e 100%)' }}>
         <div className="absolute inset-0 bg-grid" />
         <div className="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <Users className="w-10 h-10 text-white mx-auto mb-4" />

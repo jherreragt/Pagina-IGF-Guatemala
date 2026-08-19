@@ -86,7 +86,7 @@ export default function Home() {
     <div className="overflow-x-hidden">
 
       {/* ── HERO ── */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden" style={{ background: 'linear-gradient(135deg, #1a3a6e 0%, #1565c0 55%, #0288d1 100%)' }}>
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden" style={{ background: 'linear-gradient(135deg, #0a1118 0%, #16293f 55%, #274f7e 100%)' }}>
         {/* Decorative orbs */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-[-10%] right-[-5%] w-[500px] h-[500px] rounded-full bg-sky-600/10 blur-[100px]" />
@@ -235,7 +235,7 @@ export default function Home() {
 
       {/* ── PRINCIPIOS ── */}
       {settings.show_principles === 'true' && principles.length > 0 && (
-        <section className="py-24 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #1e3a8a 0%, #1565c0 60%, #0369a1 100%)' }}>
+        <section className="py-24 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #111c2b 0%, #16293f 60%, #1d3a5d 100%)' }}>
           <div className="absolute inset-0 bg-grid" />
           <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full bg-sky-600/8 blur-[120px] pointer-events-none" />
           <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -310,7 +310,7 @@ export default function Home() {
       )}
 
       {/* ── EVENTO ANUAL CTA ── */}
-      <section className="py-24 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #0369a1 0%, #0284c7 50%, #0ea5e9 100%)' }}>
+      <section className="py-24 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #16293f 0%, #1d3a5d 50%, #274f7e 100%)' }}>
         <div className="absolute inset-0 bg-grid" />
         <div className="absolute right-0 top-0 h-full w-1/2 pointer-events-none">
           <div className="h-full w-full bg-gradient-to-l from-white/5 to-transparent" />
