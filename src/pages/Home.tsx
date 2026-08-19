@@ -453,6 +453,47 @@ export default function Home() {
         />
       </section>
 
+      {/* ── ALIADOS ESTRATÉGICOS ── */}
+      <section className="py-20 bg-slate-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <p className="section-label justify-center">
+              <span className="w-5 h-px bg-sky-500" />
+              Aliados
+              <span className="w-5 h-px bg-sky-500" />
+            </p>
+            <h2 className="section-title text-3xl sm:text-4xl mb-3">Aliados Estratégicos y Patrocinadores</h2>
+            <p className="text-slate-500 text-[15px] max-w-2xl mx-auto">
+              Con el respaldo de organizaciones comprometidas con un Internet abierto, seguro e inclusivo para Guatemala.
+            </p>
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-5">
+            {[
+              { name: 'Red Ciudadana', url: 'https://redciudadana.org' },
+              { name: 'Consultoría Técnica Pedagógica', url: '#' },
+              { name: 'María Zaghi (Observatorio)', url: '#' },
+              { name: 'IGF Ginebra', url: 'https://www.intgovforum.org' },
+              { name: 'UNIS', url: '#' },
+            ].map(({ name, url }) => (
+              <a
+                key={name}
+                href={url}
+                target={url !== '#' ? '_blank' : '_self'}
+                rel="noopener noreferrer"
+                className="group flex flex-col items-center justify-center gap-3 p-6 bg-white border border-slate-100 rounded-2xl hover:border-sky-200 hover:shadow-md transition-all min-h-[140px]"
+              >
+                <div className="w-14 h-14 rounded-xl bg-slate-50 group-hover:bg-sky-50 flex items-center justify-center transition-colors">
+                  <Building2 className="w-7 h-7 text-slate-400 group-hover:text-sky-600 transition-colors" />
+                </div>
+                <span className="font-display font-bold text-slate-600 group-hover:text-blue-950 text-sm text-center leading-snug transition-colors">
+                  {name}
+                </span>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ── BLOG ── */}
       {settings.show_blog === 'true' && blogPosts.length > 0 && (
         <section className="py-24 bg-white">
