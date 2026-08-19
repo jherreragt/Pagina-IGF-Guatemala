@@ -43,7 +43,7 @@ export default function Navigation() {
       <div className="fixed top-0 left-0 right-0 z-50 h-8 bg-blue-700 border-b border-white/[0.12] hidden sm:flex">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex items-center justify-between">
           <p className="text-blue-300/70 text-[11px] font-medium tracking-wide">
-            Foro Nacional de Gobernanza de Internet · Guatemala
+            Foro para la Gobernanza de la Internet en Guatemala
           </p>
           <div className="flex items-center gap-0.5">
             {socialLinks.map(({ icon: Icon, href, label }) => (
