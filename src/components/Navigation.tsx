@@ -5,8 +5,8 @@ import { useSiteSettings } from '../hooks/useSiteSettings';
 
 const primaryLinks = [
   { label: 'Inicio', href: '/' },
-  { label: 'Evento Anual', href: '/evento' },
-  { label: 'Foro', href: '/foro' },
+  { label: 'Clausura 2026', href: '/evento' },
+  { label: 'Foro Electrónico', href: '/foro' },
   { label: 'Blog', href: '/blog' },
   { label: 'Contacto', href: '/contacto' },
 ];

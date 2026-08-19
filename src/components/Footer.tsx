@@ -62,7 +62,7 @@ export default function Footer() {
                 { label: 'Principios', href: '/principios' },
                 { label: 'Comunidad', href: '/comunidad' },
                 { label: 'Ejes Temáticos', href: '/ejes' },
-                { label: 'Evento Anual', href: '/evento' },
+                { label: 'Clausura 2026', href: '/evento' },
               ].map((link) => (
                 <li key={link.href}>
                   <Link to={link.href} className="text-slate-500 hover:text-slate-200 text-sm transition-colors">
@@ -79,7 +79,7 @@ export default function Footer() {
             <ul className="space-y-2.5">
               {[
                 { label: 'Blog', href: '/blog' },
-                { label: 'Foro de Diálogo', href: '/foro' },
+                { label: 'Foro Electrónico', href: '/foro' },
                 { label: 'Biblioteca', href: '/recursos' },
                 { label: 'Transparencia', href: '/transparencia' },
                 { label: 'Contacto', href: '/contacto' },

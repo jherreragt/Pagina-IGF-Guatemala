@@ -82,7 +82,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               <Calendar className="w-5 h-5 flex-shrink-0" />
               {expanded && (
                 <>
-                  <span className="text-sm font-medium flex-1">Evento Anual</span>
+                  <span className="text-sm font-medium flex-1">Clausura 2026</span>
                   {eventActive ? <ChevronDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
                 </>
               )}
@@ -110,7 +110,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               <MessageSquare className="w-5 h-5 flex-shrink-0" />
               {expanded && (
                 <>
-                  <span className="text-sm font-medium flex-1">Foro de Diálogo</span>
+                  <span className="text-sm font-medium flex-1">Foro Electrónico</span>
                   {forumActive ? <ChevronDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
                 </>
               )}
@@ -173,11 +173,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   };
 
   const currentLabel = (() => {
-    if (location.pathname === '/admin/event') return 'Evento Anual';
+    if (location.pathname === '/admin/event') return 'Clausura 2026';
     const sub = eventSubItems.find((s) => location.pathname === s.href);
     if (sub) return `Evento — ${sub.label}`;
     if (location.pathname.startsWith('/admin/blog')) return 'Blog';
-    if (location.pathname === '/admin/forum') return 'Foro de Diálogo';
+    if (location.pathname === '/admin/forum') return 'Foro Electrónico';
     const fSub = forumSubItems.find((s) => location.pathname === s.href);
     if (fSub) return `Foro — ${fSub.label}`;
     if (location.pathname === '/admin/home') return 'Contenido del Home';

@@ -5,7 +5,7 @@ import { supabase, SiteSetting } from '../../lib/supabase';
 const SECTION_LABELS: Record<string, string> = {
   hero: 'Sección Hero (Inicio)',
   sobre: 'Sobre IGF Guatemala',
-  evento: 'Evento Anual',
+  evento: 'Clausura 2026',
   inicio: 'Textos del Home',
   footer: 'Footer',
   visibilidad: 'Visibilidad de Secciones',

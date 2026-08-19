@@ -73,7 +73,7 @@ export default function ForumDashboard() {
   return (
     <div className="space-y-8 max-w-5xl">
       <div>
-        <h1 className="text-2xl font-bold text-slate-900">Foro de Diálogo</h1>
+        <h1 className="text-2xl font-bold text-slate-900">Foro Electrónico</h1>
         <p className="text-slate-500 text-sm mt-1">Panel de moderación y gestión del foro multiactor.</p>
       </div>
 

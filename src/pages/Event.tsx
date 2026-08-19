@@ -161,7 +161,7 @@ export default function Event() {
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-sky-500/10 border border-sky-400/20 mb-10">
             <span className="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse" />
             <Calendar className="w-3 h-3 text-sky-400" />
-            <span className="text-sky-300 text-xs font-semibold tracking-widest uppercase">Evento Anual · {eventDate}</span>
+            <span className="text-sky-300 text-xs font-semibold tracking-widest uppercase">Clausura 2026 · {eventDate}</span>
           </div>
 
           <h1 className="font-display font-bold text-white leading-tight mb-5">
@@ -204,7 +204,7 @@ export default function Event() {
               <p className="section-label"><span className="w-5 h-px bg-sky-500" />Acerca del evento</p>
               <h2 className="section-title text-4xl mb-6">El encuentro nacional de gobernanza de Internet</h2>
               <p className="text-slate-500 leading-relaxed mb-5 text-[15px]">
-                El Evento Anual del IGF Guatemala es el principal espacio nacional de diálogo multiactor sobre gobernanza de Internet. Reúne a representantes del gobierno, sociedad civil, sector privado, comunidad técnica, academia, juventudes y organismos internacionales.
+                La Clausura 2026 del IGF Guatemala es el principal espacio nacional de diálogo multiactor sobre gobernanza de Internet. Reúne a representantes del gobierno, sociedad civil, sector privado, comunidad técnica, academia, juventudes y organismos internacionales.
               </p>
               <p className="text-slate-500 leading-relaxed mb-8 text-[15px]">
                 Cada edición busca promover una conversación abierta, inclusiva, transparente y participativa sobre el futuro de Internet en Guatemala, generando recomendaciones concretas para el país.

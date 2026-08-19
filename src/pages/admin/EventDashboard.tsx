@@ -52,7 +52,7 @@ export default function EventDashboard() {
   return (
     <div className="space-y-8 max-w-5xl">
       <div>
-        <h1 className="text-2xl font-bold text-slate-900">Evento Anual</h1>
+        <h1 className="text-2xl font-bold text-slate-900">Clausura 2026</h1>
         <p className="text-slate-500 text-sm mt-1">Administra los contenidos del evento anual IGF Guatemala.</p>
       </div>
 
