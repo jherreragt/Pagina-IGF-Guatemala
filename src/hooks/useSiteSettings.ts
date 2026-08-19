@@ -7,7 +7,7 @@ const DEFAULTS: SettingsMap = {
   hero_title: 'IGF Guatemala',
   hero_subtitle: 'Un espacio abierto, inclusivo y multiactor para dialogar sobre el futuro de Internet en Guatemala.',
   hero_description: 'Reunimos a gobierno, sociedad civil, sector privado, academia, comunidad técnica, juventudes y organismos internacionales para discutir los principales desafíos digitales del país.',
-  home_badge_text: 'Capítulo Nacional · IGF Global',
+  home_badge_text: 'Capítulo Guatemala de la Internet Society',
   about_extra_1: 'Funciona como un espacio de diálogo abierto, sin fines de lucro, donde múltiples sectores se reúnen en igualdad de condiciones para discutir los desafíos y oportunidades del ecosistema digital del país.',
   about_extra_2: 'No toma decisiones vinculante, sino que genera recomendaciones, construye puentes y fortalece la participación de Guatemala en las discusiones globales.',
   why_matters_title: '¿Por qué importa la gobernanza de Internet?',

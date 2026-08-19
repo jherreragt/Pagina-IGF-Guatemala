@@ -21,9 +21,9 @@ export default function Footer() {
           <div className="lg:col-span-2">
             <div className="mb-5">
               <img
-                src="/IGF-aprobado-invertido-blanco-e1730905954692.png"
+                src="/Captura_de_pantalla_2026-08-19_a_la(s)_12.14.27_p._m..png"
                 alt="IGF Guatemala"
-                className="h-20 w-auto"
+                className="h-20 w-auto rounded-md bg-white"
               />
             </div>
             <p className="text-slate-500 text-sm leading-relaxed mb-6 max-w-xs">

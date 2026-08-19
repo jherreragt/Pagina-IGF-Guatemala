@@ -76,9 +76,9 @@ export default function Navigation() {
             {/* Brand */}
             <Link to="/" className="flex items-center flex-shrink-0">
               <img
-                src="/IGF-aprobado-invertido-blanco-e1730905954692.png"
+                src="/Captura_de_pantalla_2026-08-19_a_la(s)_12.14.27_p._m..png"
                 alt="IGF Guatemala"
-                className="h-12 w-auto"
+                className="h-12 w-auto rounded-md bg-white"
               />
             </Link>
 
