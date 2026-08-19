@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { Youtube, ExternalLink, X, Play } from 'lucide-react';
 import { supabase, YouTubeVideo } from '../lib/supabase';
 
@@ -33,6 +33,7 @@ export default function YouTubeWebinars({
   const [videos, setVideos] = useState<YouTubeVideo[]>([]);
   const [selected, setSelected] = useState<YouTubeVideo | null>(null);
   const [loading, setLoading] = useState(true);
+  const [activeCat, setActiveCat] = useState('Todos');
 
   useEffect(() => {
     supabase
@@ -46,6 +47,16 @@ export default function YouTubeWebinars({
         setLoading(false);
       });
   }, []);
+
+  const categories = useMemo(() => {
+    const cats = Array.from(new Set(videos.map((v) => v.category)));
+    return ['Todos', ...cats];
+  }, [videos]);
+
+  const filtered = useMemo(() => {
+    if (activeCat === 'Todos') return videos;
+    return videos.filter((v) => v.category === activeCat);
+  }, [videos, activeCat]);
 
   const hasConfig = Boolean(channelId || playlistId);
   const channelUrl = buildChannelUrl(channelId, playlistId);
@@ -61,7 +72,7 @@ export default function YouTubeWebinars({
               <span className="w-5 h-px bg-sky-500" />
               Multimedia
             </p>
-            <h2 className="section-title text-4xl sm:text-5xl">Webinars y videos previos</h2>
+            <h2 className="section-title text-4xl sm:text-5xl">Webinars y videos</h2>
             <p className="text-slate-500 text-[15px] mt-3 max-w-xl">
               Revive las conversaciones, paneles y webinars del IGF Guatemala sobre gobernanza de Internet.
             </p>
@@ -80,6 +91,25 @@ export default function YouTubeWebinars({
           )}
         </div>
 
+        {/* Category filters */}
+        {!loading && categories.length > 2 && (
+          <div className="flex flex-wrap gap-2 mb-8">
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setActiveCat(cat)}
+                className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${
+                  activeCat === cat
+                    ? 'bg-sky-600 text-white'
+                    : 'bg-white text-slate-600 border border-slate-200 hover:border-sky-300 hover:text-sky-700'
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+        )}
+
         {loading ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {[1, 2, 3].map((i) => (
@@ -92,9 +122,14 @@ export default function YouTubeWebinars({
               </div>
             ))}
           </div>
+        ) : filtered.length === 0 ? (
+          <div className="py-16 text-center bg-slate-50 rounded-2xl border border-slate-100">
+            <Youtube className="w-10 h-10 text-slate-300 mx-auto mb-3" />
+            <p className="text-slate-400 font-medium">No hay videos en esta categoría.</p>
+          </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {videos.map((video) => (
+            {filtered.map((video) => (
               <button
                 key={video.id}
                 onClick={() => setSelected(video)}
@@ -105,6 +140,9 @@ export default function YouTubeWebinars({
                     src={getThumbnail(video)}
                     alt={video.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = `https://img.youtube.com/vi/${video.youtube_id}/mqdefault.jpg`;
+                    }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-900/70 via-slate-900/10 to-transparent" />
                   <div className="absolute inset-0 flex items-center justify-center">
@@ -121,6 +159,9 @@ export default function YouTubeWebinars({
                   <h3 className="font-bold text-blue-950 text-[15px] leading-snug group-hover:text-sky-700 transition-colors line-clamp-2">
                     {video.title}
                   </h3>
+                  {video.description && (
+                    <p className="text-slate-500 text-sm mt-2 line-clamp-2 leading-relaxed">{video.description}</p>
+                  )}
                 </div>
               </button>
             ))}
@@ -163,6 +204,15 @@ export default function YouTubeWebinars({
               {selected.description && (
                 <p className="text-slate-400 text-sm mt-2 leading-relaxed">{selected.description}</p>
               )}
+              <a
+                href={`https://www.youtube.com/watch?v=${selected.youtube_id}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 text-sky-400 hover:text-sky-300 text-sm font-medium mt-3 transition-colors"
+              >
+                Ver en YouTube
+                <ExternalLink className="w-3.5 h-3.5" />
+              </a>
             </div>
           </div>
         </div>
