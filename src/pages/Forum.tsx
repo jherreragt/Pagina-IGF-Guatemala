@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   MessageSquare, Users, ThumbsUp, Reply, Pin, Flame, ArrowRight, ShieldCheck,
-  TrendingUp, Clock, ChevronRight,
+  TrendingUp, Clock, ChevronRight, Search,
 } from 'lucide-react';
 import PageHero from '../components/PageHero';
 import ForumRulesModal from '../components/forum/ForumRulesModal';
@@ -16,6 +16,9 @@ export default function Forum() {
   const [catMap, setCatMap] = useState<Record<string, ForumCategory>>({});
   const [loading, setLoading] = useState(true);
   const [rulesOpen, setRulesOpen] = useState(false);
+  const [search, setSearch] = useState('');
+  const [searchResults, setSearchResults] = useState<ForumThread[]>([]);
+  const [searching, setSearching] = useState(false);
 
   useEffect(() => {
     async function load() {
@@ -50,6 +53,26 @@ export default function Forum() {
     load();
   }, []);
 
+  useEffect(() => {
+    if (!search.trim()) {
+      setSearchResults([]);
+      setSearching(false);
+      return;
+    }
+    setSearching(true);
+    const t = setTimeout(async () => {
+      const { data } = await supabase
+        .from('forum_threads')
+        .select('*')
+        .or(`title.ilike.%${search.trim()}%,body.ilike.%${search.trim()}%`)
+        .order('last_activity_at', { ascending: false })
+        .limit(10);
+      setSearchResults((data as ForumThread[]) ?? []);
+      setSearching(false);
+    }, 300);
+    return () => clearTimeout(t);
+  }, [search]);
+
   return (
     <div className="pt-16 sm:pt-24">
       <PageHero
@@ -79,6 +102,76 @@ export default function Forum() {
           </div>
         </div>
       </div>
+
+      {/* Search bar */}
+      <div className="bg-white border-b border-slate-100">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+          <div className="relative max-w-xl mx-auto">
+            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+            <input
+              type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Buscar discusiones..."
+              className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 text-sm focus:outline-none focus:border-sky-400 focus:ring-1 focus:ring-sky-400/30 transition-colors"
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Search results */}
+      {search.trim() && (
+        <section className="py-8 bg-slate-50 bg-grid-light">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-sm font-bold text-slate-700 mb-4">
+              {searching ? 'Buscando...' : `${searchResults.length} resultado${searchResults.length !== 1 ? 's' : ''} para "${search}"`}
+            </h2>
+            {searchResults.length === 0 && !searching ? (
+              <div className="rounded-2xl border border-slate-100 bg-white p-8 text-center">
+                <Search className="w-8 h-8 text-slate-300 mx-auto mb-2" />
+                <p className="text-slate-500 text-sm">No se encontraron discusiones. Intenta con otros términos.</p>
+              </div>
+            ) : (
+              <div className="space-y-2">
+                {searchResults.map((thread) => {
+                  const cat = catMap[thread.category_id];
+                  return (
+                    <Link
+                      key={thread.id}
+                      to={`/foro/t/${thread.id}`}
+                      className="block rounded-xl border border-slate-100 bg-white hover:border-sky-200 hover:shadow-card transition-all p-4 group"
+                    >
+                      <div className="flex items-start gap-3">
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2 mb-1">
+                            {cat && (
+                              <span className={`text-xs font-semibold ${getForumColor(cat.color).text}`}>
+                                {cat.name}
+                              </span>
+                            )}
+                            {thread.is_pinned && <Pin className="w-3 h-3 text-amber-500" />}
+                          </div>
+                          <h3 className="font-semibold text-blue-950 text-sm group-hover:text-sky-700 transition-colors line-clamp-1">
+                            {thread.title}
+                          </h3>
+                          <p className="text-slate-400 text-xs mt-1 line-clamp-1">{thread.body}</p>
+                          <div className="flex items-center gap-3 mt-2 text-xs text-slate-400">
+                            <span>{thread.author_name}</span>
+                            <span className="flex items-center gap-1"><Reply className="w-3 h-3" />{thread.reply_count}</span>
+                            <span className="flex items-center gap-1"><ThumbsUp className="w-3 h-3" />{thread.reaction_count}</span>
+                            <span>{timeAgo(thread.last_activity_at)}</span>
+                          </div>
+                        </div>
+                        <ChevronRight className="w-4 h-4 text-slate-300 group-hover:text-sky-500 transition-colors flex-shrink-0 mt-1" />
+                      </div>
+                    </Link>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        </section>
+      )}
 
       {/* Categories grid */}
       <section className="py-16 bg-slate-50 bg-grid-light">
@@ -265,7 +358,7 @@ export default function Forum() {
             Crea una cuenta para publicar, responder y apoyar ideas. La participación es abierta, gratuita y multiactor.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Link to="/foro/brecha-digital" className="inline-flex items-center gap-2 px-6 py-3 bg-white text-sky-700 font-bold rounded-xl hover:bg-sky-50 transition-all hover:scale-[1.02] shadow-lg">
+            <Link to="/foro" className="inline-flex items-center gap-2 px-6 py-3 bg-white text-sky-700 font-bold rounded-xl hover:bg-sky-50 transition-all hover:scale-[1.02] shadow-lg">
               Explorar foros <ArrowRight className="w-4 h-4" />
             </Link>
             <button onClick={() => setRulesOpen(true)} className="btn-outline text-base px-7 py-3">

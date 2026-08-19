@@ -289,7 +289,7 @@ export default function ForumCategoryPage() {
                   placeholder="Describe tu pregunta, propuesta o experiencia..."
                   rows={6}
                   maxLength={5000}
-                  className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 text-sm focus:outline-none focus:border-sky-400 focus:ring-1 focus:-ring-sky-400/30 transition-colors resize-none"
+                  className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 text-sm focus:outline-none focus:border-sky-400 focus:ring-1 focus:ring-sky-400/30 transition-colors resize-none"
                 />
                 <p className="text-xs text-slate-400 mt-1">{newBody.length}/5000</p>
               </div>

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { X, Mail, Lock, User, AlertCircle, MessageSquare, ShieldCheck } from 'lucide-react';
+import { X, Mail, Lock, User, AlertCircle, MessageSquare, ShieldCheck, CheckCircle2 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import ForumConductModal from './ForumConductModal';
 
@@ -16,6 +16,7 @@ export default function ForumAuthModal({ open, onClose, onSuccess }: ForumAuthMo
   const [password, setPassword] = useState('');
   const [displayName, setDisplayName] = useState('');
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [conductOpen, setConductOpen] = useState(false);
   const [conductAccepted, setConductAccepted] = useState(false);
@@ -29,6 +30,7 @@ export default function ForumAuthModal({ open, onClose, onSuccess }: ForumAuthMo
     setError('');
     setSubmitting(false);
     setConductAccepted(false);
+    setSuccess('');
   }
 
   function handleClose() {
@@ -70,6 +72,17 @@ export default function ForumAuthModal({ open, onClose, onSuccess }: ForumAuthMo
       return;
     }
 
+    if (mode === 'register') {
+      setMode('login');
+      setError('');
+      setSuccess('¡Cuenta creada! Ya puedes iniciar sesión.');
+      setDisplayName('');
+      setPassword('');
+      setConductAccepted(false);
+      onSuccess?.();
+      return;
+    }
+
     reset();
     onSuccess?.();
     onClose();
@@ -108,6 +121,12 @@ export default function ForumAuthModal({ open, onClose, onSuccess }: ForumAuthMo
               <div className="flex items-start gap-2 p-3 bg-red-50 border border-red-200 rounded-xl mb-4 text-red-600 text-sm">
                 <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
                 <span>{error}</span>
+              </div>
+            )}
+            {success && (
+              <div className="flex items-start gap-2 p-3 bg-green-50 border border-green-200 rounded-xl mb-4 text-green-700 text-sm">
+                <CheckCircle2 className="w-4 h-4 flex-shrink-0 mt-0.5" />
+                <span>{success}</span>
               </div>
             )}
 
@@ -215,6 +234,7 @@ export default function ForumAuthModal({ open, onClose, onSuccess }: ForumAuthMo
                 onClick={() => {
                   setMode(mode === 'login' ? 'register' : 'login');
                   setError('');
+                  setSuccess('');
                 }}
                 className="text-sky-600 hover:text-sky-700 text-sm font-medium transition-colors"
               >

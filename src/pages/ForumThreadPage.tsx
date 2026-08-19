@@ -3,7 +3,7 @@ import { Link, useParams, useNavigate } from 'react-router-dom';
 import {
   MessageSquare, ChevronLeft, Reply, ThumbsUp, Flag, Pin, Lock,
   AlertCircle, Send, EyeOff, Trash2, ShieldAlert, Sparkles, X,
-  ShieldCheck, EyeOff as HideIcon, Clock,
+  ShieldCheck, EyeOff as HideIcon, Clock, Edit2, Check,
 } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import ForumAuthModal from '../components/forum/ForumAuthModal';
@@ -36,6 +36,11 @@ export default function ForumThreadPage() {
   const [reportReason, setReportReason] = useState('');
   const [reportSubmitting, setReportSubmitting] = useState(false);
   const [reportDone, setReportDone] = useState(false);
+  const [editingPostId, setEditingPostId] = useState<string | null>(null);
+  const [editPostBody, setEditPostBody] = useState('');
+  const [editingThread, setEditingThread] = useState(false);
+  const [editThreadTitle, setEditThreadTitle] = useState('');
+  const [editThreadBody, setEditThreadBody] = useState('');
 
   function getDisplayName(): string {
     if (!user) return 'Anónimo';
@@ -80,11 +85,13 @@ export default function ForumThreadPage() {
 
   const loadMyReactions = useCallback(() => {
     if (!user || !threadId) return;
+    const postIds = posts.map((p) => p.id);
+    const targetIds = [threadId, ...postIds];
     supabase
       .from('forum_reactions')
       .select('target_type, target_id')
       .eq('user_id', user.id)
-      .or(`target_id.eq.${threadId}`)
+      .in('target_id', targetIds)
       .then(({ data }) => {
         const set = new Set<string>();
         (data ?? []).forEach((r: { target_type: string; target_id: string }) => {
@@ -92,27 +99,23 @@ export default function ForumThreadPage() {
         });
         setMyReactions(set);
       });
-
-    // Also check reactions on posts in this thread
-    posts.forEach((p) => {
-      supabase
-        .from('forum_reactions')
-        .select('id')
-        .eq('user_id', user.id)
-        .eq('target_type', 'post')
-        .eq('target_id', p.id)
-        .maybeSingle()
-        .then(({ data }) => {
-          if (data) {
-            setMyReactions((prev) => new Set(prev).add(`post:${p.id}`));
-          }
-        });
-    });
   }, [user, threadId, posts]);
 
   useEffect(() => { loadThread(); }, [loadThread]);
   useEffect(() => { loadPosts(); }, [loadPosts]);
   useEffect(() => { loadMyReactions(); }, [loadMyReactions]);
+
+  // Realtime: refresh posts when new replies arrive
+  useEffect(() => {
+    if (!threadId) return;
+    const channel = supabase
+      .channel(`thread-${threadId}`)
+      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'forum_posts', filter: `thread_id=eq.${threadId}` }, () => loadPosts())
+      .on('postgres_changes', { event: 'DELETE', schema: 'public', table: 'forum_posts', filter: `thread_id=eq.${threadId}` }, () => loadPosts())
+      .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'forum_threads', filter: `id=eq.${threadId}` }, () => loadThread())
+      .subscribe();
+    return () => { supabase.removeChannel(channel); };
+  }, [threadId, loadPosts, loadThread]);
 
   async function handleReply(e: React.FormEvent) {
     e.preventDefault();
@@ -238,6 +241,27 @@ export default function ForumThreadPage() {
     const isOwner = thread.author_id === user.id;
     if (!isOwner) return;
     await supabase.from('forum_threads').delete().eq('id', thread.id).eq('author_id', user.id);
+    navigate('/foro');
+  }
+
+  async function handleEditThread() {
+    if (!user || !thread) return;
+    if (!editThreadTitle.trim() || !editThreadBody.trim()) return;
+    await supabase.from('forum_threads')
+      .update({ title: editThreadTitle.trim(), body: editThreadBody.trim() })
+      .eq('id', thread.id).eq('author_id', user.id);
+    setEditingThread(false);
+    loadThread();
+  }
+
+  async function handleEditPost(postId: string) {
+    if (!user) return;
+    if (!editPostBody.trim()) return;
+    await supabase.from('forum_posts')
+      .update({ body: editPostBody.trim() })
+      .eq('id', postId).eq('author_id', user.id);
+    setEditingPostId(null);
+    loadPosts();
   }
 
   if (loading) {
@@ -335,6 +359,14 @@ export default function ForumThreadPage() {
                     <Flag className="w-3.5 h-3.5" /> Reportar
                   </button>
                 )}
+                {isOwner && !editingThread && (
+                  <button
+                    onClick={() => { setEditingThread(true); setEditThreadTitle(thread.title); setEditThreadBody(thread.body); }}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium text-slate-400 hover:text-sky-600 hover:bg-sky-50 transition-colors"
+                  >
+                    <Edit2 className="w-3.5 h-3.5" />
+                  </button>
+                )}
                 {isOwner && (
                   <button
                     onClick={handleDeleteThread}
@@ -347,9 +379,42 @@ export default function ForumThreadPage() {
             </div>
           </div>
 
-          {/* Thread body */}
+          {/* Thread body / edit mode */}
           <div className="px-6 pb-6 border-t border-slate-50 pt-5">
-            <p className="text-slate-700 text-[15px] leading-relaxed whitespace-pre-wrap">{thread.body}</p>
+            {editingThread ? (
+              <div className="space-y-3">
+                <input
+                  type="text"
+                  value={editThreadTitle}
+                  onChange={(e) => setEditThreadTitle(e.target.value)}
+                  className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 text-sm focus:outline-none focus:border-sky-400"
+                  placeholder="Título"
+                />
+                <textarea
+                  value={editThreadBody}
+                  onChange={(e) => setEditThreadBody(e.target.value)}
+                  rows={6}
+                  maxLength={5000}
+                  className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 text-sm focus:outline-none focus:border-sky-400 resize-none"
+                />
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={handleEditThread}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-sky-600 hover:bg-sky-500 text-white text-sm font-semibold rounded-lg transition-colors"
+                  >
+                    <Check className="w-4 h-4" /> Guardar
+                  </button>
+                  <button
+                    onClick={() => setEditingThread(false)}
+                    className="px-3 py-1.5 text-slate-500 text-sm font-medium hover:text-slate-700 transition-colors"
+                  >
+                    Cancelar
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <p className="text-slate-700 text-[15px] leading-relaxed whitespace-pre-wrap">{thread.body}</p>
+            )}
           </div>
 
           {/* Pending-review banner — visible to author and admins */}
@@ -451,6 +516,32 @@ export default function ForumThreadPage() {
 
                   <p className="text-slate-700 text-sm leading-relaxed whitespace-pre-wrap mb-4">{post.body}</p>
 
+                  {editingPostId === post.id && (
+                    <div className="space-y-2 mb-4">
+                      <textarea
+                        value={editPostBody}
+                        onChange={(e) => setEditPostBody(e.target.value)}
+                        rows={4}
+                        maxLength={3000}
+                        className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 text-sm focus:outline-none focus:border-sky-400 resize-none"
+                      />
+                      <div className="flex items-center gap-2">
+                        <button
+                          onClick={() => handleEditPost(post.id)}
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-sky-600 hover:bg-sky-500 text-white text-xs font-semibold rounded-lg transition-colors"
+                        >
+                          <Check className="w-3.5 h-3.5" /> Guardar
+                        </button>
+                        <button
+                          onClick={() => setEditingPostId(null)}
+                          className="px-3 py-1.5 text-slate-500 text-xs font-medium hover:text-slate-700 transition-colors"
+                        >
+                          Cancelar
+                        </button>
+                      </div>
+                    </div>
+                  )}
+
                   <div className="flex items-center gap-2 pt-3 border-t border-slate-50">
                     <button
                       onClick={() => handleReact('post', post.id)}
@@ -467,6 +558,14 @@ export default function ForumThreadPage() {
                         className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium text-slate-400 hover:text-red-500 hover:bg-red-50 transition-colors"
                       >
                         <Flag className="w-3 h-3" /> Reportar
+                      </button>
+                    )}
+                    {isPostOwner && editingPostId !== post.id && (
+                      <button
+                        onClick={() => { setEditingPostId(post.id); setEditPostBody(post.body); }}
+                        className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium text-slate-400 hover:text-sky-600 hover:bg-sky-50 transition-colors"
+                      >
+                        <Edit2 className="w-3 h-3" /> Editar
                       </button>
                     )}
                     {isPostOwner && (
