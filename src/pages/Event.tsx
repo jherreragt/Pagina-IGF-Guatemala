@@ -226,6 +226,55 @@ export default function Event() {
         </div>
       </section>
 
+      {/* Fases del IGF */}
+      <section className="py-24 bg-slate-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-14">
+            <div className="inline-flex items-center gap-2 text-brand-600 font-semibold text-sm uppercase tracking-wider mb-4">
+              <span className="w-8 h-0.5 bg-brand-500" />Etapas del proceso<span className="w-8 h-0.5 bg-brand-500" />
+            </div>
+            <h2 className="text-4xl font-bold text-brand-900 mb-4">Fases del IGF</h2>
+            <p className="text-slate-500 max-w-2xl mx-auto">El proceso se desarrolla en dos etapas: los conversatorios temáticos y el evento de cierre.</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            <div className="p-8 bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-all">
+              <div className="flex items-center gap-4 mb-5">
+                <div className="w-14 h-14 rounded-2xl bg-brand-100 flex items-center justify-center flex-shrink-0">
+                  <Users className="w-7 h-7 text-brand-600" />
+                </div>
+                <div>
+                  <h3 className="font-display font-bold text-brand-900 text-2xl">Conversatorios</h3>
+                  <p className="text-brand-600 text-sm font-semibold mt-0.5">Inician el 21 de octubre</p>
+                </div>
+              </div>
+              <p className="text-slate-600 text-[15px] leading-relaxed mb-3">
+                Se llevarán a cabo varios conversatorios con expertos, sobre distintos temas de gobernanza de interés en nuestro país.
+              </p>
+              <p className="text-slate-500 text-sm leading-relaxed">
+                Los temas son de actualidad, pensamos que son de importancia a los usuarios de Internet de nuestro país.
+              </p>
+            </div>
+            <div className="p-8 bg-brand-900 rounded-2xl shadow-sm hover:shadow-md transition-all">
+              <div className="flex items-center gap-4 mb-5">
+                <div className="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center flex-shrink-0">
+                  <Globe className="w-7 h-7 text-brand-300" />
+                </div>
+                <div>
+                  <h3 className="font-display font-bold text-white text-2xl">Evento IGF</h3>
+                  <p className="text-brand-300 text-sm font-semibold mt-0.5">24 de noviembre</p>
+                </div>
+              </div>
+              <p className="text-brand-100 text-[15px] leading-relaxed mb-3">
+                Se presentarán en un solo evento en el cual presentaremos las conclusiones y recomendaciones de los conversatorios, los cuales estarán también en discusión por quienes participen.
+              </p>
+              <p className="text-brand-200 text-sm leading-relaxed">
+                Es un evento dinámico y participativo que busca compartir el conocimiento generado durante los conversatorios.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Quiénes participan */}
       <section className="py-20 bg-slate-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
