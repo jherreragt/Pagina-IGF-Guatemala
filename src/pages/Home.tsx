@@ -467,13 +467,14 @@ export default function Home() {
               Con el respaldo de organizaciones comprometidas con un Internet abierto, seguro e inclusivo para Guatemala.
             </p>
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-5">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-5">
             {[
               { name: 'Red Ciudadana', url: 'https://redciudadana.org', logo: '/logo_red_ciudadana2.png' },
               { name: 'Consultoría Técnica Pedagógica', url: '#', logo: '/Logo_Tecnopedagogia.jpeg' },
               { name: 'Observatorio', url: '#', logo: '/Logo_observatorio_nuevo_png.png' },
               { name: 'UNIS', url: '#', logo: '/Logo_UNIS.jpeg' },
-              { name: 'IGF Ginebra', url: 'https://www.intgovforum.org', logo: null },
+              { name: 'IGF Ginebra', url: 'https://www.intgovforum.org', logo: '/igflogo2.png' },
+              { name: 'RPSC', url: '#', logo: '/IMG-Rpsc.jpg' },
             ].map(({ name, url, logo }) => (
               <a
                 key={name}
