@@ -469,22 +469,32 @@ export default function Home() {
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-5">
             {[
-              { name: 'Red Ciudadana', url: 'https://redciudadana.org' },
-              { name: 'Consultoría Técnica Pedagógica', url: '#' },
-              { name: 'María Zaghi (Observatorio)', url: '#' },
-              { name: 'IGF Ginebra', url: 'https://www.intgovforum.org' },
-              { name: 'UNIS', url: '#' },
-            ].map(({ name, url }) => (
+              { name: 'Red Ciudadana', url: 'https://redciudadana.org', logo: '/logo_red_ciudadana2.png' },
+              { name: 'Consultoría Técnica Pedagógica', url: '#', logo: '/Logo_Tecnopedagogia.jpeg' },
+              { name: 'Observatorio', url: '#', logo: '/Logo_observatorio_nuevo_png.png' },
+              { name: 'UNIS', url: '#', logo: '/Logo_UNIS.jpeg' },
+              { name: 'IGF Ginebra', url: 'https://www.intgovforum.org', logo: null },
+            ].map(({ name, url, logo }) => (
               <a
                 key={name}
                 href={url}
                 target={url !== '#' ? '_blank' : '_self'}
                 rel="noopener noreferrer"
-                className="group flex flex-col items-center justify-center gap-3 p-6 bg-white border border-slate-100 rounded-2xl hover:border-sky-200 hover:shadow-md transition-all min-h-[140px]"
+                className="group flex flex-col items-center justify-center gap-3 p-6 bg-white border border-slate-100 rounded-2xl hover:border-sky-200 hover:shadow-md transition-all min-h-[160px]"
               >
-                <div className="w-14 h-14 rounded-xl bg-slate-50 group-hover:bg-sky-50 flex items-center justify-center transition-colors">
-                  <Building2 className="w-7 h-7 text-slate-400 group-hover:text-sky-600 transition-colors" />
-                </div>
+                {logo ? (
+                  <div className="h-16 flex items-center justify-center">
+                    <img
+                      src={logo}
+                      alt={name}
+                      className="max-h-16 max-w-[120px] object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
+                    />
+                  </div>
+                ) : (
+                  <div className="w-14 h-14 rounded-xl bg-slate-50 group-hover:bg-sky-50 flex items-center justify-center transition-colors">
+                    <Building2 className="w-7 h-7 text-slate-400 group-hover:text-sky-600 transition-colors" />
+                  </div>
+                )}
                 <span className="font-display font-bold text-slate-600 group-hover:text-blue-950 text-sm text-center leading-snug transition-colors">
                   {name}
                 </span>
