@@ -35,9 +35,11 @@ export default function ForumConductModal({ open, onClose, onAccepted }: ForumCo
     const {
       data: { user },
     } = await supabase.auth.getUser();
+    // During registration there is no user yet — accept in-memory only.
     if (!user) {
-      setError('Inicia sesión primero para aceptar los lineamientos.');
       setAccepting(false);
+      onAccepted?.();
+      onClose();
       return;
     }
     const { data: meta } = await supabase

@@ -46,11 +46,22 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   async function signUp(email: string, password: string, displayName: string) {
-    const { error } = await supabase.auth.signUp({
+    const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: { data: { display_name: displayName } },
     });
+    if (!error && data.user) {
+      const { data: meta } = await supabase
+        .from('forum_conduct_meta')
+        .select('current_version')
+        .eq('id', 1)
+        .maybeSingle();
+      const version = (meta as { current_version: number } | null)?.current_version ?? 1;
+      await supabase
+        .from('forum_conduct_acceptances')
+        .upsert({ user_id: data.user.id, version }, { onConflict: 'user_id' });
+    }
     return { error };
   }
 
