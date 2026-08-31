@@ -1,15 +1,21 @@
 import { useState } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
-import { Globe, Eye, EyeOff, AlertCircle } from 'lucide-react';
+import { Navigate, useNavigate, useSearchParams } from 'react-router-dom';
+import { Globe, Eye, EyeOff, AlertCircle, UserPlus, LogIn, CheckCircle2, Clock } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 
 export default function AdminLogin() {
-  const { session, loading, signIn } = useAuth();
+  const { session, loading, signIn, requestAdminAccess, adminStatus } = useAuth();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const pendingRedirect = searchParams.get('pending') === '1';
+
+  const [mode, setMode] = useState<'login' | 'register'>('login');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [displayName, setDisplayName] = useState('');
   const [showPass, setShowPass] = useState(false);
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
   const [submitting, setSubmitting] = useState(false);
 
   if (loading) {
@@ -20,15 +26,43 @@ export default function AdminLogin() {
     );
   }
 
-  if (session) return <Navigate to="/admin" replace />;
+  if (session && adminStatus === 'approved') return <Navigate to="/admin" replace />;
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError('');
+    setSuccess('');
     setSubmitting(true);
-    const { error } = await signIn(email, password);
+
+    if (mode === 'register') {
+      if (!displayName.trim()) {
+        setError('Ingresa tu nombre.');
+        setSubmitting(false);
+        return;
+      }
+      if (password.length < 6) {
+        setError('La contraseña debe tener al menos 6 caracteres.');
+        setSubmitting(false);
+        return;
+      }
+      const { error: reqError } = await requestAdminAccess(email, password, displayName.trim());
+      setSubmitting(false);
+      if (reqError) {
+        setError(reqError.includes('already') || reqError.includes('registered')
+          ? 'Ese correo ya está registrado. Inicia sesión o solicita acceso con otra cuenta.'
+          : reqError);
+        return;
+      }
+      setSuccess('Solicitud enviada. Un super administrador revisará tu solicitud. Te avisaremos cuando sea aprobada.');
+      setMode('login');
+      setPassword('');
+      setDisplayName('');
+      return;
+    }
+
+    const { error: signInError } = await signIn(email, password);
     setSubmitting(false);
-    if (error) {
+    if (signInError) {
       setError('Credenciales incorrectas. Verifica tu correo y contraseña.');
     } else {
       navigate('/admin');
@@ -47,7 +81,40 @@ export default function AdminLogin() {
         </div>
 
         <div className="bg-white border border-slate-200 rounded-2xl p-7 shadow-xl">
-          <h2 className="text-lg font-semibold text-slate-900 mb-6">Iniciar sesión</h2>
+          {/* Pending notice */}
+          {pendingRedirect && (
+            <div className="flex items-start gap-2.5 p-3.5 bg-amber-50 border border-amber-200 rounded-xl mb-5 text-amber-800 text-sm">
+              <Clock className="w-4 h-4 flex-shrink-0 mt-0.5" />
+              <span>Tu solicitud de acceso está pendiente de aprobación por un super administrador.</span>
+            </div>
+          )}
+
+          {/* Mode tabs */}
+          <div className="flex gap-1 p-1 bg-slate-100 rounded-xl mb-6">
+            <button
+              type="button"
+              onClick={() => { setMode('login'); setError(''); setSuccess(''); }}
+              className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-sm font-medium transition-colors ${mode === 'login' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
+            >
+              <LogIn className="w-4 h-4" /> Iniciar sesión
+            </button>
+            <button
+              type="button"
+              onClick={() => { setMode('register'); setError(''); setSuccess(''); }}
+              className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-sm font-medium transition-colors ${mode === 'register' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
+            >
+              <UserPlus className="w-4 h-4" /> Solicitar acceso
+            </button>
+          </div>
+
+          <h2 className="text-lg font-semibold text-slate-900 mb-1">
+            {mode === 'login' ? 'Iniciar sesión' : 'Solicitar acceso de administrador'}
+          </h2>
+          <p className="text-slate-500 text-xs mb-5">
+            {mode === 'login'
+              ? 'Ingresa con tu cuenta de administrador.'
+              : 'Crea una cuenta y solicita acceso. Un super administrador debe aprobarla.'}
+          </p>
 
           {error && (
             <div className="flex items-center gap-2 p-3 bg-red-50 border border-red-200 rounded-xl mb-5 text-red-600 text-sm">
@@ -56,7 +123,30 @@ export default function AdminLogin() {
             </div>
           )}
 
+          {success && (
+            <div className="flex items-start gap-2 p-3 bg-green-50 border border-green-200 rounded-xl mb-5 text-green-700 text-sm">
+              <CheckCircle2 className="w-4 h-4 flex-shrink-0 mt-0.5" />
+              <span>{success}</span>
+            </div>
+          )}
+
           <form onSubmit={handleSubmit} className="space-y-4">
+            {mode === 'register' && (
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-1.5">
+                  Nombre
+                </label>
+                <input
+                  type="text"
+                  required
+                  value={displayName}
+                  onChange={(e) => setDisplayName(e.target.value)}
+                  placeholder="Tu nombre completo"
+                  className="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 text-sm focus:outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-100 transition-colors"
+                />
+              </div>
+            )}
+
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-slate-700 mb-1.5">
                 Correo electrónico
@@ -82,7 +172,7 @@ export default function AdminLogin() {
                   id="password"
                   type={showPass ? 'text' : 'password'}
                   required
-                  autoComplete="current-password"
+                  autoComplete={mode === 'login' ? 'current-password' : 'new-password'}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
@@ -105,7 +195,7 @@ export default function AdminLogin() {
             >
               {submitting ? (
                 <div className="w-4 h-4 border-2 border-slate-300 border-t-white rounded-full animate-spin" />
-              ) : 'Ingresar'}
+              ) : mode === 'login' ? 'Ingresar' : 'Enviar solicitud'}
             </button>
           </form>
         </div>

@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import {
   LayoutDashboard, FileText, Settings, LogOut,
   ChevronLeft, Menu, ExternalLink, Calendar,
-  Youtube, Mail, ChevronDown, ChevronRight, MessageSquare, Home
+  Youtube, Mail, ChevronDown, ChevronRight, MessageSquare, Home, UserCog
 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 
@@ -154,6 +154,18 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               </Link>
             );
           })()}
+
+          {/* Admin Users */}
+          {(() => {
+            const active = location.pathname === '/admin/usuarios';
+            return (
+              <Link to="/admin/usuarios"
+                className={`flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors ${active ? 'bg-sky-600 text-white' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'}`}>
+                <UserCog className="w-5 h-5 flex-shrink-0" />
+                {expanded && <span className="text-sm font-medium">Administradores</span>}
+              </Link>
+            );
+          })()}
         </nav>
 
         <div className="p-3 border-t border-slate-200 space-y-1">
@@ -182,6 +194,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     if (fSub) return `Foro — ${fSub.label}`;
     if (location.pathname === '/admin/home') return 'Contenido del Home';
     if (location.pathname === '/admin/settings') return 'Configuración';
+    if (location.pathname === '/admin/usuarios') return 'Administradores';
     return 'Dashboard';
   })();
 

@@ -35,6 +35,7 @@ import EventEditions from './pages/admin/EventEditions';
 import YouTubeVideosAdmin from './pages/admin/YouTubeVideos';
 import ContactSubmissionsAdmin from './pages/admin/ContactSubmissions';
 import HomeContent from './pages/admin/HomeContent';
+import AdminUsersPage from './pages/admin/AdminUsers';
 
 // Forum pages
 import Forum from './pages/Forum';
@@ -125,6 +126,7 @@ export default function App() {
           <Route path="/admin/videos" element={<ProtectedRoute><AdminLayout><YouTubeVideosAdmin /></AdminLayout></ProtectedRoute>} />
           <Route path="/admin/mensajes" element={<ProtectedRoute><AdminLayout><ContactSubmissionsAdmin /></AdminLayout></ProtectedRoute>} />
           <Route path="/admin/home" element={<ProtectedRoute><AdminLayout><HomeContent /></AdminLayout></ProtectedRoute>} />
+          <Route path="/admin/usuarios" element={<ProtectedRoute><AdminLayout><AdminUsersPage /></AdminLayout></ProtectedRoute>} />
 
           {/* Forum admin routes */}
           <Route path="/admin/forum" element={<ProtectedRoute><AdminLayout><ForumDashboard /></AdminLayout></ProtectedRoute>} />

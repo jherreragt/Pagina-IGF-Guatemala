@@ -229,6 +229,19 @@ export type ForumConductAcceptance = {
   accepted_at: string;
 };
 
+export type AdminUser = {
+  id: string;
+  user_id: string;
+  email: string;
+  display_name: string;
+  role: 'super_admin' | 'admin';
+  status: 'pending' | 'approved' | 'rejected' | 'revoked';
+  requested_at: string;
+  approved_at: string | null;
+  approved_by: string | null;
+  created_at: string;
+};
+
 export type YouTubeVideo = {
   id: string;
   youtube_id: string;
