@@ -4,6 +4,7 @@ import { AuthProvider } from './contexts/AuthContext';
 import Navigation from './components/Navigation';
 import Footer from './components/Footer';
 import ProtectedRoute from './components/ProtectedRoute';
+import EventPopup from './components/EventPopup';
 import AdminLayout from './components/admin/AdminLayout';
 
 // Public pages
@@ -35,7 +36,6 @@ import EventEditions from './pages/admin/EventEditions';
 import YouTubeVideosAdmin from './pages/admin/YouTubeVideos';
 import ContactSubmissionsAdmin from './pages/admin/ContactSubmissions';
 import HomeContent from './pages/admin/HomeContent';
-import AdminUsersPage from './pages/admin/AdminUsers';
 
 // Forum pages
 import Forum from './pages/Forum';
@@ -64,6 +64,7 @@ function PublicLayout({ children }: { children: React.ReactNode }) {
       <Navigation />
       <main className="flex-1">{children}</main>
       <Footer />
+      <EventPopup />
     </div>
   );
 }
@@ -71,7 +72,7 @@ function PublicLayout({ children }: { children: React.ReactNode }) {
 export default function App() {
   return (
     <AuthProvider>
-      <BrowserRouter>
+      <BrowserRouter basename={import.meta.env.BASE_URL}>
         <ScrollToTop />
         <Routes>
           {/* Admin routes */}
@@ -126,7 +127,6 @@ export default function App() {
           <Route path="/admin/videos" element={<ProtectedRoute><AdminLayout><YouTubeVideosAdmin /></AdminLayout></ProtectedRoute>} />
           <Route path="/admin/mensajes" element={<ProtectedRoute><AdminLayout><ContactSubmissionsAdmin /></AdminLayout></ProtectedRoute>} />
           <Route path="/admin/home" element={<ProtectedRoute><AdminLayout><HomeContent /></AdminLayout></ProtectedRoute>} />
-          <Route path="/admin/usuarios" element={<ProtectedRoute><AdminLayout><AdminUsersPage /></AdminLayout></ProtectedRoute>} />
 
           {/* Forum admin routes */}
           <Route path="/admin/forum" element={<ProtectedRoute><AdminLayout><ForumDashboard /></AdminLayout></ProtectedRoute>} />
