@@ -4,7 +4,6 @@ import { AuthProvider } from './contexts/AuthContext';
 import Navigation from './components/Navigation';
 import Footer from './components/Footer';
 import ProtectedRoute from './components/ProtectedRoute';
-import EventPopup from './components/EventPopup';
 import AdminLayout from './components/admin/AdminLayout';
 
 // Public pages
@@ -51,6 +50,7 @@ import ForumRulesAdmin from './pages/admin/ForumRulesAdmin';
 import ForumUsers from './pages/admin/ForumUsers';
 import ForumModerationQueue from './pages/admin/ForumModerationQueue';
 import ForumConductAdmin from './pages/admin/ForumConductAdmin';
+import AdminUsersPage from './pages/admin/AdminUsers';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -64,7 +64,6 @@ function PublicLayout({ children }: { children: React.ReactNode }) {
       <Navigation />
       <main className="flex-1">{children}</main>
       <Footer />
-      <EventPopup />
     </div>
   );
 }
@@ -127,7 +126,7 @@ export default function App() {
           <Route path="/admin/videos" element={<ProtectedRoute><AdminLayout><YouTubeVideosAdmin /></AdminLayout></ProtectedRoute>} />
           <Route path="/admin/mensajes" element={<ProtectedRoute><AdminLayout><ContactSubmissionsAdmin /></AdminLayout></ProtectedRoute>} />
           <Route path="/admin/home" element={<ProtectedRoute><AdminLayout><HomeContent /></AdminLayout></ProtectedRoute>} />
-
+          <Route path="/admin/usuarios" element={<ProtectedRoute><AdminLayout><AdminUsersPage /></AdminLayout></ProtectedRoute>} />
           {/* Forum admin routes */}
           <Route path="/admin/forum" element={<ProtectedRoute><AdminLayout><ForumDashboard /></AdminLayout></ProtectedRoute>} />
           <Route path="/admin/forum/categorias" element={<ProtectedRoute><AdminLayout><ForumCategories /></AdminLayout></ProtectedRoute>} />
