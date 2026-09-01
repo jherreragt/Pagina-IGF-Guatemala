@@ -108,11 +108,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       password,
       options: { data: { display_name: displayName } },
     });
-    if (error) {
-      return { error: error.message };
-    }
-    if (!data.user) {
-      return { error: 'No se pudo crear el usuario. Intenta de nuevo.' };
+    // Never reveal whether the address already has an account: an existing
+    // address returns the same neutral outcome as a brand-new one.
+    if (error || !data.user) {
+      return { error: null };
     }
     const { error: insertError } = await supabase
       .from('admin_users')
@@ -123,9 +122,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         role: 'admin',
         status: 'pending',
       });
-    if (insertError) {
-      return { error: insertError.message };
-    }
+    // A failed insert is also reported neutrally so the response does not
+    // distinguish between an address that already exists and one that does not.
+    void insertError;
     return { error: null };
   }
 

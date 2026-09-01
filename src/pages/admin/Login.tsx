@@ -45,15 +45,11 @@ export default function AdminLogin() {
         setSubmitting(false);
         return;
       }
-      const { error: reqError } = await requestAdminAccess(email, password, displayName.trim());
+      await requestAdminAccess(email, password, displayName.trim());
       setSubmitting(false);
-      if (reqError) {
-        setError(reqError.includes('already') || reqError.includes('registered')
-          ? 'Ese correo ya está registrado. Inicia sesión o solicita acceso con otra cuenta.'
-          : reqError);
-        return;
-      }
-      setSuccess('Solicitud enviada. Un super administrador revisará tu solicitud. Te avisaremos cuando sea aprobada.');
+      // The same confirmation is shown whether or not the address already has
+      // an account, so this form cannot be used to discover registered users.
+      setSuccess('Si el correo es válido, tu solicitud fue registrada. Un super administrador la revisará y te avisaremos cuando sea aprobada.');
       setMode('login');
       setPassword('');
       setDisplayName('');

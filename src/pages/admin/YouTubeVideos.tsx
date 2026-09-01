@@ -152,10 +152,10 @@ export default function YouTubeVideosAdmin() {
     let errMsg = '';
     if (editingId) {
       const { error: err } = await supabase.from('youtube_videos').update(payload).eq('id', editingId);
-      if (err) errMsg = err.message;
+      if (err) errMsg = 'No se pudo guardar el video. Verifica los datos e intenta de nuevo.';
     } else {
       const { error: err } = await supabase.from('youtube_videos').insert(payload);
-      if (err) errMsg = err.message;
+      if (err) errMsg = 'No se pudo guardar el video. Verifica los datos e intenta de nuevo.';
     }
 
     setSaving(false);
@@ -171,7 +171,7 @@ export default function YouTubeVideosAdmin() {
   async function handleDelete(id: string) {
     if (!confirm('¿Eliminar este video? Esta acción no se puede deshacer.')) return;
     const { error: err } = await supabase.from('youtube_videos').delete().eq('id', id);
-    if (err) { setError(err.message); return; }
+    if (err) { setError('No se pudo eliminar el video. Intenta de nuevo.'); return; }
     setSuccess('Video eliminado');
     load();
   }
@@ -181,7 +181,7 @@ export default function YouTubeVideosAdmin() {
       .from('youtube_videos')
       .update({ published: !v.published })
       .eq('id', v.id);
-    if (err) { setError(err.message); return; }
+    if (err) { setError('No se pudo actualizar el video. Intenta de nuevo.'); return; }
     load();
   }
 

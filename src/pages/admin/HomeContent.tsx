@@ -89,7 +89,7 @@ export default function HomeContent() {
       result = await supabase.from(table).update(form).eq('id', (editing as Item).id).select().single();
     }
     setSaving(false);
-    if (result.error) { setError(result.error.message); return; }
+    if (result.error) { setError('No se pudo guardar el cambio. Verifica los datos e intenta de nuevo.'); return; }
     setSaved(true);
     await load(tab);
     if (isNew) closePanel();

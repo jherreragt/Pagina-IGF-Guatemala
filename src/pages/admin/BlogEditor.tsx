@@ -108,7 +108,9 @@ export default function BlogEditor() {
     setSaving(false);
 
     if (result.error) {
-      setError(result.error.message.includes('duplicate') ? 'Ya existe un artículo con ese slug. Usa un slug diferente.' : result.error.message);
+      setError(result.error.message.includes('duplicate')
+        ? 'Ya existe un artículo con ese slug. Usa un slug diferente.'
+        : 'No se pudo guardar el artículo. Verifica los datos e intenta de nuevo.');
       return;
     }
 

@@ -85,7 +85,7 @@ export default function EventEditions() {
       result = await supabase.from('event_editions').update(payload).eq('id', editing!.id).select().single();
     }
     setSaving(false);
-    if (result.error) { setError(result.error.message); return; }
+    if (result.error) { setError('No se pudo guardar el cambio. Verifica los datos e intenta de nuevo.'); return; }
     setSaved(true);
     await load();
     if (isNew) closePanel();

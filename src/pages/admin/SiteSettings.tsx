@@ -55,7 +55,7 @@ export default function SiteSettings() {
     const { error: err } = await supabase.from('site_settings').upsert(updates);
     setSaving(false);
     if (err) {
-      setError(err.message);
+      setError('No se pudo guardar la configuración. Intenta de nuevo.');
     } else {
       setSaved(true);
       setTimeout(() => setSaved(false), 3000);

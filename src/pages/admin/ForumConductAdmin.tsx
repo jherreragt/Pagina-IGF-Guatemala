@@ -80,7 +80,7 @@ export default function ForumConductAdmin() {
     }
     setSaving(false);
     if (result.error) {
-      setError(result.error.message);
+      setError('No se pudo guardar el cambio. Intenta de nuevo.');
       return;
     }
     setSaved(true);
@@ -118,7 +118,7 @@ export default function ForumConductAdmin() {
       .eq('id', 1);
     setBumping(false);
     if (e) {
-      setError(e.message);
+      setError('No se pudo actualizar la versión. Intenta de nuevo.');
       return;
     }
     setBumped(true);

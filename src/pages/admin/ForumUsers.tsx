@@ -56,7 +56,9 @@ export default function ForumUsers() {
 
     setSubmitting(false);
     if (insertError) {
-      setError(insertError.message.includes('duplicate') ? 'Esta persona ya es moderadora.' : insertError.message);
+      setError(insertError.message.includes('duplicate')
+        ? 'Esta persona ya es moderadora.'
+        : 'No se pudo agregar a esta persona. Intenta de nuevo.');
       return;
     }
 
