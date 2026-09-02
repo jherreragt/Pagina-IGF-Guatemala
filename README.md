@@ -102,6 +102,21 @@ La base de datos se configura ejecutando las migraciones incluidas en `supabase/
 | `20260716003430_create_youtube_videos_table.sql` | Tabla de videos de YouTube mostrados en la home |
 | `20260716004854_add_home_content_tables_and_settings.sql.sql` | Tablas de contenido de la home (estadísticas, temas, principios, comunidad) y textos administrables |
 | `20260725143151_forum_moderation_upgrade.sql` | Moderación del foro: código de conducta, aceptaciones, estados de moderación, categorías de reporte, cola de primeros aportes |
+| `20260831195112_update_forum_categories_2026.sql` | 11 categorías temáticas nuevas del foro, alineadas con los ejes del IGF Guatemala 2026 |
+| `20260831210320_create_admin_users_table.sql` | Tabla `admin_users` para el flujo de solicitud y aprobación de acceso al panel de administración |
+| `20260901151320_secure_home_content_tables.sql` | Restringe escritura en las tablas de contenido de la home a administradores aprobados |
+| `20260901151344_secure_contact_submissions.sql` | Restringe lectura/escritura de mensajes de contacto a administradores aprobados |
+| `20260901151406_secure_event_registrations.sql` | Restringe la lista de registros de asistencia a administradores aprobados |
+| `20260901151431_secure_blog_posts.sql` | Restringe escritura y lectura de borradores del blog a administradores aprobados |
+| `20260901151451_secure_site_settings.sql` | Restringe escritura de la configuración del sitio a administradores aprobados |
+| `20260901151513_secure_event_content_tables.sql` | Restringe escritura de sesiones, ponentes, aliados y recursos del evento a administradores aprobados |
+| `20260901151537_secure_youtube_videos.sql` | Restringe escritura de videos de YouTube a administradores aprobados |
+| `20260901151558_secure_admin_access_requests.sql` | Las solicitudes de acceso admin solo pueden pedir rol `admin`, no `super_admin` |
+| `20260901151717_forum_moderation_column_guard.sql` | Impide que autores del foro escriban columnas de moderación en su propio contenido |
+| `20260901151809_forum_reject_replies_to_closed_threads.sql` | La base de datos rechaza respuestas a hilos cerrados u ocultos |
+| `20260901151837_forum_derive_author_name_server_side.sql` | El nombre visible en el foro se deriva de la sesión, no de lo que envía el navegador |
+| `20260901151904_secure_get_user_id_by_email.sql` | Bloquea la función de búsqueda de usuario por correo para evitar enumeración de cuentas |
+| `20260901152146_pin_function_search_path.sql` | Fija el `search_path` en todas las funciones del esquema `public` |
 
 ### Opción A — Desde el panel de Supabase
 
@@ -144,20 +159,35 @@ supabase db push
 | `forum_conduct_meta` | Versión actual del código de conducta |
 | `forum_conduct_acceptances` | Registro de aceptaciones del código por cada usuario |
 | `contact_submissions` | Mensajes recibidos por el formulario de contacto |
+| `admin_users` | Solicitudes de acceso al panel de administración, con estado de aprobación y rol (`admin` / `super_admin`) |
 
-Todas las tablas tienen **Row Level Security (RLS)** activada. Las tablas de contenido público permiten lectura a usuarios anónimos y autenticados; las tablas del foro usan `auth.uid()` para verificar propiedad.
+Todas las tablas tienen **Row Level Security (RLS)** activada. Las tablas de contenido público permiten lectura a usuarios anónimos y autenticados; las tablas del foro usan `auth.uid()` para verificar propiedad. La escritura de todo el contenido administrable (home, blog, evento, videos, configuración del sitio, mensajes de contacto) está restringida a usuarios con acceso de administrador aprobado, verificado mediante la función `is_admin_approved()`.
 
 ---
 
 ## Creación del usuario administrador
 
-El panel de administración requiere autenticación por correo y contraseña mediante Supabase Auth.
+El panel de administración requiere autenticación por correo y contraseña mediante Supabase Auth, además de tener acceso aprobado en la tabla `admin_users`.
 
-1. En el panel de Supabase, ve a **Authentication → Users**.
-2. Haz clic en **Add user → Create new user**.
-3. Ingresa el correo y contraseña que usarás para acceder al panel.
-4. Verifica que la opción **Auto Confirm User** esté activada (para no requerir confirmación por correo).
-5. Accede al panel en la ruta **/admin** del sitio (ej. `http://localhost:5173/admin`).
+### Crear el primer super admin
+
+1. En el panel de Supabase, ve a **Authentication → Users** y crea un usuario con correo y contraseña.
+2. Verifica que **Auto Confirm User** esté activada (para no requerir confirmación por correo).
+3. En **SQL Editor**, inserta manualmente el registro de super admin:
+
+```sql
+INSERT INTO admin_users (user_id, email, display_name, role, status)
+VALUES ('<uuid-del-usuario>', 'correo@ejemplo.com', 'Nombre', 'super_admin', 'approved');
+```
+
+4. Accede al panel en **/admin** (ej. `http://localhost:5173/admin`).
+
+### Flujo de solicitud de acceso (a partir del segundo admin)
+
+1. Una persona sin acceso entra a **/admin** y usa el formulario de **Solicitar acceso**.
+2. Su solicitud queda en estado `pending` en la tabla `admin_users`, con rol `admin` (no puede solicitar `super_admin`).
+3. Un super admin revisa las solicitudes desde **`/admin/usuarios`** y puede aprobarlas, rechazarlas o revocarlas.
+4. Solo los usuarios con estado `approved` pueden acceder al panel y editar contenido.
 
 > **Nota:** La confirmación por correo está desactivada por defecto. Los usuarios creados desde el panel de Supabase pueden iniciar sesión inmediatamente.
 
@@ -222,7 +252,7 @@ Navegador (React + Vite)
 
 ### Panel de administración
 
-Acceso en `/admin` (requiere iniciar sesión). Todas las rutas están protegidas.
+Acceso en `/admin` (requiere iniciar sesión y tener acceso de administrador aprobado). Todas las rutas están protegidas.
 
 | Ruta | Función |
 |---|---|
@@ -248,6 +278,7 @@ Acceso en `/admin` (requiere iniciar sesión). Todas las rutas están protegidas
 | `/admin/forum/cola` | Cola de moderación: aprobar o rechazar primeros aportes |
 | `/admin/forum/reglas` | Reglas del foro |
 | `/admin/forum/lineamientos` | Editar el código de conducta y subir versión |
+| `/admin/usuarios` | Gestión de solicitudes de acceso admin: aprobar, rechazar, revocar, asignar super admin |
 | `/admin/forum/usuarios` | Usuarios y moderadores del foro |
 
 ### Sistema de configuración (site_settings)
@@ -323,6 +354,17 @@ Desde **`/admin/forum`** se accede al dashboard del foro, que enlaza a todas las
 
 - **Usuario:** puede crear discusiones, responder, reaccionar y reportar. Su primer aporte pasa por la cola de moderación.
 - **Moderador / Administrador:** tiene acceso al panel de administración, puede aprobar o rechazar aportes pendientes, y moderar contenido directamente (fijar, destacar, cerrar, ocultar, eliminar). Los moderadores se asignan desde **`/admin/forum/usuarios`**.
+
+### Seguridad y control de acceso
+
+El sitio cuenta con varias capas de protección aplicadas a nivel de base de datos (no solo en el navegador):
+
+- **Acceso administrativo verificado:** Toda escritura de contenido (home, blog, evento, videos, configuración, mensajes de contacto) requiere que el usuario tenga acceso de administrador aprobado (`is_admin_approved()`). Un usuario autenticado sin acceso aprobado no puede modificar nada.
+- **Roles de admin:** Las solicitudes de acceso solo pueden pedir rol `admin`; solo un super admin puede ascender a otro a `super_admin`.
+- **Foro:** Los autores no pueden escribir columnas de moderación en su propio contenido (fijar, destacar, ocultar, cerrar, aprobar). La base de datos rechaza respuestas a hilos cerrados u ocultos. El nombre visible se deriva de la sesión, no de lo que envíe el navegador.
+- **Protección de datos sensibles:** La lista de registros de asistencia y los mensajes de contacto solo son visibles para administradores aprobados. La función de búsqueda de usuario por correo está bloqueada para evitar enumerar cuentas registradas.
+- **Search path fijado:** Todas las funciones de PostgreSQL del esquema `public` tienen `search_path` fijado, reduciendo el riesgo de suplantación de nombres.
+- **Protección contra contraseñas filtradas:** Se recomienda activar la opción de rechazar contraseñas que aparezcan en listas de filtraciones conocidas, disponible en la configuración de autenticación del panel de Supabase (**Authentication → Providers → Email**).
 
 ### Autenticación
 
