@@ -469,7 +469,6 @@ export default function Home() {
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-5">
             {[
-              { name: 'Red Ciudadana', url: 'https://redciudadana.org', logo: '/logo_red_ciudadana2.png' },
               { name: 'Tecnopedagogia', url: '#', logo: '/Logo_Tecnopedagogia.jpeg' },
               { name: 'Observatorio', url: '#', logo: '/Logo_observatorio_nuevo_png.png' },
               { name: 'UNIS', url: '#', logo: '/Logo_UNIS.jpeg' },
