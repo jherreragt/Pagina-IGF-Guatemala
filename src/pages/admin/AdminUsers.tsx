@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback } from 'react';
 import {
   UserCog, CheckCircle2, XCircle, Clock, Ban, ShieldCheck, User,
-  AlertCircle, Search,
+  AlertCircle, Search, UserPlus, X, Loader2,
 } from 'lucide-react';
 import { supabase, AdminUser } from '../../lib/supabase';
 import { useAuth } from '../../contexts/AuthContext';
@@ -23,6 +23,10 @@ export default function AdminUsersPage() {
   const [search, setSearch] = useState('');
   const [actionError, setActionError] = useState('');
   const [actionId, setActionId] = useState<string | null>(null);
+  const [showCreate, setShowCreate] = useState(false);
+  const [createForm, setCreateForm] = useState({ email: '', password: '', display_name: '', role: 'admin' as 'admin' | 'super_admin' });
+  const [createLoading, setCreateLoading] = useState(false);
+  const [createError, setCreateError] = useState('');
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -78,6 +82,40 @@ export default function AdminUsersPage() {
     load();
   }
 
+  async function createAdmin(data: { email: string; password: string; display_name: string; role: 'admin' | 'super_admin' }) {
+    setActionError('');
+    setCreateLoading(true);
+    try {
+      const session = await supabase.auth.getSession();
+      const token = session.data.session?.access_token;
+      if (!token) {
+        setCreateError('No hay sesión activa.');
+        return;
+      }
+      const res = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/admin-create-user`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+          'apikey': import.meta.env.VITE_SUPABASE_ANON_KEY,
+        },
+        body: JSON.stringify(data),
+      });
+      const body = await res.json();
+      if (!res.ok) {
+        setCreateError(body.error ?? 'No se pudo crear el administrador.');
+        return;
+      }
+      setShowCreate(false);
+      setCreateForm({ email: '', password: '', display_name: '', role: 'admin' });
+      load();
+    } catch {
+      setCreateError('Error de conexión.');
+    } finally {
+      setCreateLoading(false);
+    }
+  }
+
   const filtered = users.filter((u) => {
     if (filter === 'pending' && u.status !== 'pending') return false;
     if (filter === 'approved' && u.status !== 'approved') return false;
@@ -93,11 +131,21 @@ export default function AdminUsersPage() {
 
   return (
     <div className="space-y-6 max-w-4xl">
-      <div>
-        <h1 className="text-2xl font-bold text-slate-900">Administradores</h1>
-        <p className="text-slate-500 text-sm mt-1">
-          Gestiona solicitudes de acceso y roles del panel administrativo.
-        </p>
+      <div className="flex items-start justify-between gap-4">
+        <div>
+          <h1 className="text-2xl font-bold text-slate-900">Administradores</h1>
+          <p className="text-slate-500 text-sm mt-1">
+            Gestiona solicitudes de acceso y roles del panel administrativo.
+          </p>
+        </div>
+        {isSuperAdmin && (
+          <button
+            onClick={() => { setCreateError(''); setShowCreate(true); }}
+            className="inline-flex items-center gap-1.5 px-4 py-2 bg-sky-600 hover:bg-sky-500 text-white text-sm font-semibold rounded-lg transition-colors flex-shrink-0"
+          >
+            <UserPlus className="w-4 h-4" /> Crear administrador
+          </button>
+        )}
       </div>
 
       {!isSuperAdmin && (
@@ -267,6 +315,93 @@ export default function AdminUsersPage() {
               </div>
             );
           })}
+        </div>
+      )}
+
+      {/* Create admin modal */}
+      {showCreate && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 p-4">
+          <div className="bg-white rounded-2xl shadow-xl w-full max-w-md">
+            <div className="flex items-center justify-between px-6 py-4 border-b border-slate-200">
+              <h2 className="font-bold text-slate-900">Crear administrador</h2>
+              <button onClick={() => setShowCreate(false)} className="text-slate-400 hover:text-slate-600 transition-colors">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            <form
+              onSubmit={(e) => { e.preventDefault(); createAdmin(createForm); }}
+              className="px-6 py-5 space-y-4"
+            >
+              {createError && (
+                <div className="flex items-center gap-2 p-3 bg-red-50 border border-red-200 rounded-xl text-red-600 text-sm">
+                  <AlertCircle className="w-4 h-4 flex-shrink-0" />
+                  {createError}
+                </div>
+              )}
+              <div>
+                <label className="block text-xs font-semibold text-slate-700 mb-1.5">Nombre</label>
+                <input
+                  type="text"
+                  required
+                  value={createForm.display_name}
+                  onChange={(e) => setCreateForm({ ...createForm, display_name: e.target.value })}
+                  className="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-sm text-slate-900 focus:outline-none focus:border-sky-400 focus:ring-1 focus:ring-sky-400/30"
+                  placeholder="Nombre completo"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-semibold text-slate-700 mb-1.5">Correo electrónico</label>
+                <input
+                  type="email"
+                  required
+                  value={createForm.email}
+                  onChange={(e) => setCreateForm({ ...createForm, email: e.target.value })}
+                  className="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-sm text-slate-900 focus:outline-none focus:border-sky-400 focus:ring-1 focus:ring-sky-400/30"
+                  placeholder="correo@ejemplo.com"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-semibold text-slate-700 mb-1.5">Contraseña temporal</label>
+                <input
+                  type="password"
+                  required
+                  minLength={8}
+                  value={createForm.password}
+                  onChange={(e) => setCreateForm({ ...createForm, password: e.target.value })}
+                  className="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-sm text-slate-900 focus:outline-none focus:border-sky-400 focus:ring-1 focus:ring-sky-400/30"
+                  placeholder="Mínimo 8 caracteres"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-semibold text-slate-700 mb-1.5">Rol</label>
+                <select
+                  value={createForm.role}
+                  onChange={(e) => setCreateForm({ ...createForm, role: e.target.value as 'admin' | 'super_admin' })}
+                  className="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-sm text-slate-900 focus:outline-none focus:border-sky-400 focus:ring-1 focus:ring-sky-400/30"
+                >
+                  <option value="admin">Administrador</option>
+                  <option value="super_admin">Super Administrador</option>
+                </select>
+              </div>
+              <div className="flex items-center justify-end gap-3 pt-2">
+                <button
+                  type="button"
+                  onClick={() => setShowCreate(false)}
+                  className="px-4 py-2 text-slate-600 text-sm font-medium hover:text-slate-900 transition-colors"
+                >
+                  Cancelar
+                </button>
+                <button
+                  type="submit"
+                  disabled={createLoading}
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-sky-600 hover:bg-sky-500 text-white text-sm font-semibold rounded-lg transition-colors disabled:bg-slate-300"
+                >
+                  {createLoading && <Loader2 className="w-4 h-4 animate-spin" />}
+                  Crear
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
       )}
     </div>
