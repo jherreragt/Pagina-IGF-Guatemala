@@ -35,6 +35,7 @@ import EventEditions from './pages/admin/EventEditions';
 import YouTubeVideosAdmin from './pages/admin/YouTubeVideos';
 import ContactSubmissionsAdmin from './pages/admin/ContactSubmissions';
 import HomeContent from './pages/admin/HomeContent';
+import AdminUsersPage from './pages/admin/AdminUsers';
 
 // Forum pages
 import Forum from './pages/Forum';
@@ -50,7 +51,6 @@ import ForumRulesAdmin from './pages/admin/ForumRulesAdmin';
 import ForumUsers from './pages/admin/ForumUsers';
 import ForumModerationQueue from './pages/admin/ForumModerationQueue';
 import ForumConductAdmin from './pages/admin/ForumConductAdmin';
-import AdminUsersPage from './pages/admin/AdminUsers';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -71,7 +71,7 @@ function PublicLayout({ children }: { children: React.ReactNode }) {
 export default function App() {
   return (
     <AuthProvider>
-      <BrowserRouter basename={import.meta.env.BASE_URL}>
+      <BrowserRouter>
         <ScrollToTop />
         <Routes>
           {/* Admin routes */}
@@ -127,6 +127,7 @@ export default function App() {
           <Route path="/admin/mensajes" element={<ProtectedRoute><AdminLayout><ContactSubmissionsAdmin /></AdminLayout></ProtectedRoute>} />
           <Route path="/admin/home" element={<ProtectedRoute><AdminLayout><HomeContent /></AdminLayout></ProtectedRoute>} />
           <Route path="/admin/usuarios" element={<ProtectedRoute><AdminLayout><AdminUsersPage /></AdminLayout></ProtectedRoute>} />
+
           {/* Forum admin routes */}
           <Route path="/admin/forum" element={<ProtectedRoute><AdminLayout><ForumDashboard /></AdminLayout></ProtectedRoute>} />
           <Route path="/admin/forum/categorias" element={<ProtectedRoute><AdminLayout><ForumCategories /></AdminLayout></ProtectedRoute>} />
